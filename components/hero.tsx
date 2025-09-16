@@ -23,11 +23,11 @@ export default function Hero() {
           <div className="max-w-3xl text-center md:text-left">
             {/* Copy */}
             <h1 className="h1 font-inter mb-6">
-              Join the best tech startups in the <span className="font-nycd text-indigo-500 font-normal">industry</span>
+              Your next holiday <span className="font-nycd text-indigo-500 font-normal">starts here</span>
             </h1>
             <p className="text-lg text-gray-500 mb-8">
-              Our landing page template works on all devices, so you only have to set it
-              <br className="hidden md:block" /> up once, and get beautiful results forever.
+            Explore the world with a tool that recommends the perfect destination for you.
+              <br className="hidden md:block" /> According to the season, your desires, budget and departure city.
             </p>
             {/* Button + Avatars */}
             <div className="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
