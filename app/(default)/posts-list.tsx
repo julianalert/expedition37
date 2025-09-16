@@ -1,43 +1,53 @@
-{/*
-Note: This code includes an example of how to fetch data from an external JSON file that is hosted at https://raw.githubusercontent.com/cruip/cruip-dummy/main/job-board-posts.json. To facilitate this, we've included a lib directory in the root which contains a function that can fetch the JSON content. Additionally, we've defined the Post types in the types.d.ts file located in the root.
-*/}
-
-import getAllPosts from '@/lib/getAllPosts'
+import getAllDestinations from '@/lib/getAllDestinations'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
+import Testimonials from '@/components/testimonials'
 
-interface Post {
+interface Destination {
   id: number,
-  sticky: boolean,
-  title: string,
-  name: string,
+  rank: number,
+  city: string,
+  country: string,
   image: string,
-  tag1: string,
-  tag2: string,
-  date: string,  
+  featured: boolean,
 }
 
 export default async function PostsList() {
-  const postsData: Promise<Post[]> = getAllPosts()
-  const posts = await postsData
+  const destinationsData: Promise<Destination[]> = getAllDestinations()
+  const destinations = await destinationsData
 
   return (
-    <div className="pb-8 md:pb-16">
-      <h2 className="text-3xl font-bold font-inter mb-10">Latest jobs</h2>
-      {/* List container */}
-      <div className="flex flex-col">
-
-        {posts.map(post => {
-          return (
-            <PostItem key={post.id} {...post} />
-          )
-        })}
-
-        {/* Newletter CTA */}
-        <div className="py-8 border-b border-gray-200 -order-1">
-          <Newsletter />
-        </div>
-
+    <div className="pb-8 md:pb-16" id="destinations">
+      {/* Cards grid container */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {destinations.map((destination, index) => {
+          const items = [];
+          
+          // Add the destination item
+          items.push(
+            <PostItem key={destination.id} {...destination} />
+          );
+          
+          // Add testimonials after the 9th destination (index 8)
+          if (index === 8 && destinations.length > 9) {
+            items.push(
+              <div key="testimonials" className="md:col-span-2 lg:col-span-3">
+                <Testimonials />
+              </div>
+            );
+          }
+          
+          // Add newsletter after the 12th destination (index 11)
+          if (index === 14 && destinations.length > 15) {
+            items.push(
+              <div key="newsletter" className="md:col-span-2 lg:col-span-3">
+                <Newsletter />
+              </div>
+            );
+          }
+          
+          return items;
+        }).flat()}
       </div>
     </div>
   )

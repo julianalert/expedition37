@@ -3,13 +3,13 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <footer>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="py-8 md:py-12">
           {/* Top area */}
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between mb-4 md:mb-6">
             <div className="shrink-0 mr-4">
               {/* Logo */}
-              <Link className="inline-flex group mb-8 md:mb-0" href="/" aria-label="Cruip">
+              <Link className="inline-flex group mb-8 md:mb-0" href="/" aria-label="Expedition37">
                 <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
                   <path className="fill-indigo-500" d="M13.853 18.14 1 10.643 31 1l-.019.058z" />
                   <path className="fill-indigo-300" d="M13.853 18.14 30.981 1.058 21.357 31l-7.5-12.857z" />
@@ -18,7 +18,7 @@ export default function Footer() {
             </div>
             {/* Social links */}
             <div className="flex items-center space-x-4 mb-4 md:order-2 md:ml-4 md:mb-0">
-              <div className="text-xl font-nycd text-indigo-500">Follow us</div>
+              <div className="text-xl font-nycd text-indigo-500">Join the party</div>
               <ul className="inline-flex space-x-3">
                 <li>
                   <a
@@ -77,16 +77,11 @@ export default function Footer() {
                     Guidelines
                   </a>
                 </li>
-                <li className="after:content-['·'] last:after:hidden after:text-gray-400 after:px-2">
-                  <a className="text-gray-500 hover:text-gray-500 hover:underline" href="#0">
-                    Why Choose Us?
-                  </a>
-                </li>
               </ul>
             </div>
 
             {/* Copyright */}
-            <div className="text-sm text-gray-500">@Cruip.com | All rights reserved</div>
+            <div className="text-sm text-gray-500">@Expedition37 | All rights reserved</div>
           </div>
         </div>
       </div>

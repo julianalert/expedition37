@@ -4,8 +4,8 @@ import TestimonialsImage02 from '@/public/images/testimonial-02.jpg'
 
 export default function Testimonials() {
   return (
-    <div>
-      <h2 className="text-3xl font-bold font-inter mb-10">Our customers love us</h2>
+    <div className="my-12 md:my-16">
+      <h2 className="text-3xl font-bold font-inter mb-10">They found their perfect destination with us 💜</h2>
       {/* Testimonials container */}
       <div className="space-y-10">
         {/* Item */}
@@ -19,13 +19,10 @@ export default function Testimonials() {
             </div>
             <figure>
               <blockquote className="text-lg font-bold m-0 pb-1">
-                <p>Hiring a Senior Laravel engineer through JobBoard has been incredible. The best job board experience we've ever had.</p>
+                <p>I can't believe it's free lol. Who needs ChatPT when you have Expedition37?</p>
               </blockquote>
               <figcaption className="text-sm font-medium">
-                Patrick Metzger, CEO{' '}
-                <a className="text-teal-500 hover:underline" href="#0">
-                  App.com
-                </a>
+              <span className="text-teal-500">Patrick</span> @ 37yo, from New-York, USA
               </figcaption>
             </figure>
           </div>
@@ -41,13 +38,10 @@ export default function Testimonials() {
             </div>
             <figure>
               <blockquote className="text-lg font-bold m-0 pb-1">
-                <p>Hiring a Senior Laravel engineer through JobBoard has been incredible. The best job board experience we've ever had.</p>
+                <p>I didn't know where to go for my next holiday, Expedition37 helped me find and organize the perfect getaway.</p>
               </blockquote>
               <figcaption className="text-sm font-medium">
-                Annie Patrick, CEO{' '}
-                <a className="text-sky-500 hover:underline" href="#0">
-                  TrueThing
-                </a>
+              <span className="text-sky-500">Anne</span> @ 32yo, from Paris, France{' '}
               </figcaption>
             </figure>
           </div>

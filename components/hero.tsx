@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import Illustration from '@/public/images/hero-illustration.svg'
@@ -7,6 +9,13 @@ import Avatar03 from '@/public/images/avatar-03.jpg'
 import Avatar04 from '@/public/images/avatar-04.jpg'
 
 export default function Hero() {
+  const scrollToDestinations = () => {
+    const element = document.getElementById('destinations');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative overflow-hidden">
       {/* Bg */}
@@ -17,10 +26,10 @@ export default function Hero() {
         <Image src={Illustration} className="max-w-none" priority alt="Hero Illustration" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-28 pb-8 md:pt-36 md:pb-16">
           {/* Hero content */}
-          <div className="max-w-3xl text-center md:text-left">
+          <div className="max-w-6xl text-center md:text-left">
             {/* Copy */}
             <h1 className="h1 font-inter mb-6">
               Your next holiday <span className="font-nycd text-indigo-500 font-normal">starts here</span>
@@ -32,9 +41,12 @@ export default function Hero() {
             {/* Button + Avatars */}
             <div className="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
               <div>
-                <Link className="btn text-white bg-indigo-500 hover:bg-indigo-600 shadow-xs" href="/post-a-job">
-                  Post a job - $299
-                </Link>
+                <button 
+                  className="btn text-white bg-indigo-500 hover:bg-indigo-600 shadow-xs" 
+                  onClick={scrollToDestinations}
+                >
+                  Find your perfect destination
+                </button>
               </div>
               <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3">
                 <div className="inline-flex -space-x-3 -ml-0.5">
@@ -68,7 +80,7 @@ export default function Hero() {
                   />
                 </div>
                 <div className="text-sm text-gray-500 font-medium">
-                  Reach <span className="text-indigo-500">100K+</span> Prefessionals
+                  Already helped <span className="text-indigo-500">1,337</span> Travelers
                 </div>
               </div>
             </div>

@@ -15,79 +15,95 @@ export default function Sidebar() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
-            {/* Group 1 */}
+            {/* Group 4 */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Job Type</div>
-              <ul className="space-y-2">
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Full-time</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Part-time</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Intership</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Contract / Freelance</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Co-founder</span>
-                  </label>
-                </li>
-              </ul>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Where do you want to go?</div>
+              <label className="sr-only">Continent</label>
+              <select className="form-select w-full">
+                <option>🗺️ Anywhere</option>
+                <option>🇪🇺 Europe</option>
+                <option>⛩️ Asia</option>
+                <option>🌎 North America</option>
+                <option>💃 Latin America</option>
+                <option>🕌 Middle East</option>
+                <option>🏄‍♂️ Oceania</option>
+                <option>🌍 Africa</option>
+              </select>
             </div>
             {/* Group 2 */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Job Roles</div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">What's your mood</div>
               <ul className="space-y-2">
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" defaultChecked />
-                    <span className="text-sm text-gray-600 ml-2">Programming</span>
+                    <span className="text-sm text-gray-600 ml-2">🏝️ Tropical</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Design</span>
+                    <span className="text-sm text-gray-600 ml-2">🏙️ City life</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Management / Finance</span>
+                    <span className="text-sm text-gray-600 ml-2">🏔️ Mountains</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Customer Support</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Sales / Marketing</span>
+                    <span className="text-sm text-gray-600 ml-2">❄️ Snow</span>
                   </label>
                 </li>
               </ul>
             </div>
-            {/* Group 3 */}
+            {/* Group 1 */}
+            <div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Criterias</div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">👮‍♂️ Safe</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">💕 Romantic</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">👦 Kidfriendly</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">🎉 Nightlife</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">🍔 Good Food</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">🌍 Cultural</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">🏖️ Beaches</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">💎 Gem</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="form-checkbox" />
+                  <span className="text-sm text-gray-600 ml-2">🔥 Popular</span>
+                </label>
+              </div>
+            </div>
+            
+            {/* Group 3
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Remote Only</div>
               <div className="flex items-center">
@@ -100,8 +116,8 @@ export default function Sidebar() {
                 </div>
                 <div className="text-sm text-gray-400 italic ml-2">{remoteJob ? 'On' : 'Off'}</div>
               </div>
-            </div>
-            {/* Group 3 */}
+            </div> */}
+            {/* Group 3 
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
               <ul className="space-y-2">
@@ -130,19 +146,8 @@ export default function Sidebar() {
                   </label>
                 </li>
               </ul>
-            </div>
-            {/* Group 4 */}
-            <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Location</div>
-              <label className="sr-only">Location</label>
-              <select className="form-select w-full">
-                <option>Anywhere</option>
-                <option>London</option>
-                <option>San Francisco</option>
-                <option>New York</option>
-                <option>Berlin</option>
-              </select>
-            </div>
+            </div>*/}
+            
           </div>
         </div>
       </div>

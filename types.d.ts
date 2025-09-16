@@ -8,3 +8,12 @@ type Post = {
   "tag2": string,
   "date": string,
 }
+
+type Destination = {
+  "id": number,
+  "rank": number,
+  "city": string,
+  "country": string,
+  "image": string,
+  "featured": boolean,
+}
