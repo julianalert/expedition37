@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function PostItem({ ...props }) {
   return (
-    <Link href={`/posts/${props.id}`} className="group block">
+    <Link href="#" className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 
