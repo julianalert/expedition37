@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function PostItem({ ...props }) {
   return (
-    <Link href={`/country/${props.id}`} className="group block">
+    <Link href={`/posts/${props.id}`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 
@@ -26,14 +26,16 @@ export default function PostItem({ ...props }) {
         
         {/* Content */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between">
-          {/* Continent */}
+          {/* Rank */}
           <div className="flex justify-start">
-            <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-              {props.continent}
-            </div>
+            {props.rank && (
+              <div className="text-2xl font-bold text-white/90">
+                #{props.rank}
+              </div>
+            )}
           </div>
           
-          {/* Country name */}
+          {/* City name */}
           <div className="text-left">
             <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-white/90 transition-colors duration-200">
               {props.name}

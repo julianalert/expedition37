@@ -1,35 +1,56 @@
-import getAllDestinations from '@/lib/getAllDestinations'
+'use client'
+
+import { useState, useEffect } from 'react'
+import getAllCountries from '@/lib/getAllCountries'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import Testimonials from '@/components/testimonials'
+import { useFilters } from '@/contexts/FilterContext'
 
-interface Destination {
-  id: number,
-  rank: number,
-  city: string,
-  country: string,
-  image: string,
-  featured: boolean,
-}
+export default function PostsList() {
+  const [countries, setCountries] = useState<Country[]>([])
+  const { filters } = useFilters()
 
-export default async function PostsList() {
-  const destinationsData: Promise<Destination[]> = getAllDestinations()
-  const destinations = await destinationsData
+  useEffect(() => {
+    getAllCountries().then(setCountries)
+  }, [])
+
+  // Filter countries based on selected filters
+  const filteredCountries = countries.filter(country => {
+    // Filter by continent
+    if (filters.continent !== 'Anywhere' && country.continent !== filters.continent) {
+      return false
+    }
+
+    // Filter by moods
+    if (filters.moods.length > 0) {
+      const hasMatchingMood = filters.moods.some(mood => country.mood.includes(mood))
+      if (!hasMatchingMood) return false
+    }
+
+    // Filter by criteria
+    if (filters.criteria.length > 0) {
+      const hasMatchingCriteria = filters.criteria.some(criteria => country.mood.includes(criteria))
+      if (!hasMatchingCriteria) return false
+    }
+
+    return true
+  })
 
   return (
-    <div className="pb-8 md:pb-16" id="destinations">
+    <div className="pb-8 md:pb-16" id="countries">
       {/* Cards grid container */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {destinations.map((destination, index) => {
+        {filteredCountries.map((country, index) => {
           const items = [];
           
-          // Add the destination item
+          // Add the country item
           items.push(
-            <PostItem key={destination.id} {...destination} />
+            <PostItem key={country.id} {...country} />
           );
           
-          // Add testimonials after the 9th destination (index 8)
-          if (index === 8 && destinations.length > 9) {
+          // Add testimonials after the 9th country (index 8)
+          if (index === 8 && filteredCountries.length > 9) {
             items.push(
               <div key="testimonials" className="md:col-span-2 lg:col-span-3">
                 <Testimonials />
@@ -37,8 +58,8 @@ export default async function PostsList() {
             );
           }
           
-          // Add newsletter after the 12th destination (index 11)
-          if (index === 14 && destinations.length > 15) {
+          // Add newsletter after the 12th country (index 11)
+          if (index === 14 && filteredCountries.length > 15) {
             items.push(
               <div key="newsletter" className="md:col-span-2 lg:col-span-3">
                 <Newsletter />

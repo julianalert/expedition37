@@ -1,17 +1,40 @@
 'use client'
 
 import { useState } from 'react'
+import { useFilters } from '@/contexts/FilterContext'
 
 export default function Sidebar() {
+  const { filters, updateFilters, clearFilters } = useFilters()
 
-  const [remoteJob, setRemoteJob] = useState<boolean>(false)
+  const handleContinentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    updateFilters({ continent: e.target.value })
+  }
+
+  const handleMoodChange = (mood: string, checked: boolean) => {
+    const newMoods = checked 
+      ? [...filters.moods, mood]
+      : filters.moods.filter(m => m !== mood)
+    updateFilters({ moods: newMoods })
+  }
+
+  const handleCriteriaChange = (criteria: string, checked: boolean) => {
+    const newCriteria = checked 
+      ? [...filters.criteria, criteria]
+      : filters.criteria.filter(c => c !== criteria)
+    updateFilters({ criteria: newCriteria })
+  }
 
   return (
-    <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
+    <aside className="mb-8 md:mb-0 md:w-80 lg:w-96 md:ml-6 lg:ml-8 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
           <div className="absolute top-5 right-5 leading-none">
-            <button className="text-sm font-medium text-indigo-500 hover:underline">Clear</button>
+            <button 
+              onClick={clearFilters}
+              className="text-sm font-medium text-indigo-500 hover:underline"
+            >
+              Clear
+            </button>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
@@ -19,15 +42,17 @@ export default function Sidebar() {
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Where do you want to go?</div>
               <label className="sr-only">Continent</label>
-              <select className="form-select w-full">
-                <option>🗺️ Anywhere</option>
-                <option>🇪🇺 Europe</option>
-                <option>⛩️ Asia</option>
-                <option>🌎 North America</option>
-                <option>💃 Latin America</option>
-                <option>🕌 Middle East</option>
-                <option>🏄‍♂️ Oceania</option>
-                <option>🌍 Africa</option>
+              <select 
+                className="form-select w-full"
+                value={filters.continent}
+                onChange={handleContinentChange}
+              >
+                <option value="Anywhere">🗺️ Anywhere</option>
+                <option value="Europe">🇪🇺 Europe</option>
+                <option value="Asia">⛩️ Asia</option>
+                <option value="North America">🌎 North America</option>
+                <option value="South America">💃 South America</option>
+                <option value="Africa">🌍 Africa</option>
               </select>
             </div>
             {/* Group 2 */}
@@ -36,26 +61,57 @@ export default function Sidebar() {
               <ul className="space-y-2">
                 <li>
                   <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" defaultChecked />
-                    <span className="text-sm text-gray-600 ml-2">🏝️ Tropical</span>
+                    <input 
+                      type="checkbox" 
+                      className="form-checkbox"
+                      checked={filters.moods.includes('beach')}
+                      onChange={(e) => handleMoodChange('beach', e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-600 ml-2">🏖️ Beach</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">🏙️ City life</span>
+                    <input 
+                      type="checkbox" 
+                      className="form-checkbox"
+                      checked={filters.moods.includes('urban')}
+                      onChange={(e) => handleMoodChange('urban', e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-600 ml-2">🏙️ Urban</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">🏔️ Mountains</span>
+                    <input 
+                      type="checkbox" 
+                      className="form-checkbox"
+                      checked={filters.moods.includes('cultural')}
+                      onChange={(e) => handleMoodChange('cultural', e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-600 ml-2">🏛️ Cultural</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">❄️ Snow</span>
+                    <input 
+                      type="checkbox" 
+                      className="form-checkbox"
+                      checked={filters.moods.includes('affordable')}
+                      onChange={(e) => handleMoodChange('affordable', e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-600 ml-2">💰 Affordable</span>
+                  </label>
+                </li>
+                <li>
+                  <label className="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      className="form-checkbox"
+                      checked={filters.moods.includes('vibrant')}
+                      onChange={(e) => handleMoodChange('vibrant', e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-600 ml-2">✨ Vibrant</span>
                   </label>
                 </li>
               </ul>
@@ -65,40 +121,76 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Criterias</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">👮‍♂️ Safe</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('modern')}
+                    onChange={(e) => handleCriteriaChange('modern', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🏢 Modern</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">💕 Romantic</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('historic')}
+                    onChange={(e) => handleCriteriaChange('historic', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🏛️ Historic</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">👦 Kidfriendly</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('coastal')}
+                    onChange={(e) => handleCriteriaChange('coastal', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🌊 Coastal</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('nightlife')}
+                    onChange={(e) => handleCriteriaChange('nightlife', e.target.checked)}
+                  />
                   <span className="text-sm text-gray-600 ml-2">🎉 Nightlife</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">🍔 Good Food</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('adventure')}
+                    onChange={(e) => handleCriteriaChange('adventure', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🏔️ Adventure</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">🌍 Cultural</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('peaceful')}
+                    onChange={(e) => handleCriteriaChange('peaceful', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🕊️ Peaceful</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">🏖️ Beaches</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('artistic')}
+                    onChange={(e) => handleCriteriaChange('artistic', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">🎨 Artistic</span>
                 </label>
                 <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">💎 Gem</span>
-                </label>
-                <label className="flex items-center">
-                  <input type="checkbox" className="form-checkbox" />
-                  <span className="text-sm text-gray-600 ml-2">🔥 Popular</span>
+                  <input 
+                    type="checkbox" 
+                    className="form-checkbox"
+                    checked={filters.criteria.includes('emerging')}
+                    onChange={(e) => handleCriteriaChange('emerging', e.target.checked)}
+                  />
+                  <span className="text-sm text-gray-600 ml-2">💎 Emerging</span>
                 </label>
               </div>
             </div>

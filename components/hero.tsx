@@ -10,7 +10,7 @@ import Avatar04 from '@/public/images/avatar-04.jpg'
 
 export default function Hero() {
   const scrollToDestinations = () => {
-    const element = document.getElementById('destinations');
+    const element = document.getElementById('countries');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }

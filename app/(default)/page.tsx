@@ -6,6 +6,7 @@ import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
 import PostsList from './posts-list'
+import { FilterProvider } from '@/contexts/FilterContext'
 
 export default function Home() {
   return (
@@ -17,17 +18,19 @@ export default function Home() {
       <section>
         <div className="max-w-8xl mx-auto px-4 sm:px-6">
           <div className="py-8 md:py-16">
-            <div className="md:flex md:justify-between" data-sticky-container>
+            <FilterProvider>
+              <div className="md:flex md:justify-between" data-sticky-container>
 
-              <Sidebar />
+                <Sidebar />
 
-              {/* Main content */}
-              <div className="md:grow">
-                <PostsList />
+                {/* Main content */}
+                <div className="md:grow">
+                  <PostsList />
+
+                </div>
 
               </div>
-
-            </div>
+            </FilterProvider>
           </div>
         </div>
       </section>

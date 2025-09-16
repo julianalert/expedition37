@@ -16,4 +16,29 @@ type Destination = {
   "country": string,
   "image": string,
   "featured": boolean,
+  "continent": string,
+  "mood": string[],
+}
+
+type Country = {
+  "id": number,
+  "name": string,
+  "image": string,
+  "featured": boolean,
+  "continent": string,
+  "mood": string[],
+  "created_at"?: string,
+  "updated_at"?: string,
+}
+
+type City = {
+  "id": number,
+  "name": string,
+  "country": number,
+  "image": string,
+  "featured": boolean,
+  "rank"?: number,
+  "mood": string[],
+  "created_at"?: string,
+  "updated_at"?: string,
 }
