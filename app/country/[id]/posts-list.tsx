@@ -67,23 +67,23 @@ export default function PostsList({ countryId }: PostsListProps) {
             <PostItem key={city.id} {...city} />
           );
           
-          // Add testimonials after the 6th city (index 5)
+          {/* // Add testimonials after the 6th city (index 5)
           if (index === 5 && filteredCities.length > 6) {
             items.push(
               <div key="testimonials" className="md:col-span-2 lg:col-span-3">
                 <Testimonials />
               </div>
             );
-          }
+          }*/}
           
-          // Add newsletter after the 9th city (index 8)
+           {/*// Add newsletter after the 9th city (index 8)
           if (index === 8 && filteredCities.length > 9) {
             items.push(
               <div key="newsletter" className="md:col-span-2 lg:col-span-3">
                 <Newsletter />
               </div>
             );
-          }
+          }*/}
           
           return items;
         }).flat()}

@@ -49,7 +49,7 @@ export default function PostsList() {
             <PostItem key={country.id} {...country} />
           );
           
-          // Add testimonials after the 9th country (index 8)
+          {/*// Add testimonials after the 9th country (index 8)
           if (index === 8 && filteredCountries.length > 9) {
             items.push(
               <div key="testimonials" className="md:col-span-2 lg:col-span-3">
@@ -65,7 +65,7 @@ export default function PostsList() {
                 <Newsletter />
               </div>
             );
-          }
+          }*/}
           
           return items;
         }).flat()}
