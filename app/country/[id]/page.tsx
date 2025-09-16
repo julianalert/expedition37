@@ -9,16 +9,17 @@ import CountryDetails from './country-details'
 import { FilterProvider } from '@/contexts/FilterContext'
 
 interface CountryPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function CountryPage({ params }: CountryPageProps) {
+export default async function CountryPage({ params }: CountryPageProps) {
+  const resolvedParams = await params
   return (
     <>
       <FilterProvider>
-        <CountryDetails countryId={params.id} />
+        <CountryDetails countryId={resolvedParams.id} />
       </FilterProvider>
       <Footer />
     </>
