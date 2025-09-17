@@ -5,11 +5,11 @@ import getCountryByName from '@/lib/getCountryByName'
 import PostsList from './posts-list'
 import Sidebar from '@/components/sidebar'
 
-interface WhereToGoProps {
+interface BestPlacesToVisitProps {
   countryName: string
 }
 
-export default function WhereToGo({ countryName }: WhereToGoProps) {
+export default function BestPlacesToVisit({ countryName }: BestPlacesToVisitProps) {
   const [country, setCountry] = useState<Country | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -62,10 +62,10 @@ export default function WhereToGo({ countryName }: WhereToGoProps) {
               {/* Section title for cities */}
               <div className="mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                  Where to go in {country.name}
+                  Best places to visit in {country.name}
                 </h2>
                 <p className="text-gray-600">
-                  Explore the best destinations and cities to visit in {country.name}.
+                  Discover the top destinations and cities to visit in {country.name}.
                 </p>
               </div>
 

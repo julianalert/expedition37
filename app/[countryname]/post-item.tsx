@@ -1,8 +1,12 @@
 import Link from 'next/link'
+import { countryNameToSlug } from '@/lib/countryUtils'
 
-export default function PostItem({ ...props }) {
+export default function PostItem({ countryName, ...props }) {
+  const citySlug = countryNameToSlug(props.name)
+  const countrySlug = countryNameToSlug(countryName)
+  
   return (
-    <Link href="#" className="group block">
+    <Link href={`/${countrySlug}/${citySlug}/best-time-to-visit`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 

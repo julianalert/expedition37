@@ -1,23 +1,31 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import getCitiesByCountryName from '@/lib/getCitiesByCountryName'
+import getAllCities from '@/lib/getAllCities'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import Testimonials from '@/components/testimonials'
 import { useFilters } from '@/contexts/FilterContext'
 
 interface PostsListProps {
-  countryName: string
+  placeName: string
 }
 
-export default function PostsList({ countryName }: PostsListProps) {
+export default function PostsList({ placeName }: PostsListProps) {
   const [cities, setCities] = useState<City[]>([])
   const { filters } = useFilters()
 
   useEffect(() => {
-    getCitiesByCountryName(countryName).then(setCities)
-  }, [countryName])
+    // For now, show all cities as related places
+    // Later this could be filtered by region, similar cities, etc.
+    getAllCities().then((allCities) => {
+      // Filter out the current city to avoid showing it in its own list
+      const filteredCities = allCities.filter(city => 
+        city.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') !== placeName
+      )
+      setCities(filteredCities.slice(0, 12)) // Show max 12 related cities
+    })
+  }, [placeName])
 
   // Filter cities based on selected filters
   const filteredCities = cities.filter((city) => {
@@ -46,9 +54,9 @@ export default function PostsList({ countryName }: PostsListProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No cities available</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No related places available</h3>
           <p className="text-gray-600">
-            We haven't added any cities for this country yet. Check back later!
+            We haven't added any related places yet. Check back later!
           </p>
         </div>
       </div>
@@ -64,7 +72,7 @@ export default function PostsList({ countryName }: PostsListProps) {
           
           // Add the city item
           items.push(
-            <PostItem key={city.id} {...city} countryName={countryName} />
+            <PostItem key={city.id} {...city} />
           );
           
           {/* Add testimonials after the 6th city (index 5)

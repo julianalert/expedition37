@@ -2,28 +2,28 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { countryNameToSlug } from '@/lib/countryUtils'
+import { cityNameToSlug } from '@/lib/cityUtils'
 
-interface CountryTabsProps {
+interface PlaceTabsProps {
+  placeName: string
   countryName: string
 }
 
 const tabs = [
-  { id: 'best-places', name: 'Best places to visit', href: '/best-places-to-visit' },
   { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
   { id: 'deals', name: 'Good deals', href: '/good-deals' }
 ]
 
-export default function CountryTabs({ countryName }: CountryTabsProps) {
+export default function PlaceTabs({ placeName, countryName }: PlaceTabsProps) {
   const pathname = usePathname()
-  const countrySlug = countryNameToSlug(countryName)
+  const placeSlug = cityNameToSlug(placeName)
+  const countrySlug = cityNameToSlug(countryName) // Using same util function
   
   // Determine active tab based on current path
   const getActiveTab = () => {
-    if (pathname === `/${countrySlug}/best-places-to-visit`) return 'best-places'
-    if (pathname === `/${countrySlug}/best-time-to-visit`) return 'best-time'
-    if (pathname === `/${countrySlug}/good-deals`) return 'deals'
-    return 'best-places'
+    if (pathname === `/${countrySlug}/${placeSlug}/best-time-to-visit`) return 'best-time'
+    if (pathname === `/${countrySlug}/${placeSlug}/good-deals`) return 'deals'
+    return 'best-time' // Default to best-time instead of where-to-go
   }
   
   const activeTab = getActiveTab()
@@ -34,7 +34,7 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
-            const href = `/${countrySlug}${tab.href}`
+            const href = `/${countrySlug}/${placeSlug}${tab.href}`
             
             return (
               <Link
