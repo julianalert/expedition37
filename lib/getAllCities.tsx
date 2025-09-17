@@ -37,14 +37,14 @@ export default async function getAllCities(): Promise<City[]> {
 function getFallbackCities(): City[] {
   const fallbackCities: City[] = [
     // Thailand cities
-    { id: 1, name: "Bangkok", country: 1, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: true, rank: 1, mood: ["vibrant", "cultural", "affordable"] },
-    { id: 2, name: "Chiang Mai", country: 1, image: "https://images.unsplash.com/photo-1596622897385-0086202d383d?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", featured: true, rank: 3, mood: ["cultural", "peaceful", "affordable", "temples"] },
+    { id: 1, name: "Bangkok", country: 1, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: true, rank: 1, mood: ["vibrant", "cultural", "affordable"], description: "Thailand's bustling capital city, known for its vibrant street life, ornate temples, and incredible street food scene." },
+    { id: 2, name: "Chiang Mai", country: 1, image: "https://images.unsplash.com/photo-1596622897385-0086202d383d?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", featured: true, rank: 3, mood: ["cultural", "peaceful", "affordable", "temples"], description: "A cultural hub in northern Thailand, famous for its ancient temples, night markets, and laid-back mountain atmosphere." },
     
     // Indonesia cities
-    { id: 3, name: "Canggu", country: 2, image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 2, mood: ["beach", "surf", "relaxed", "spiritual"] },
+    { id: 3, name: "Canggu", country: 2, image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 2, mood: ["beach", "surf", "relaxed", "spiritual"], description: "A laid-back beach town in Bali, perfect for surfing, yoga retreats, and enjoying stunning sunsets over rice paddies." },
     
     // Malaysia cities
-    { id: 4, name: "Kuala Lumpur", country: 3, image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 4, mood: ["modern", "multicultural", "urban", "affordable"] },
+    { id: 4, name: "Kuala Lumpur", country: 3, image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 4, mood: ["modern", "multicultural", "urban", "affordable"], description: "Malaysia's dynamic capital, home to the iconic Petronas Towers and a melting pot of cultures, cuisines, and modern attractions." },
     
     // Georgia cities
     { id: 5, name: "Tbilisi", country: 4, image: "https://images.unsplash.com/photo-1603350576276-24747f7bbf40?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGJpbGlzaXxlbnwwfHwwfHx8MA%3D%3D", featured: false, rank: 5, mood: ["historic", "affordable", "emerging", "cultural"] },

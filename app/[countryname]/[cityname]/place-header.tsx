@@ -112,11 +112,16 @@ export default function PlaceHeader({ placeName, countryName }: PlaceHeaderProps
                   )}
                 </div>
                 
-                {/* Place name and moods */}
+                {/* Place name, description, and moods */}
                 <div className="text-left">
                   <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
                     {city.name}
                   </h1>
+                  {city.description && (
+                    <p className="text-sm md:text-base text-white/90 mb-3 md:mb-4 max-w-2xl">
+                      {city.description}
+                    </p>
+                  )}
                   <div className="flex flex-wrap gap-2 md:gap-3">
                     {city.mood && city.mood.map((mood: string, index: number) => (
                       <span key={index} className="text-xs md:text-sm text-white/80 bg-white/15 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">

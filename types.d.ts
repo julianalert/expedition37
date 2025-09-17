@@ -40,6 +40,7 @@ type City = {
   "featured": boolean,
   "rank"?: number,
   "mood": string[],
+  "description"?: string,
   "created_at"?: string,
   "updated_at"?: string,
 }
