@@ -1,10 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useFilters } from '@/contexts/FilterContext'
+import getAllContinents, { ContinentWithEmoji } from '@/lib/getAllContinents'
 
 export default function Sidebar() {
   const { filters, updateFilters, clearFilters } = useFilters()
+  const [continents, setContinents] = useState<ContinentWithEmoji[]>([])
+
+  useEffect(() => {
+    getAllContinents().then(setContinents)
+  }, [])
 
   const handleContinentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     updateFilters({ continent: e.target.value })
@@ -31,7 +37,7 @@ export default function Sidebar() {
           <div className="absolute top-5 right-5 leading-none">
             <button 
               onClick={clearFilters}
-              className="text-sm font-medium text-indigo-500 hover:underline"
+              className="text-sm font-medium text-indigo-500 hover:underline cursor-pointer"
             >
               Clear
             </button>
@@ -48,11 +54,11 @@ export default function Sidebar() {
                 onChange={handleContinentChange}
               >
                 <option value="Anywhere">🗺️ Anywhere</option>
-                <option value="Europe">🇪🇺 Europe</option>
-                <option value="Asia">⛩️ Asia</option>
-                <option value="North America">🌎 North America</option>
-                <option value="South America">💃 South America</option>
-                <option value="Africa">🌍 Africa</option>
+                {continents.map((continent) => (
+                  <option key={continent.name} value={continent.name}>
+                    {continent.emoji} {continent.name}
+                  </option>
+                ))}
               </select>
             </div>
             {/* Group 2 */}

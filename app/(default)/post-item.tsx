@@ -33,14 +33,17 @@ export default function PostItem({ ...props }) {
           </div>
         )}
         
+        {/* Continent indicator */}
+        <div className="absolute top-4 left-4 z-10">
+          <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+            {props.continent}
+          </div>
+        </div>
+
         {/* Content */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between">
-          {/* Continent */}
-          <div className="flex justify-start">
-            <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-              {props.continent}
-            </div>
-          </div>
+          {/* Empty top section - continent moved to absolute positioning */}
+          <div></div>
           
           {/* Country name */}
           <div className="text-left">
