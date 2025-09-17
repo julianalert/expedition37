@@ -25,7 +25,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="mb-8 md:mb-0 md:w-80 lg:w-96 md:ml-6 lg:ml-8 md:shrink-0 md:order-1">
+    <aside className="mb-8 md:mb-0 md:w-80 lg:w-96 md:mr-6 lg:mr-8 md:shrink-0">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
           <div className="absolute top-5 right-5 leading-none">

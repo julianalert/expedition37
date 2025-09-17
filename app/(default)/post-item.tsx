@@ -4,7 +4,7 @@ import { countryNameToSlug } from '@/lib/countryUtils'
 export default function PostItem({ ...props }) {
   const countrySlug = countryNameToSlug(props.name)
   return (
-    <Link href={`/${countrySlug}`} className="group block">
+    <Link href={`/${countrySlug}/where-to-go`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 

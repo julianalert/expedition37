@@ -19,7 +19,7 @@ export default function Home() {
         <div className="max-w-8xl mx-auto px-4 sm:px-6">
           <div className="py-8 md:py-16">
             <FilterProvider>
-              <div className="md:flex md:justify-between" data-sticky-container>
+              <div className="md:flex" data-sticky-container>
 
                 <Sidebar />
 

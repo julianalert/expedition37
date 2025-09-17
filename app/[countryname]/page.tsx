@@ -1,12 +1,4 @@
-export const metadata = {
-  title: 'Country Details - JobBoard',
-  description: 'Explore cities in this country',
-}
-import Header from '@/components/ui/header'
-import Footer from '@/components/ui/footer'
-import Sidebar from '@/components/sidebar'
-import CountryDetails from './country-details'
-import { FilterProvider } from '@/contexts/FilterContext'
+import { redirect } from 'next/navigation'
 
 interface CountryPageProps {
   params: Promise<{
@@ -16,12 +8,6 @@ interface CountryPageProps {
 
 export default async function CountryPage({ params }: CountryPageProps) {
   const resolvedParams = await params
-  return (
-    <>
-      <FilterProvider>
-        <CountryDetails countryName={resolvedParams.countryname} />
-      </FilterProvider>
-      <Footer />
-    </>
-  )
+  // Redirect to the default tab
+  redirect(`/${resolvedParams.countryname}/where-to-go`)
 }
