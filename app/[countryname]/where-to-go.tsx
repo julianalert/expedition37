@@ -62,10 +62,10 @@ export default function WhereToGo({ countryName }: WhereToGoProps) {
               {/* Section title for cities */}
               <div className="mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                  Cities in {country.name}
+                  Where to go in {country.name}
                 </h2>
                 <p className="text-gray-600">
-                  Explore the best destinations and cities to visit in {country.name}
+                  Explore the best destinations and cities to visit in {country.name}.
                 </p>
               </div>
 
