@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { countryNameToSlug } from '@/lib/countryUtils'
 
-export default function PostItem({ countryName, ...props }) {
+interface PostItemProps {
+  countryName: string
+  [key: string]: any
+}
+
+export default function PostItem({ countryName, ...props }: PostItemProps) {
   const citySlug = countryNameToSlug(props.name)
   const countrySlug = countryNameToSlug(countryName)
   
