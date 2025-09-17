@@ -15,6 +15,15 @@ export default function PostItem({ ...props }) {
         {/* Semi-transparent overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/60" />
         
+        {/* Rank indicator */}
+        {props.rank && (
+          <div className={`absolute top-4 z-10 ${props.featured ? 'right-12' : 'right-4'}`}>
+            <div className="bg-white/20 backdrop-blur-sm text-white text-sm font-bold px-2 py-1 rounded-full border border-white/30">
+              #{props.rank}
+            </div>
+          </div>
+        )}
+
         {/* Featured indicator */}
         {props.featured && (
           <div className="absolute top-4 right-4 z-10">
@@ -26,14 +35,8 @@ export default function PostItem({ ...props }) {
         
         {/* Content */}
         <div className="absolute inset-0 p-6 flex flex-col justify-between">
-          {/* Rank */}
-          <div className="flex justify-start">
-            {props.rank && (
-              <div className="text-2xl font-bold text-white/90">
-                #{props.rank}
-              </div>
-            )}
-          </div>
+          {/* Empty top section - rank moved to absolute positioning */}
+          <div></div>
           
           {/* City name */}
           <div className="text-left">

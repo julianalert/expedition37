@@ -27,6 +27,7 @@ type Country = {
   "featured": boolean,
   "continent": string,
   "mood": string[],
+  "rank": number,
   "created_at"?: string,
   "updated_at"?: string,
 }
