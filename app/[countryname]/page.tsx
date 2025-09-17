@@ -10,7 +10,7 @@ import { FilterProvider } from '@/contexts/FilterContext'
 
 interface CountryPageProps {
   params: Promise<{
-    id: string
+    countryname: string
   }>
 }
 
@@ -19,7 +19,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
   return (
     <>
       <FilterProvider>
-        <CountryDetails countryId={resolvedParams.id} />
+        <CountryDetails countryName={resolvedParams.countryname} />
       </FilterProvider>
       <Footer />
     </>

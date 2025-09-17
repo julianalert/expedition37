@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import getCountryById from '@/lib/getCountryById'
-import getCitiesByCountryId from '@/lib/getCitiesByCountryId'
+import getCountryByName from '@/lib/getCountryByName'
+import getCitiesByCountryName from '@/lib/getCitiesByCountryName'
 import PostsList from './posts-list'
 import Sidebar from '@/components/sidebar'
 import Link from 'next/link'
@@ -10,19 +10,19 @@ import Link from 'next/link'
 const Sticky = require('sticky-js')
 
 interface CountryDetailsProps {
-  countryId: string
+  countryName: string
 }
 
-export default function CountryDetails({ countryId }: CountryDetailsProps) {
+export default function CountryDetails({ countryName }: CountryDetailsProps) {
   const [country, setCountry] = useState<Country | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getCountryById(countryId).then((data) => {
+    getCountryByName(countryName).then((data) => {
       setCountry(data)
       setLoading(false)
     })
-  }, [countryId])
+  }, [countryName])
 
   // Initialize sticky functionality
   useEffect(() => {
@@ -159,7 +159,7 @@ export default function CountryDetails({ countryId }: CountryDetailsProps) {
                 </div>
 
                 {/* Cities list */}
-                <PostsList countryId={countryId} />
+                <PostsList countryName={countryName} />
               </div>
 
             </div>

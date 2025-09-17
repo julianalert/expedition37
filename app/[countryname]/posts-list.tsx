@@ -1,23 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import getCitiesByCountryId from '@/lib/getCitiesByCountryId'
+import getCitiesByCountryName from '@/lib/getCitiesByCountryName'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import Testimonials from '@/components/testimonials'
 import { useFilters } from '@/contexts/FilterContext'
 
 interface PostsListProps {
-  countryId: string
+  countryName: string
 }
 
-export default function PostsList({ countryId }: PostsListProps) {
+export default function PostsList({ countryName }: PostsListProps) {
   const [cities, setCities] = useState<City[]>([])
   const { filters } = useFilters()
 
   useEffect(() => {
-    getCitiesByCountryId(countryId).then(setCities)
-  }, [countryId])
+    getCitiesByCountryName(countryName).then(setCities)
+  }, [countryName])
 
   // Filter cities based on selected filters
   const filteredCities = cities.filter(city => {
