@@ -7,9 +7,10 @@ import Sidebar from '@/components/sidebar'
 
 interface WhereToGoProps {
   placeName: string
+  countryName: string
 }
 
-export default function WhereToGo({ placeName }: WhereToGoProps) {
+export default function WhereToGo({ placeName, countryName }: WhereToGoProps) {
   const [city, setCity] = useState<City | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -70,7 +71,7 @@ export default function WhereToGo({ placeName }: WhereToGoProps) {
               </div>
 
               {/* Areas/attractions list */}
-              <PostsList placeName={placeName} />
+              <PostsList placeName={placeName} countryName={countryName} />
             </div>
 
           </div>

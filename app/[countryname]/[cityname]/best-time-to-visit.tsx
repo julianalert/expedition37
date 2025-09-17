@@ -5,9 +5,10 @@ import getCityByName from '@/lib/getCityByName'
 
 interface BestTimeToVisitProps {
   placeName: string
+  countryName: string
 }
 
-export default function BestTimeToVisit({ placeName }: BestTimeToVisitProps) {
+export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVisitProps) {
   const [city, setCity] = useState<City | null>(null)
   const [loading, setLoading] = useState(true)
 

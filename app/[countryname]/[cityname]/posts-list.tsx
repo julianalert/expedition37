@@ -9,9 +9,10 @@ import { useFilters } from '@/contexts/FilterContext'
 
 interface PostsListProps {
   placeName: string
+  countryName: string
 }
 
-export default function PostsList({ placeName }: PostsListProps) {
+export default function PostsList({ placeName, countryName }: PostsListProps) {
   const [cities, setCities] = useState<City[]>([])
   const { filters } = useFilters()
 

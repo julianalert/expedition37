@@ -5,9 +5,10 @@ import getCityByName from '@/lib/getCityByName'
 
 interface GoodDealsProps {
   placeName: string
+  countryName: string
 }
 
-export default function GoodDeals({ placeName }: GoodDealsProps) {
+export default function GoodDeals({ placeName, countryName }: GoodDealsProps) {
   const [city, setCity] = useState<City | null>(null)
   const [loading, setLoading] = useState(true)
 
