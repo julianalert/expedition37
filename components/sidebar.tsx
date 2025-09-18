@@ -3,13 +3,19 @@
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/contexts/FilterContext'
 import getAllContinents, { ContinentWithEmoji } from '@/lib/getAllContinents'
+import getAllCountries from '@/lib/getAllCountries'
+import getAllCities from '@/lib/getAllCities'
 
 export default function Sidebar() {
   const { filters, updateFilters, clearFilters } = useFilters()
   const [continents, setContinents] = useState<ContinentWithEmoji[]>([])
+  const [countries, setCountries] = useState<Country[]>([])
+  const [cities, setCities] = useState<City[]>([])
 
   useEffect(() => {
     getAllContinents().then(setContinents)
+    getAllCountries().then(setCountries)
+    getAllCities().then(setCities)
   }, [])
 
   const handleContinentChange = (continent: string, checked: boolean) => {
@@ -35,6 +41,19 @@ export default function Sidebar() {
 
   const handleFilterTypeChange = (filterType: 'countries' | 'places') => {
     updateFilters({ filterType })
+  }
+
+  // Function to get count of countries or cities in a continent
+  const getContinentCount = (continentName: string): number => {
+    if (filters.filterType === 'countries') {
+      return countries.filter((country: Country) => country.continent === continentName).length
+    } else {
+      // For cities, we need to count cities whose countries are in this continent
+      return cities.filter((city: City) => {
+        const cityCountry = countries.find((country: Country) => country.id === city.country)
+        return cityCountry && cityCountry.continent === continentName
+      }).length
+    }
   }
 
   return (
@@ -96,7 +115,7 @@ export default function Sidebar() {
                         checked={filters.continents.includes(continent.name)}
                         onChange={(e) => handleContinentChange(continent.name, e.target.checked)}
                       />
-                      <span className="text-sm text-gray-600 ml-2">{continent.emoji} {continent.name}</span>
+                      <span className="text-sm text-gray-600 ml-2">{continent.emoji} {continent.name} ({getContinentCount(continent.name)})</span>
                     </label>
                   </li>
                 ))}
