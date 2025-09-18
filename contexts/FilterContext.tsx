@@ -3,9 +3,10 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 export interface FilterState {
-  continent: string
+  continents: string[]
   moods: string[]
   criteria: string[]
+  filterType: 'countries' | 'places'
 }
 
 interface FilterContextType {
@@ -15,9 +16,10 @@ interface FilterContextType {
 }
 
 const defaultFilters: FilterState = {
-  continent: 'Anywhere',
+  continents: [],
   moods: [],
-  criteria: []
+  criteria: [],
+  filterType: 'countries'
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined)

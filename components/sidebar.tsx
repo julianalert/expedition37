@@ -12,29 +12,38 @@ export default function Sidebar() {
     getAllContinents().then(setContinents)
   }, [])
 
-  const handleContinentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    updateFilters({ continent: e.target.value })
+  const handleContinentChange = (continent: string, checked: boolean) => {
+    const newContinents = checked 
+      ? [...filters.continents, continent]
+      : filters.continents.filter((c: string) => c !== continent)
+    updateFilters({ continents: newContinents })
   }
 
   const handleMoodChange = (mood: string, checked: boolean) => {
     const newMoods = checked 
       ? [...filters.moods, mood]
-      : filters.moods.filter(m => m !== mood)
+      : filters.moods.filter((m: string) => m !== mood)
     updateFilters({ moods: newMoods })
   }
 
   const handleCriteriaChange = (criteria: string, checked: boolean) => {
     const newCriteria = checked 
       ? [...filters.criteria, criteria]
-      : filters.criteria.filter(c => c !== criteria)
+      : filters.criteria.filter((c: string) => c !== criteria)
     updateFilters({ criteria: newCriteria })
+  }
+
+  const handleFilterTypeChange = (filterType: 'countries' | 'places') => {
+    updateFilters({ filterType })
   }
 
   return (
     <aside className="mb-8 md:mb-0 md:w-80 lg:w-96 md:mr-6 lg:mr-8 md:shrink-0">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
-          <div className="absolute top-5 right-5 leading-none">
+          {/* Header with title and clear button */}
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
             <button 
               onClick={clearFilters}
               className="text-sm font-medium text-indigo-500 hover:underline cursor-pointer"
@@ -43,23 +52,55 @@ export default function Sidebar() {
             </button>
           </div>
 
+          {/* Filter Type Toggle */}
+          <div className="mb-6">
+            <div className="flex rounded-lg border border-gray-200 p-1 bg-white">
+              <button
+                onClick={() => handleFilterTypeChange('countries')}
+                className={`
+                  flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
+                  ${filters.filterType === 'countries'
+                    ? 'bg-indigo-500 text-white shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  }
+                `}
+              >
+                Countries
+              </button>
+              <button
+                onClick={() => handleFilterTypeChange('places')}
+                className={`
+                  flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
+                  ${filters.filterType === 'places'
+                    ? 'bg-indigo-500 text-white shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  }
+                `}
+              >
+                Places
+              </button>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
             {/* Group 4 */}
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Where do you want to go?</div>
-              <label className="sr-only">Continent</label>
-              <select 
-                className="form-select w-full"
-                value={filters.continent}
-                onChange={handleContinentChange}
-              >
-                <option value="Anywhere">🗺️ Anywhere</option>
-                {continents.map((continent) => (
-                  <option key={continent.name} value={continent.name}>
-                    {continent.emoji} {continent.name}
-                  </option>
+              <ul className="space-y-2">
+                {continents.map((continent: ContinentWithEmoji) => (
+                  <li key={continent.name}>
+                    <label className="flex items-center">
+                      <input 
+                        type="checkbox" 
+                        className="form-checkbox"
+                        checked={filters.continents.includes(continent.name)}
+                        onChange={(e) => handleContinentChange(continent.name, e.target.checked)}
+                      />
+                      <span className="text-sm text-gray-600 ml-2">{continent.emoji} {continent.name}</span>
+                    </label>
+                  </li>
                 ))}
-              </select>
+              </ul>
             </div>
             {/* Group 2 */}
             <div>
