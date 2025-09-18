@@ -37,11 +37,22 @@ export default function Sidebar() {
     updateFilters({ filterType })
   }
 
-  const handleBudgetChange = (budget: string, checked: boolean) => {
-    const newBudgets = checked 
-      ? [...filters.budget, budget]
-      : filters.budget.filter((b: string) => b !== budget)
-    updateFilters({ budget: newBudgets })
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    updateFilters({ budget: e.target.value })
+  }
+
+  const handleAdditionalChange = (additional: string, checked: boolean) => {
+    const newAdditional = checked 
+      ? [...filters.additional, additional]
+      : filters.additional.filter((a: string) => a !== additional)
+    updateFilters({ additional: newAdditional })
+  }
+
+  const handleVacationGoalChange = (goal: string, checked: boolean) => {
+    const newVacationGoals = checked 
+      ? [...filters.vacationGoal, goal]
+      : filters.vacationGoal.filter((g: string) => g !== goal)
+    updateFilters({ vacationGoal: newVacationGoals })
   }
 
   // Function to get count of countries or cities in a continent
@@ -122,127 +133,296 @@ export default function Sidebar() {
                 ))}
               </ul>
             </div>
+
+            {/* Vacation Goal */}
+            <div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">What's your vacation goal?</div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleVacationGoalChange('relax', !filters.vacationGoal.includes('relax'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.vacationGoal.includes('relax')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🧘 Relax
+                </button>
+                <button
+                  onClick={() => handleVacationGoalChange('explore-culture', !filters.vacationGoal.includes('explore-culture'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.vacationGoal.includes('explore-culture')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🏛️ Explore a culture
+                </button>
+                <button
+                  onClick={() => handleVacationGoalChange('have-fun', !filters.vacationGoal.includes('have-fun'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.vacationGoal.includes('have-fun')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🎉 Have fun
+                </button>
+                <button
+                  onClick={() => handleVacationGoalChange('sports-activities', !filters.vacationGoal.includes('sports-activities'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.vacationGoal.includes('sports-activities')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  ⚽ Engage in sports activities
+                </button>
+                <button
+                  onClick={() => handleVacationGoalChange('romantic', !filters.vacationGoal.includes('romantic'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.vacationGoal.includes('romantic')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💕 Romantic
+                </button>
+              </div>
+            </div>
+
             {/* What matters to you */}
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">What matters to you?</div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => handleCriteriaChange('safety', !filters.criteria.includes('safety'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('safety')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  👮‍♂️ Safety
-                </button>
-                <button
-                  onClick={() => handleCriteriaChange('fast-internet', !filters.criteria.includes('fast-internet'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('fast-internet')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  📡 Fast internet
-                </button>
-                <button
-                  onClick={() => handleCriteriaChange('clean-air', !filters.criteria.includes('clean-air'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('clean-air')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  💨 Clean air
-                </button>
-                <button
-                  onClick={() => handleCriteriaChange('hidden-gem', !filters.criteria.includes('hidden-gem'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('hidden-gem')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  💎 Hidden gem
-                </button>
-                <button
-                  onClick={() => handleCriteriaChange('popular-now', !filters.criteria.includes('popular-now'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('popular-now')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  🔥 Popular now
-                </button>
-                <button
-                  onClick={() => handleCriteriaChange('family-friendly', !filters.criteria.includes('family-friendly'))}
-                  className={`
-                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.criteria.includes('family-friendly')
-                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
-                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  👦 Family Friendly
-                </button>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">👮‍♂️ Safety</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="safety-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('safety')} 
+                      onChange={() => handleCriteriaChange('safety', !filters.criteria.includes('safety'))} 
+                    />
+                    <label htmlFor="safety-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Safety</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">📡 Fast internet</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="fast-internet-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('fast-internet')} 
+                      onChange={() => handleCriteriaChange('fast-internet', !filters.criteria.includes('fast-internet'))} 
+                    />
+                    <label htmlFor="fast-internet-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Fast internet</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">💨 Clean air</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="clean-air-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('clean-air')} 
+                      onChange={() => handleCriteriaChange('clean-air', !filters.criteria.includes('clean-air'))} 
+                    />
+                    <label htmlFor="clean-air-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Clean air</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">💎 Hidden gem</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="hidden-gem-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('hidden-gem')} 
+                      onChange={() => handleCriteriaChange('hidden-gem', !filters.criteria.includes('hidden-gem'))} 
+                    />
+                    <label htmlFor="hidden-gem-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Hidden gem</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">🔥 Popular now</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="popular-now-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('popular-now')} 
+                      onChange={() => handleCriteriaChange('popular-now', !filters.criteria.includes('popular-now'))} 
+                    />
+                    <label htmlFor="popular-now-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Popular now</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">👦 Family Friendly</span>
+                  <div className="form-switch">
+                    <input 
+                      type="checkbox" 
+                      id="family-friendly-toggle" 
+                      className="sr-only" 
+                      checked={filters.criteria.includes('family-friendly')} 
+                      onChange={() => handleCriteriaChange('family-friendly', !filters.criteria.includes('family-friendly'))} 
+                    />
+                    <label htmlFor="family-friendly-toggle">
+                      <span className="bg-white shadow-xs" aria-hidden="true" />
+                      <span className="sr-only">Family Friendly</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Budget Filter */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Monthly Budget</div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Weekly Budget</div>
+              <label className="sr-only">Weekly Budget</label>
+              <select 
+                className="form-select w-full"
+                value={filters.budget}
+                onChange={handleBudgetChange}
+              >
+                <option value="">Any budget</option>
+                <option value="<1k">💰 &lt;US$1K/week</option>
+                <option value="<2k">💸 &lt;US$2K/week</option>
+                <option value="<3k">💵 &lt;US$3K/week</option>
+              </select>
+            </div>
+
+            {/* You may also want */}
+            <div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">You may also want...</div>
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => handleBudgetChange('<1k', !filters.budget.includes('<1k'))}
+                  onClick={() => handleAdditionalChange('amazing-food', !filters.additional.includes('amazing-food'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.budget.includes('<1k')
+                    ${filters.additional.includes('amazing-food')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
                   `}
                 >
-                  💰 &lt;US$1K/mo
+                  🍜 Amazing Food
                 </button>
                 <button
-                  onClick={() => handleBudgetChange('<2k', !filters.budget.includes('<2k'))}
+                  onClick={() => handleAdditionalChange('nightlife', !filters.additional.includes('nightlife'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.budget.includes('<2k')
+                    ${filters.additional.includes('nightlife')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
                   `}
                 >
-                  💸 &lt;US$2K/mo
+                  🍸 Nightlife
                 </button>
                 <button
-                  onClick={() => handleBudgetChange('<3k', !filters.budget.includes('<3k'))}
+                  onClick={() => handleAdditionalChange('great-for-dating', !filters.additional.includes('great-for-dating'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.budget.includes('<3k')
+                    ${filters.additional.includes('great-for-dating')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
                   `}
                 >
-                  💵 &lt;US$3K/mo
+                  💕 Great for dating
+                </button>
+                <button
+                  onClick={() => handleAdditionalChange('eco-friendly', !filters.additional.includes('eco-friendly'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.additional.includes('eco-friendly')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🌱 Eco friendly
+                </button>
+                <button
+                  onClick={() => handleAdditionalChange('dog-friendly', !filters.additional.includes('dog-friendly'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.additional.includes('dog-friendly')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🐕 Dog friendly
+                </button>
+                <button
+                  onClick={() => handleAdditionalChange('lgbtq-friendly', !filters.additional.includes('lgbtq-friendly'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.additional.includes('lgbtq-friendly')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🏳️‍🌈 LGBTQ+ friendly
+                </button>
+                <button
+                  onClick={() => handleAdditionalChange('low-racism', !filters.additional.includes('low-racism'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.additional.includes('low-racism')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🤝 Low racism
+                </button>
+                <button
+                  onClick={() => handleAdditionalChange('muslim-friendly', !filters.additional.includes('muslim-friendly'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.additional.includes('muslim-friendly')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  ☪️ Muslim friendly
                 </button>
               </div>
             </div>
+
             
             {/* Group 3
             <div>

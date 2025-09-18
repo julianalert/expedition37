@@ -27,23 +27,38 @@ export default function PostsList() {
     }
 
 
-    // Filter by criteria
-    if (filters.criteria.length > 0) {
-      const hasMatchingCriteria = filters.criteria.some((criteria: string) => country.mood.includes(criteria))
-      if (!hasMatchingCriteria) return false
-    }
+    // Filter by criteria - DISABLED FOR NOW (no data available)
+    // if (filters.criteria.length > 0) {
+    //   const hasMatchingCriteria = filters.criteria.some((criteria: string) => country.mood.includes(criteria))
+    //   if (!hasMatchingCriteria) return false
+    // }
 
-    // Filter by budget (assuming countries have budget-related mood tags)
-    if (filters.budget.length > 0) {
-      const hasMatchingBudget = filters.budget.some((budget: string) => {
-        // Map budget filters to mood tags that indicate affordability
-        if (budget === '<1k' || budget === '<2k') {
-          return country.mood.includes('affordable')
-        }
-        return true // For now, <3k shows all
-      })
-      if (!hasMatchingBudget) return false
-    }
+    // Filter by budget - DISABLED FOR NOW (no data available)
+    // if (filters.budget) {
+    //   // Map budget filters to mood tags that indicate affordability
+    //   if (filters.budget === '<1k' || filters.budget === '<2k') {
+    //     if (!country.mood.includes('affordable')) return false
+    //   }
+    //   // For now, <3k shows all
+    // }
+
+    // Filter by additional preferences - DISABLED FOR NOW (no data available)
+    // if (filters.additional.length > 0) {
+    //   const hasMatchingAdditional = filters.additional.some((additional: string) => {
+    //     // Map additional filters to mood tags
+    //     return country.mood.includes(additional) || country.mood.includes(additional.replace('-', ''))
+    //   })
+    //   if (!hasMatchingAdditional) return false
+    // }
+
+    // Filter by vacation goals - DISABLED FOR NOW (no data available)
+    // if (filters.vacationGoal.length > 0) {
+    //   const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
+    //     // Map vacation goals to mood tags
+    //     return country.mood.includes(goal) || country.mood.includes(goal.replace('-', ''))
+    //   })
+    //   if (!hasMatchingGoal) return false
+    // }
 
     return true
   })
@@ -59,23 +74,38 @@ export default function PostsList() {
     }
 
 
-    // Filter by criteria
-    if (filters.criteria.length > 0) {
-      const hasMatchingCriteria = filters.criteria.some((criteria: string) => city.mood.includes(criteria))
-      if (!hasMatchingCriteria) return false
-    }
+    // Filter by criteria - DISABLED FOR NOW (no data available)
+    // if (filters.criteria.length > 0) {
+    //   const hasMatchingCriteria = filters.criteria.some((criteria: string) => city.mood.includes(criteria))
+    //   if (!hasMatchingCriteria) return false
+    // }
 
-    // Filter by budget (assuming cities have budget-related mood tags)
-    if (filters.budget.length > 0) {
-      const hasMatchingBudget = filters.budget.some((budget: string) => {
-        // Map budget filters to mood tags that indicate affordability
-        if (budget === '<1k' || budget === '<2k') {
-          return city.mood.includes('affordable')
-        }
-        return true // For now, <3k shows all
-      })
-      if (!hasMatchingBudget) return false
-    }
+    // Filter by budget - DISABLED FOR NOW (no data available)
+    // if (filters.budget) {
+    //   // Map budget filters to mood tags that indicate affordability
+    //   if (filters.budget === '<1k' || filters.budget === '<2k') {
+    //     if (!city.mood.includes('affordable')) return false
+    //   }
+    //   // For now, <3k shows all
+    // }
+
+    // Filter by additional preferences - DISABLED FOR NOW (no data available)
+    // if (filters.additional.length > 0) {
+    //   const hasMatchingAdditional = filters.additional.some((additional: string) => {
+    //     // Map additional filters to mood tags
+    //     return city.mood.includes(additional) || city.mood.includes(additional.replace('-', ''))
+    //   })
+    //   if (!hasMatchingAdditional) return false
+    // }
+
+    // Filter by vacation goals - DISABLED FOR NOW (no data available)
+    // if (filters.vacationGoal.length > 0) {
+    //   const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
+    //     // Map vacation goals to mood tags
+    //     return city.mood.includes(goal) || city.mood.includes(goal.replace('-', ''))
+    //   })
+    //   if (!hasMatchingGoal) return false
+    // }
 
     return true
   })
@@ -93,8 +123,8 @@ export default function PostsList() {
               <PostItem key={country.id} {...country} />
             );
             
-            {/* Add testimonials after the 9th country (index 8)
-            if (index === 8 && filteredCountries.length > 9) {
+            // Add testimonials after the 9th country (index 8)
+            if (index === 14 && filteredCountries.length > 15) {
               items.push(
                 <div key="testimonials" className="md:col-span-2 lg:col-span-3">
                   <Testimonials />
@@ -103,13 +133,13 @@ export default function PostsList() {
             }
             
             // Add newsletter after the 12th country (index 11)
-            if (index === 14 && filteredCountries.length > 15) {
+            if (index === 29 && filteredCountries.length > 30) {
               items.push(
                 <div key="newsletter" className="md:col-span-2 lg:col-span-3">
                   <Newsletter />
                 </div>
               );
-            } */}
+            } 
             
             return items;
           }).flat()
