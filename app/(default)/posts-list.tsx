@@ -51,14 +51,22 @@ export default function PostsList() {
       if (!hasAllCriteria) return false
     }
 
-    // Filter by budget - DISABLED FOR NOW (no data available)
-    // if (filters.budget) {
-    //   // Map budget filters to mood tags that indicate affordability
-    //   if (filters.budget === '<1k' || filters.budget === '<2k') {
-    //     if (!country.mood.includes('affordable')) return false
-    //   }
-    //   // For now, <3k shows all
-    // }
+    // Filter by budget (Weekly Budget)
+    if (filters.budget) {
+      if (!country.weeklyBudget) return false // Skip countries without budget data
+      
+      switch (filters.budget) {
+        case '<1k':
+          if (country.weeklyBudget >= 1000) return false
+          break
+        case '<2k':
+          if (country.weeklyBudget >= 2000) return false
+          break
+        case '<3k':
+          if (country.weeklyBudget >= 3000) return false
+          break
+      }
+    }
 
     // Filter by additional preferences (You may also want) - ALL selected must match
     if (filters.additional.length > 0) {
@@ -138,14 +146,23 @@ export default function PostsList() {
       if (!hasAllCriteria) return false
     }
 
-    // Filter by budget - DISABLED FOR NOW (no data available)
-    // if (filters.budget) {
-    //   // Map budget filters to mood tags that indicate affordability
-    //   if (filters.budget === '<1k' || filters.budget === '<2k') {
-    //     if (!city.mood.includes('affordable')) return false
-    //   }
-    //   // For now, <3k shows all
-    // }
+    // Filter by budget (Weekly Budget from city's country)
+    if (filters.budget) {
+      const cityCountry = countries.find((country: Country) => country.id === city.country)
+      if (!cityCountry || !cityCountry.weeklyBudget) return false // Skip cities without budget data
+      
+      switch (filters.budget) {
+        case '<1k':
+          if (cityCountry.weeklyBudget >= 1000) return false
+          break
+        case '<2k':
+          if (cityCountry.weeklyBudget >= 2000) return false
+          break
+        case '<3k':
+          if (cityCountry.weeklyBudget >= 3000) return false
+          break
+      }
+    }
 
     // Filter by additional preferences (You may also want) - ALL selected must match
     if (filters.additional.length > 0) {

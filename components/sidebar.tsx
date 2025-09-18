@@ -306,7 +306,7 @@ export default function Sidebar() {
 
             {/* Budget Filter */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Weekly Budget</div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Weekly Budget (per person)</div>
               <label className="sr-only">Weekly Budget</label>
               <select 
                 className="form-select w-full"

@@ -43,6 +43,7 @@ type Country = {
   "lgbtqfriendly"?: boolean,
   "lowRacism"?: boolean,
   "muslimfriendly"?: boolean,
+  "weeklyBudget"?: number,
   "created_at"?: string,
   "updated_at"?: string,
 }

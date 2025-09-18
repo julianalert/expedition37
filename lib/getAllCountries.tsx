@@ -33,7 +33,8 @@ function getFallbackCountries(): Country[] {
       mood: ["luxury", "beach", "tropical", "romantic"],
       rank: 1,
       vacationgoal: ["Relax", "Romantic"],
-      safe: true
+      safe: true,
+      weeklyBudget: 2500
     },
     {
       id: 2,
@@ -44,7 +45,8 @@ function getFallbackCountries(): Country[] {
       mood: ["historic", "cultural", "charming", "chocolate"],
       rank: 2,
       vacationgoal: ["Explore a culture", "Have fun"],
-      safe: true
+      safe: true,
+      weeklyBudget: 1200
     },
     {
       id: 3,
@@ -55,7 +57,8 @@ function getFallbackCountries(): Country[] {
       mood: ["historic", "cultural", "romantic", "artistic"],
       rank: 3,
       vacationgoal: ["Explore a culture", "Romantic", "Have fun"],
-      safe: true
+      safe: true,
+      weeklyBudget: 1800
     },
     {
       id: 4,
@@ -66,7 +69,8 @@ function getFallbackCountries(): Country[] {
       mood: ["romantic", "cultural", "luxury", "artistic"],
       rank: 4,
       vacationgoal: ["Romantic", "Explore a culture"],
-      safe: true
+      safe: true,
+      weeklyBudget: 2200
     },
     {
       id: 5,
@@ -77,7 +81,8 @@ function getFallbackCountries(): Country[] {
       mood: ["vibrant", "cultural", "affordable", "tropical"],
       rank: 5,
       vacationgoal: ["Relax", "Explore a culture", "Engage in sports activities"],
-      safe: false
+      safe: false,
+      weeklyBudget: 800
     },
     {
       id: 6,
@@ -87,7 +92,8 @@ function getFallbackCountries(): Country[] {
       continent: "Europe",
       mood: ["artistic", "coastal", "vibrant", "architecture"],
       rank: 6,
-      safe: true
+      safe: true,
+      weeklyBudget: 1500
     },
     {
       id: 7,
@@ -97,7 +103,8 @@ function getFallbackCountries(): Country[] {
       continent: "Europe",
       mood: ["historic", "affordable", "charming", "emerging"],
       rank: 7,
-      safe: false
+      safe: false,
+      weeklyBudget: 600
     },
     {
       id: 8,
