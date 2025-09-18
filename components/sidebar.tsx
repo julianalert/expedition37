@@ -139,10 +139,10 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">What's your vacation goal?</div>
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => handleVacationGoalChange('relax', !filters.vacationGoal.includes('relax'))}
+                  onClick={() => handleVacationGoalChange('Relax', !filters.vacationGoal.includes('Relax'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.vacationGoal.includes('relax')
+                    ${filters.vacationGoal.includes('Relax')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
@@ -151,10 +151,10 @@ export default function Sidebar() {
                   🧘 Relax
                 </button>
                 <button
-                  onClick={() => handleVacationGoalChange('explore-culture', !filters.vacationGoal.includes('explore-culture'))}
+                  onClick={() => handleVacationGoalChange('Explore a culture', !filters.vacationGoal.includes('Explore a culture'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.vacationGoal.includes('explore-culture')
+                    ${filters.vacationGoal.includes('Explore a culture')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
@@ -163,10 +163,10 @@ export default function Sidebar() {
                   🏛️ Explore a culture
                 </button>
                 <button
-                  onClick={() => handleVacationGoalChange('have-fun', !filters.vacationGoal.includes('have-fun'))}
+                  onClick={() => handleVacationGoalChange('Have fun', !filters.vacationGoal.includes('Have fun'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.vacationGoal.includes('have-fun')
+                    ${filters.vacationGoal.includes('Have fun')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
@@ -175,10 +175,10 @@ export default function Sidebar() {
                   🎉 Have fun
                 </button>
                 <button
-                  onClick={() => handleVacationGoalChange('sports-activities', !filters.vacationGoal.includes('sports-activities'))}
+                  onClick={() => handleVacationGoalChange('Engage in sports activities', !filters.vacationGoal.includes('Engage in sports activities'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.vacationGoal.includes('sports-activities')
+                    ${filters.vacationGoal.includes('Engage in sports activities')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }
@@ -187,10 +187,10 @@ export default function Sidebar() {
                   ⚽ Engage in sports activities
                 </button>
                 <button
-                  onClick={() => handleVacationGoalChange('romantic', !filters.vacationGoal.includes('romantic'))}
+                  onClick={() => handleVacationGoalChange('Romantic', !filters.vacationGoal.includes('Romantic'))}
                   className={`
                     px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
-                    ${filters.vacationGoal.includes('romantic')
+                    ${filters.vacationGoal.includes('Romantic')
                       ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
                       : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                     }

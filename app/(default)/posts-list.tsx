@@ -27,11 +27,29 @@ export default function PostsList() {
     }
 
 
-    // Filter by criteria - DISABLED FOR NOW (no data available)
-    // if (filters.criteria.length > 0) {
-    //   const hasMatchingCriteria = filters.criteria.some((criteria: string) => country.mood.includes(criteria))
-    //   if (!hasMatchingCriteria) return false
-    // }
+    // Filter by criteria (What matters to you) - ALL selected criteria must match
+    if (filters.criteria.length > 0) {
+      const hasAllCriteria = filters.criteria.every((criteria: string) => {
+        switch (criteria) {
+          case 'safety':
+            return country.safe === true
+          case 'fast-internet':
+            return country.fastInternet === true
+          case 'clean-air':
+            return country.cleanAir === true
+          case 'hidden-gem':
+            return country.hiddenGem === true
+          case 'popular-now':
+            return country.popular === true
+          case 'family-friendly':
+            return country.familyFriendly === true
+          default:
+            // For other criteria, fall back to mood tags
+            return country.mood.includes(criteria)
+        }
+      })
+      if (!hasAllCriteria) return false
+    }
 
     // Filter by budget - DISABLED FOR NOW (no data available)
     // if (filters.budget) {
@@ -42,23 +60,42 @@ export default function PostsList() {
     //   // For now, <3k shows all
     // }
 
-    // Filter by additional preferences - DISABLED FOR NOW (no data available)
-    // if (filters.additional.length > 0) {
-    //   const hasMatchingAdditional = filters.additional.some((additional: string) => {
-    //     // Map additional filters to mood tags
-    //     return country.mood.includes(additional) || country.mood.includes(additional.replace('-', ''))
-    //   })
-    //   if (!hasMatchingAdditional) return false
-    // }
+    // Filter by additional preferences (You may also want) - ALL selected must match
+    if (filters.additional.length > 0) {
+      const hasAllAdditional = filters.additional.every((additional: string) => {
+        switch (additional) {
+          case 'amazing-food':
+            return country.amazingFood === true
+          case 'nightlife':
+            return country.nightlife === true
+          case 'great-for-dating':
+            return country.greatForDating === true
+          case 'eco-friendly':
+            return country.ecofriendly === true
+          case 'dog-friendly':
+            return country.dogfriendly === true
+          case 'lgbtq-friendly':
+            return country.lgbtqfriendly === true
+          case 'low-racism':
+            return country.lowRacism === true
+          case 'muslim-friendly':
+            return country.muslimfriendly === true
+          default:
+            // For other additional filters, fall back to mood tags
+            return country.mood.includes(additional) || country.mood.includes(additional.replace('-', ''))
+        }
+      })
+      if (!hasAllAdditional) return false
+    }
 
-    // Filter by vacation goals - DISABLED FOR NOW (no data available)
-    // if (filters.vacationGoal.length > 0) {
-    //   const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
-    //     // Map vacation goals to mood tags
-    //     return country.mood.includes(goal) || country.mood.includes(goal.replace('-', ''))
-    //   })
-    //   if (!hasMatchingGoal) return false
-    // }
+    // Filter by vacation goals
+    if (filters.vacationGoal.length > 0) {
+      const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
+        // Check if the country's vacationgoal array includes this goal
+        return country.vacationgoal && country.vacationgoal.includes(goal)
+      })
+      if (!hasMatchingGoal) return false
+    }
 
     return true
   })
@@ -74,11 +111,32 @@ export default function PostsList() {
     }
 
 
-    // Filter by criteria - DISABLED FOR NOW (no data available)
-    // if (filters.criteria.length > 0) {
-    //   const hasMatchingCriteria = filters.criteria.some((criteria: string) => city.mood.includes(criteria))
-    //   if (!hasMatchingCriteria) return false
-    // }
+    // Filter by criteria (What matters to you) - ALL selected criteria must match
+    if (filters.criteria.length > 0) {
+      const cityCountry = countries.find((country: Country) => country.id === city.country)
+      if (!cityCountry) return false
+      
+      const hasAllCriteria = filters.criteria.every((criteria: string) => {
+        switch (criteria) {
+          case 'safety':
+            return cityCountry.safe === true
+          case 'fast-internet':
+            return cityCountry.fastInternet === true
+          case 'clean-air':
+            return cityCountry.cleanAir === true
+          case 'hidden-gem':
+            return cityCountry.hiddenGem === true
+          case 'popular-now':
+            return cityCountry.popular === true
+          case 'family-friendly':
+            return cityCountry.familyFriendly === true
+          default:
+            // For other criteria, fall back to mood tags
+            return city.mood.includes(criteria)
+        }
+      })
+      if (!hasAllCriteria) return false
+    }
 
     // Filter by budget - DISABLED FOR NOW (no data available)
     // if (filters.budget) {
@@ -89,23 +147,48 @@ export default function PostsList() {
     //   // For now, <3k shows all
     // }
 
-    // Filter by additional preferences - DISABLED FOR NOW (no data available)
-    // if (filters.additional.length > 0) {
-    //   const hasMatchingAdditional = filters.additional.some((additional: string) => {
-    //     // Map additional filters to mood tags
-    //     return city.mood.includes(additional) || city.mood.includes(additional.replace('-', ''))
-    //   })
-    //   if (!hasMatchingAdditional) return false
-    // }
+    // Filter by additional preferences (You may also want) - ALL selected must match
+    if (filters.additional.length > 0) {
+      const cityCountry = countries.find((country: Country) => country.id === city.country)
+      if (!cityCountry) return false
+      
+      const hasAllAdditional = filters.additional.every((additional: string) => {
+        switch (additional) {
+          case 'amazing-food':
+            return cityCountry.amazingFood === true
+          case 'nightlife':
+            return cityCountry.nightlife === true
+          case 'great-for-dating':
+            return cityCountry.greatForDating === true
+          case 'eco-friendly':
+            return cityCountry.ecofriendly === true
+          case 'dog-friendly':
+            return cityCountry.dogfriendly === true
+          case 'lgbtq-friendly':
+            return cityCountry.lgbtqfriendly === true
+          case 'low-racism':
+            return cityCountry.lowRacism === true
+          case 'muslim-friendly':
+            return cityCountry.muslimfriendly === true
+          default:
+            // For other additional filters, fall back to mood tags
+            return city.mood.includes(additional) || city.mood.includes(additional.replace('-', ''))
+        }
+      })
+      if (!hasAllAdditional) return false
+    }
 
-    // Filter by vacation goals - DISABLED FOR NOW (no data available)
-    // if (filters.vacationGoal.length > 0) {
-    //   const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
-    //     // Map vacation goals to mood tags
-    //     return city.mood.includes(goal) || city.mood.includes(goal.replace('-', ''))
-    //   })
-    //   if (!hasMatchingGoal) return false
-    // }
+    // Filter by vacation goals (get vacation goal from city's country)
+    if (filters.vacationGoal.length > 0) {
+      const cityCountry = countries.find((country: Country) => country.id === city.country)
+      if (!cityCountry || !cityCountry.vacationgoal) return false
+      
+      const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
+        // Check if the city's country has this vacation goal
+        return cityCountry.vacationgoal && cityCountry.vacationgoal.includes(goal)
+      })
+      if (!hasMatchingGoal) return false
+    }
 
     return true
   })

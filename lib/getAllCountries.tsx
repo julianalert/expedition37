@@ -31,7 +31,9 @@ function getFallbackCountries(): Country[] {
       featured: true,
       continent: "Asia",
       mood: ["luxury", "beach", "tropical", "romantic"],
-      rank: 1
+      rank: 1,
+      vacationgoal: ["Relax", "Romantic"],
+      safe: true
     },
     {
       id: 2,
@@ -40,7 +42,9 @@ function getFallbackCountries(): Country[] {
       featured: false,
       continent: "Europe",
       mood: ["historic", "cultural", "charming", "chocolate"],
-      rank: 2
+      rank: 2,
+      vacationgoal: ["Explore a culture", "Have fun"],
+      safe: true
     },
     {
       id: 3,
@@ -49,7 +53,9 @@ function getFallbackCountries(): Country[] {
       featured: false,
       continent: "Europe",
       mood: ["historic", "cultural", "romantic", "artistic"],
-      rank: 3
+      rank: 3,
+      vacationgoal: ["Explore a culture", "Romantic", "Have fun"],
+      safe: true
     },
     {
       id: 4,
@@ -58,7 +64,9 @@ function getFallbackCountries(): Country[] {
       featured: false,
       continent: "Europe",
       mood: ["romantic", "cultural", "luxury", "artistic"],
-      rank: 4
+      rank: 4,
+      vacationgoal: ["Romantic", "Explore a culture"],
+      safe: true
     },
     {
       id: 5,
@@ -67,7 +75,9 @@ function getFallbackCountries(): Country[] {
       featured: true,
       continent: "Asia",
       mood: ["vibrant", "cultural", "affordable", "tropical"],
-      rank: 5
+      rank: 5,
+      vacationgoal: ["Relax", "Explore a culture", "Engage in sports activities"],
+      safe: false
     },
     {
       id: 6,
@@ -76,7 +86,8 @@ function getFallbackCountries(): Country[] {
       featured: false,
       continent: "Europe",
       mood: ["artistic", "coastal", "vibrant", "architecture"],
-      rank: 6
+      rank: 6,
+      safe: true
     },
     {
       id: 7,
@@ -85,7 +96,8 @@ function getFallbackCountries(): Country[] {
       featured: false,
       continent: "Europe",
       mood: ["historic", "affordable", "charming", "emerging"],
-      rank: 7
+      rank: 7,
+      safe: false
     },
     {
       id: 8,
