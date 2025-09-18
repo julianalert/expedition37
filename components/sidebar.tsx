@@ -25,12 +25,6 @@ export default function Sidebar() {
     updateFilters({ continents: newContinents })
   }
 
-  const handleMoodChange = (mood: string, checked: boolean) => {
-    const newMoods = checked 
-      ? [...filters.moods, mood]
-      : filters.moods.filter((m: string) => m !== mood)
-    updateFilters({ moods: newMoods })
-  }
 
   const handleCriteriaChange = (criteria: string, checked: boolean) => {
     const newCriteria = checked 
@@ -41,6 +35,13 @@ export default function Sidebar() {
 
   const handleFilterTypeChange = (filterType: 'countries' | 'places') => {
     updateFilters({ filterType })
+  }
+
+  const handleBudgetChange = (budget: string, checked: boolean) => {
+    const newBudgets = checked 
+      ? [...filters.budget, budget]
+      : filters.budget.filter((b: string) => b !== budget)
+    updateFilters({ budget: newBudgets })
   }
 
   // Function to get count of countries or cities in a continent
@@ -121,143 +122,125 @@ export default function Sidebar() {
                 ))}
               </ul>
             </div>
-            {/* Group 2 */}
+            {/* What matters to you */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">What's your mood</div>
-              <ul className="space-y-2">
-                <li>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      className="form-checkbox"
-                      checked={filters.moods.includes('beach')}
-                      onChange={(e) => handleMoodChange('beach', e.target.checked)}
-                    />
-                    <span className="text-sm text-gray-600 ml-2">🏖️ Beach</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      className="form-checkbox"
-                      checked={filters.moods.includes('urban')}
-                      onChange={(e) => handleMoodChange('urban', e.target.checked)}
-                    />
-                    <span className="text-sm text-gray-600 ml-2">🏙️ Urban</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      className="form-checkbox"
-                      checked={filters.moods.includes('cultural')}
-                      onChange={(e) => handleMoodChange('cultural', e.target.checked)}
-                    />
-                    <span className="text-sm text-gray-600 ml-2">🏛️ Cultural</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      className="form-checkbox"
-                      checked={filters.moods.includes('affordable')}
-                      onChange={(e) => handleMoodChange('affordable', e.target.checked)}
-                    />
-                    <span className="text-sm text-gray-600 ml-2">💰 Affordable</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      className="form-checkbox"
-                      checked={filters.moods.includes('vibrant')}
-                      onChange={(e) => handleMoodChange('vibrant', e.target.checked)}
-                    />
-                    <span className="text-sm text-gray-600 ml-2">✨ Vibrant</span>
-                  </label>
-                </li>
-              </ul>
+              <div className="text-sm text-gray-800 font-semibold mb-3">What matters to you?</div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleCriteriaChange('safety', !filters.criteria.includes('safety'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('safety')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  👮‍♂️ Safety
+                </button>
+                <button
+                  onClick={() => handleCriteriaChange('fast-internet', !filters.criteria.includes('fast-internet'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('fast-internet')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  📡 Fast internet
+                </button>
+                <button
+                  onClick={() => handleCriteriaChange('clean-air', !filters.criteria.includes('clean-air'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('clean-air')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💨 Clean air
+                </button>
+                <button
+                  onClick={() => handleCriteriaChange('hidden-gem', !filters.criteria.includes('hidden-gem'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('hidden-gem')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💎 Hidden gem
+                </button>
+                <button
+                  onClick={() => handleCriteriaChange('popular-now', !filters.criteria.includes('popular-now'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('popular-now')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  🔥 Popular now
+                </button>
+                <button
+                  onClick={() => handleCriteriaChange('family-friendly', !filters.criteria.includes('family-friendly'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.criteria.includes('family-friendly')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  👦 Family Friendly
+                </button>
+              </div>
             </div>
-            {/* Group 1 */}
+
+            {/* Budget Filter */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Criterias</div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('modern')}
-                    onChange={(e) => handleCriteriaChange('modern', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🏢 Modern</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('historic')}
-                    onChange={(e) => handleCriteriaChange('historic', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🏛️ Historic</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('coastal')}
-                    onChange={(e) => handleCriteriaChange('coastal', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🌊 Coastal</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('nightlife')}
-                    onChange={(e) => handleCriteriaChange('nightlife', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🎉 Nightlife</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('adventure')}
-                    onChange={(e) => handleCriteriaChange('adventure', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🏔️ Adventure</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('peaceful')}
-                    onChange={(e) => handleCriteriaChange('peaceful', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🕊️ Peaceful</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('artistic')}
-                    onChange={(e) => handleCriteriaChange('artistic', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">🎨 Artistic</span>
-                </label>
-                <label className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    className="form-checkbox"
-                    checked={filters.criteria.includes('emerging')}
-                    onChange={(e) => handleCriteriaChange('emerging', e.target.checked)}
-                  />
-                  <span className="text-sm text-gray-600 ml-2">💎 Emerging</span>
-                </label>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Monthly Budget</div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleBudgetChange('<1k', !filters.budget.includes('<1k'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.budget.includes('<1k')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💰 &lt;US$1K/mo
+                </button>
+                <button
+                  onClick={() => handleBudgetChange('<2k', !filters.budget.includes('<2k'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.budget.includes('<2k')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💸 &lt;US$2K/mo
+                </button>
+                <button
+                  onClick={() => handleBudgetChange('<3k', !filters.budget.includes('<3k'))}
+                  className={`
+                    px-3 py-2 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer border
+                    ${filters.budget.includes('<3k')
+                      ? 'bg-indigo-500 text-white border-indigo-500 shadow-sm'
+                      : 'text-gray-600 border-gray-200 bg-white hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  💵 &lt;US$3K/mo
+                </button>
               </div>
             </div>
             

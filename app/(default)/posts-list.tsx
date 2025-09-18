@@ -26,16 +26,23 @@ export default function PostsList() {
       return false
     }
 
-    // Filter by moods
-    if (filters.moods.length > 0) {
-      const hasMatchingMood = filters.moods.some((mood: string) => country.mood.includes(mood))
-      if (!hasMatchingMood) return false
-    }
 
     // Filter by criteria
     if (filters.criteria.length > 0) {
       const hasMatchingCriteria = filters.criteria.some((criteria: string) => country.mood.includes(criteria))
       if (!hasMatchingCriteria) return false
+    }
+
+    // Filter by budget (assuming countries have budget-related mood tags)
+    if (filters.budget.length > 0) {
+      const hasMatchingBudget = filters.budget.some((budget: string) => {
+        // Map budget filters to mood tags that indicate affordability
+        if (budget === '<1k' || budget === '<2k') {
+          return country.mood.includes('affordable')
+        }
+        return true // For now, <3k shows all
+      })
+      if (!hasMatchingBudget) return false
     }
 
     return true
@@ -51,16 +58,23 @@ export default function PostsList() {
       }
     }
 
-    // Filter by moods
-    if (filters.moods.length > 0) {
-      const hasMatchingMood = filters.moods.some((mood: string) => city.mood.includes(mood))
-      if (!hasMatchingMood) return false
-    }
 
     // Filter by criteria
     if (filters.criteria.length > 0) {
       const hasMatchingCriteria = filters.criteria.some((criteria: string) => city.mood.includes(criteria))
       if (!hasMatchingCriteria) return false
+    }
+
+    // Filter by budget (assuming cities have budget-related mood tags)
+    if (filters.budget.length > 0) {
+      const hasMatchingBudget = filters.budget.some((budget: string) => {
+        // Map budget filters to mood tags that indicate affordability
+        if (budget === '<1k' || budget === '<2k') {
+          return city.mood.includes('affordable')
+        }
+        return true // For now, <3k shows all
+      })
+      if (!hasMatchingBudget) return false
     }
 
     return true

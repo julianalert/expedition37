@@ -6,6 +6,7 @@ export interface FilterState {
   continents: string[]
   moods: string[]
   criteria: string[]
+  budget: string[]
   filterType: 'countries' | 'places'
 }
 
@@ -19,6 +20,7 @@ const defaultFilters: FilterState = {
   continents: [],
   moods: [],
   criteria: [],
+  budget: [],
   filterType: 'countries'
 }
 
