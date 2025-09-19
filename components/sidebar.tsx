@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { useFilters } from '@/contexts/FilterContext'
 import getAllContinents, { ContinentWithEmoji } from '@/lib/getAllContinents'
 import getAllCountries from '@/lib/getAllCountries'
@@ -8,15 +9,26 @@ import getAllCities from '@/lib/getAllCities'
 
 export default function Sidebar() {
   const { filters, updateFilters, clearFilters } = useFilters()
+  const pathname = usePathname()
   const [continents, setContinents] = useState<ContinentWithEmoji[]>([])
   const [countries, setCountries] = useState<Country[]>([])
   const [cities, setCities] = useState<City[]>([])
+
+  // Check if we're on a country page (e.g., /france/best-places-to-visit)
+  const isCountryPage = pathname && pathname.split('/').length >= 3 && pathname !== '/'
 
   useEffect(() => {
     getAllContinents().then(setContinents)
     getAllCountries().then(setCountries)
     getAllCities().then(setCities)
   }, [])
+
+  // Set default filter to 'places' when on a country page
+  useEffect(() => {
+    if (isCountryPage && filters.filterType !== 'places') {
+      updateFilters({ filterType: 'places' })
+    }
+  }, [isCountryPage, filters.filterType, updateFilters])
 
   const handleContinentChange = (continent: string, checked: boolean) => {
     const newContinents = checked 
@@ -83,56 +95,60 @@ export default function Sidebar() {
             </button>
           </div>
 
-          {/* Filter Type Toggle */}
-          <div className="mb-6">
-            <div className="flex rounded-lg border border-gray-200 p-1 bg-white">
-              <button
-                onClick={() => handleFilterTypeChange('countries')}
-                className={`
-                  flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
-                  ${filters.filterType === 'countries'
-                    ? 'bg-indigo-500 text-white shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  }
-                `}
-              >
-                Countries
-              </button>
-              <button
-                onClick={() => handleFilterTypeChange('places')}
-                className={`
-                  flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
-                  ${filters.filterType === 'places'
-                    ? 'bg-indigo-500 text-white shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  }
-                `}
-              >
-                Places
-              </button>
+          {/* Filter Type Toggle - Hidden on country pages */}
+          {!isCountryPage && (
+            <div className="mb-6">
+              <div className="flex rounded-lg border border-gray-200 p-1 bg-white">
+                <button
+                  onClick={() => handleFilterTypeChange('countries')}
+                  className={`
+                    flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
+                    ${filters.filterType === 'countries'
+                      ? 'bg-indigo-500 text-white shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    }
+                  `}
+                >
+                  Countries
+                </button>
+                <button
+                  onClick={() => handleFilterTypeChange('places')}
+                  className={`
+                    flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
+                    ${filters.filterType === 'places'
+                      ? 'bg-indigo-500 text-white shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    }
+                  `}
+                >
+                  Places
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
-            {/* Group 4 */}
-            <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Where do you want to go?</div>
-              <ul className="space-y-2">
-                {continents.map((continent: ContinentWithEmoji) => (
-                  <li key={continent.name}>
-                    <label className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        className="form-checkbox"
-                        checked={filters.continents.includes(continent.name)}
-                        onChange={(e) => handleContinentChange(continent.name, e.target.checked)}
-                      />
-                      <span className="text-sm text-gray-600 ml-2">{continent.emoji} {continent.name} ({getContinentCount(continent.name)})</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Continent Filter - Hidden on country pages */}
+            {!isCountryPage && (
+              <div>
+                <div className="text-sm text-gray-800 font-semibold mb-3">Where do you want to go?</div>
+                <ul className="space-y-2">
+                  {continents.map((continent: ContinentWithEmoji) => (
+                    <li key={continent.name}>
+                      <label className="flex items-center">
+                        <input 
+                          type="checkbox" 
+                          className="form-checkbox"
+                          checked={filters.continents.includes(continent.name)}
+                          onChange={(e) => handleContinentChange(continent.name, e.target.checked)}
+                        />
+                        <span className="text-sm text-gray-600 ml-2">{continent.emoji} {continent.name} ({getContinentCount(continent.name)})</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Vacation Goal */}
             <div>
