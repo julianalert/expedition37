@@ -2,10 +2,55 @@ import Image from 'next/image'
 import UploadImage from '@/public/images/upload.jpg'
 import AddOns from './add-ons'
 
-export const metadata = {
-  title: 'Post a Job - JobBoard',
-  description: 'Page description',
+import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+
+const metadataConfig: MetadataConfig = {
+  seo: {
+    title: `Share Your Travel Experience - ${SITE_CONFIG.name}`,
+    description: `Share your amazing travel experiences with the ${SITE_CONFIG.name} community. Help fellow travelers discover new destinations and create unforgettable memories.`,
+    keywords: [
+      'share travel experience',
+      'travel story',
+      'travel community',
+      'travel tips',
+      'destination guide',
+      'travel blog',
+      'travel experiences',
+      'travel recommendations',
+      'submit travel story'
+    ],
+    canonical: `${SITE_CONFIG.url}/post-a-job`,
+    robots: 'noindex, nofollow', // Form pages typically shouldn't be indexed
+    author: SITE_CONFIG.author,
+  },
+  openGraph: {
+    title: `Share Your Travel Experience | ${SITE_CONFIG.name}`,
+    description: `Join our travel community by sharing your experiences. Help fellow travelers discover amazing destinations around the world.`,
+    url: `${SITE_CONFIG.url}/post-a-job`,
+    siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/images/expedition37-og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: `Share your travel experience with ${SITE_CONFIG.name}`,
+        type: 'image/png',
+      },
+    ],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: SITE_CONFIG.twitter,
+    creator: SITE_CONFIG.twitter,
+    title: `Share Your Travel Experience`,
+    description: `Join our community and share your amazing travel experiences with fellow adventurers.`,
+    images: [`${SITE_CONFIG.url}/images/expedition37-og-image.png`],
+  },
 }
+
+export const metadata = generateMetadataUtil(metadataConfig)
 
 export default function PostAJob() {
   return (

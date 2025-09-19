@@ -17,7 +17,7 @@ export default function PostItem({ ...props }) {
   }
   
   return (
-    <Link href={`/${countrySlug}`} className="group block">
+    <Link href={`/${countrySlug}/best-places-to-visit`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 

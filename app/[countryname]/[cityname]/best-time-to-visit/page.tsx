@@ -1,14 +1,82 @@
-export const metadata = {
-  title: 'Best time to visit',
-  description: 'Find out the best time to visit this place',
-}
 import BestTimeToVisit from '../best-time-to-visit'
+import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { slugToCountryName } from '@/lib/countryUtils'
+import { slugToCityName } from '@/lib/cityUtils'
+import getCityByName from '@/lib/getCityByName'
+import getCountryByName from '@/lib/getCountryByName'
+import type { Metadata } from 'next'
 
 interface BestTimePageProps {
   params: Promise<{
     countryname: string
     cityname: string
   }>
+}
+
+export async function generateMetadata({ params }: BestTimePageProps): Promise<Metadata> {
+  const resolvedParams = await params
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
+  const countryName = slugToCountryName(countrySlug)
+  const cityName = slugToCityName(citySlug)
+  
+  const [city, country] = await Promise.all([
+    getCityByName(citySlug),
+    getCountryByName(countrySlug)
+  ])
+  
+  const displayCityName = city?.name || cityName
+  const displayCountryName = country?.name || countryName
+
+  const metadataConfig: MetadataConfig = {
+    seo: {
+      title: `Best Time to Visit ${displayCityName}, ${displayCountryName} - Weather Guide`,
+      description: `Discover the best time to visit ${displayCityName}, ${displayCountryName} with our comprehensive weather guide. Find ideal months, seasons, and climate information for your trip.`,
+      keywords: [
+        `best time to visit ${displayCityName}`,
+        `${displayCityName} weather`,
+        `${displayCityName} climate`,
+        `${displayCityName} seasons`,
+        `when to visit ${displayCityName}`,
+        `${displayCityName} ${displayCountryName} weather`,
+        `${displayCityName} temperature`,
+        `${displayCityName} travel months`,
+        'weather guide',
+        'travel planning',
+        'seasonal travel'
+      ],
+      canonical: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/best-time-to-visit`,
+      robots: 'index, follow',
+      author: SITE_CONFIG.author,
+    },
+    openGraph: {
+      title: `Best Time to Visit ${displayCityName}, ${displayCountryName} | ${SITE_CONFIG.name}`,
+      description: `Plan your perfect ${displayCityName} trip with our weather and climate guide. Find the ideal months for your travel style.`,
+      url: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/best-time-to-visit`,
+      siteName: SITE_CONFIG.name,
+      images: [
+        {
+          url: city?.image || `${SITE_CONFIG.url}/images/destinations/${citySlug}-weather.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `Best time to visit ${displayCityName}, ${displayCountryName} - Weather and climate guide`,
+          type: 'image/jpeg',
+        },
+      ],
+      type: 'article',
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: SITE_CONFIG.twitter,
+      creator: SITE_CONFIG.twitter,
+      title: `Best Time to Visit ${displayCityName}`,
+      description: `Discover the perfect months to visit ${displayCityName}, ${displayCountryName} with our comprehensive weather guide.`,
+      images: [city?.image || `${SITE_CONFIG.url}/images/destinations/${citySlug}-weather.jpg`],
+    },
+  }
+
+  return generateMetadataUtil(metadataConfig)
 }
 
 export default async function BestTimePage({ params }: BestTimePageProps) {

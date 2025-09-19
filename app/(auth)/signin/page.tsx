@@ -1,7 +1,51 @@
-export const metadata = {
-  title: 'Sign In - JobBoard',
-  description: 'Page description',
+import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+
+const metadataConfig: MetadataConfig = {
+  seo: {
+    title: `Sign In to ${SITE_CONFIG.name} - Access Your Travel Account`,
+    description: `Sign in to your ${SITE_CONFIG.name} account to access personalized travel recommendations, save your favorite destinations, and connect with our travel community.`,
+    keywords: [
+      'sign in',
+      'login',
+      'travel account',
+      'user account',
+      'travel community',
+      'personalized travel',
+      'travel recommendations',
+      'expedition37 login'
+    ],
+    canonical: `${SITE_CONFIG.url}/signin`,
+    robots: 'noindex, nofollow', // Auth pages typically shouldn't be indexed
+    author: SITE_CONFIG.author,
+  },
+  openGraph: {
+    title: `Sign In to ${SITE_CONFIG.name}`,
+    description: `Access your travel account to get personalized destination recommendations and connect with fellow travelers.`,
+    url: `${SITE_CONFIG.url}/signin`,
+    siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/images/expedition37-og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: `Sign in to ${SITE_CONFIG.name}`,
+        type: 'image/png',
+      },
+    ],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: SITE_CONFIG.twitter,
+    creator: SITE_CONFIG.twitter,
+    title: `Sign In to ${SITE_CONFIG.name}`,
+    description: `Access your travel account for personalized destination recommendations.`,
+    images: [`${SITE_CONFIG.url}/images/expedition37-og-image.png`],
+  },
 }
+
+export const metadata = generateMetadataUtil(metadataConfig)
 
 export default function SignIn() {
   return (

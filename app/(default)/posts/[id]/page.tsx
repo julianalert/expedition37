@@ -3,6 +3,7 @@ Note: This code includes an example of how to fetch data from an external JSON f
 */}
 
 import getAllPosts from '@/lib/getAllPosts'
+import { SITE_CONFIG } from '@/lib/metadata'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -31,13 +32,60 @@ export async function generateMetadata(
 
   if (!post) {
     return {
-      title: 'Post Not Found'
+      title: 'Post Not Found',
+      description: 'The requested post could not be found.',
     }
   }
 
   return {
-    title: post.title,
-    description: 'Page description',
+    title: `${post.title} | ${post.name} - ${SITE_CONFIG.name}`,
+    description: `Discover ${post.title} with ${post.name}. Explore travel opportunities, destinations, and experiences shared by our travel community.`,
+    keywords: [
+      post.title.toLowerCase(),
+      post.name.toLowerCase(),
+      post.tag1?.toLowerCase(),
+      post.tag2?.toLowerCase(),
+      'travel opportunities',
+      'travel community',
+      'travel experiences',
+      'destination guide',
+      'travel blog',
+      'expedition',
+    ].filter(Boolean),
+    
+    openGraph: {
+      title: `${post.title} | ${SITE_CONFIG.name}`,
+      description: `Explore ${post.title} with ${post.name}. Join our travel community and discover amazing destinations and experiences.`,
+      url: `${SITE_CONFIG.url}/posts/${params.id}`,
+      siteName: SITE_CONFIG.name,
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: `${post.title} - ${post.name}`,
+          type: 'image/jpeg',
+        },
+      ],
+      type: 'article',
+      locale: 'en_US',
+    },
+    
+    twitter: {
+      card: 'summary_large_image',
+      site: SITE_CONFIG.twitter,
+      creator: SITE_CONFIG.twitter,
+      title: `${post.title}`,
+      description: `Discover ${post.title} with ${post.name}. Join our travel community for amazing experiences.`,
+      images: [post.image],
+    },
+    
+    authors: [{ name: post.name }],
+    category: 'Travel',
+    publishedTime: post.date,
+    
+    robots: 'index, follow',
+    canonical: `${SITE_CONFIG.url}/posts/${params.id}`,
   }
 }
 

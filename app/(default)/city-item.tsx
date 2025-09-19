@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { cityNameToSlug } from '@/lib/cityUtils'
-import { countryNameToSlug } from '@/lib/countryUtils'
+import { countryNameToSlug, slugToCountryName } from '@/lib/countryUtils'
 import getAllCountries from '@/lib/getAllCountries'
 import { useEffect, useState } from 'react'
 import RatingOverlay from '@/components/rating-overlay'
@@ -35,6 +35,7 @@ export default function CityItem(props: CityItemProps) {
   }, [props.country, props.countryNameProp])
 
   const countrySlug = countryNameToSlug(countryName)
+  const displayCountryName = props.countryNameProp ? slugToCountryName(props.countryNameProp) : countryName
   
   // Don't render the link until we have the country information
   if (isLoading || !countryName) {
@@ -109,7 +110,7 @@ export default function CityItem(props: CityItemProps) {
   }
   
   return (
-    <Link href={`/${countrySlug}/${citySlug}/best-time-to-visit`} className="group block">
+    <Link href={`/${countrySlug}/${citySlug}`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
         {/* Background image */}
         <div 
