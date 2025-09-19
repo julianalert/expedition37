@@ -119,7 +119,7 @@ export default function TemperatureChart({ temperature, placeName }: Temperature
         <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-600">
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 bg-blue-500 rounded"></div>
-            <span>Cold (≤10°)</span>
+            <span>Cold (&le;10°)</span>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 bg-cyan-500 rounded"></div>
@@ -139,7 +139,7 @@ export default function TemperatureChart({ temperature, placeName }: Temperature
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 bg-red-500 rounded"></div>
-            <span>Very Hot (>35°)</span>
+            <span>Very Hot (&gt;35°)</span>
           </div>
         </div>
       </div>
