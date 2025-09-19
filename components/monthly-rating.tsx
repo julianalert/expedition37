@@ -1,7 +1,7 @@
 'use client'
 
 interface MonthlyRatingProps {
-  bestTimeToVisit: MonthlyRating[] | string | null
+  bestTimeToVisit: MonthlyRating[] | string | null | undefined
   placeName?: string
 }
 
@@ -39,7 +39,7 @@ const getMonthAbbreviation = (month: string): string => {
 }
 
 // Helper function to parse JSON string if needed
-const parseRatingData = (data: MonthlyRating[] | string | null): MonthlyRating[] => {
+const parseRatingData = (data: MonthlyRating[] | string | null | undefined): MonthlyRating[] => {
   if (!data) return []
   
   if (typeof data === 'string') {

@@ -1,7 +1,7 @@
 'use client'
 
 interface TemperatureChartProps {
-  temperature: MonthlyTemperature[] | string | null
+  temperature: MonthlyTemperature[] | string | null | undefined
   placeName?: string
 }
 
@@ -25,7 +25,7 @@ const getMonthAbbreviation = (month: string): string => {
 }
 
 // Helper function to parse JSON string if needed
-const parseTemperatureData = (data: MonthlyTemperature[] | string | null): MonthlyTemperature[] => {
+const parseTemperatureData = (data: MonthlyTemperature[] | string | null | undefined): MonthlyTemperature[] => {
   if (!data) return []
   
   if (typeof data === 'string') {
