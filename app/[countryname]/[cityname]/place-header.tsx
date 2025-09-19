@@ -65,7 +65,7 @@ export default function PlaceHeader({ placeName, countryName }: PlaceHeaderProps
           {/* Back navigation */}
           <div className="mb-8">
             <Link 
-              href={`/${countrySlug}/best-places-to-visit`}
+              href={`/${countrySlug}`}
               className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

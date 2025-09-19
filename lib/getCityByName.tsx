@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 import getAllCities from './getAllCities'
-import { findCityBySlug } from './cityUtils'
+import { findCityBySlug, cityNameToSlug } from './cityUtils'
 
 export default async function getCityByName(citySlug: string): Promise<City | null> {
   // Check if Supabase environment variables are configured
@@ -10,8 +10,26 @@ export default async function getCityByName(citySlug: string): Promise<City | nu
   }
 
   try {
-    // For Supabase, we'll get all cities and find by slug
-    // This is because we need to match the slugified version of the name
+    // Try to find city by name directly (more efficient than fetching all)
+    // Convert slug back to potential city name for direct lookup
+    const potentialName = citySlug.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
+    
+    // First try direct lookup by name
+    const { data, error } = await supabase
+      .from('city')
+      .select('*')
+      .ilike('name', potentialName)
+      .single()
+    
+    if (!error && data) {
+      return data
+    }
+
+    // If direct lookup fails, fall back to fetching all and finding by slug
+    // This handles cases where the slug doesn't perfectly match the name conversion
+    console.log('Direct city lookup failed, trying slug-based search')
     const cities = await getAllCities()
     const city = findCityBySlug(cities, citySlug)
     

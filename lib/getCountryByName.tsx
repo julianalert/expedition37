@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 import getAllCountries from './getAllCountries'
-import { findCountryBySlug } from './countryUtils'
+import { findCountryBySlug, countryNameToSlug } from './countryUtils'
 
 export default async function getCountryByName(countrySlug: string): Promise<Country | null> {
   // Check if Supabase environment variables are configured
@@ -10,8 +10,26 @@ export default async function getCountryByName(countrySlug: string): Promise<Cou
   }
 
   try {
-    // For Supabase, we'll get all countries and find by slug
-    // This is because we need to match the slugified version of the name
+    // Try to find country by name directly (more efficient than fetching all)
+    // Convert slug back to potential country name for direct lookup
+    const potentialName = countrySlug.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
+    
+    // First try direct lookup by name
+    const { data, error } = await supabase
+      .from('country')
+      .select('*')
+      .ilike('name', potentialName)
+      .single()
+    
+    if (!error && data) {
+      return data
+    }
+
+    // If direct lookup fails, fall back to fetching all and finding by slug
+    // This handles cases where the slug doesn't perfectly match the name conversion
+    console.log('Direct country lookup failed, trying slug-based search')
     const countries = await getAllCountries()
     const country = findCountryBySlug(countries, countrySlug)
     

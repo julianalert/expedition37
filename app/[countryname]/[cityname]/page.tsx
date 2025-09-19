@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import Overview from './overview'
 
 interface PlacePageProps {
   params: Promise<{
@@ -9,6 +9,6 @@ interface PlacePageProps {
 
 export default async function PlacePage({ params }: PlacePageProps) {
   const resolvedParams = await params
-  // Redirect to the default tab (best-time-to-visit)
-  redirect(`/${resolvedParams.countryname}/${resolvedParams.cityname}/best-time-to-visit`)
+  
+  return <Overview placeName={resolvedParams.cityname} countryName={resolvedParams.countryname} />
 }

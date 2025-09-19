@@ -17,9 +17,12 @@ interface CountryLayoutClientProps {
 export default function CountryLayoutClient({ children, countryName }: CountryLayoutClientProps) {
   const pathname = usePathname()
   
-  // Check if we're on a city page (has 3+ segments: /country/city/tab)
+  // Check if we're on a city page
   const pathSegments = pathname.split('/').filter(Boolean)
-  const isCityPage = pathSegments.length >= 3
+  // City pages have either 2 segments (/country/city) or 3+ segments (/country/city/tab)
+  // But we need to exclude country-level tabs like /country/best-places-to-visit
+  const countryTabs = ['best-places-to-visit', 'best-time-to-visit', 'good-deals']
+  const isCityPage = pathSegments.length >= 2 && !countryTabs.includes(pathSegments[1])
   
   // Initialize sticky functionality
   useEffect(() => {

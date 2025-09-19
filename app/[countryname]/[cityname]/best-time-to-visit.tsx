@@ -52,7 +52,7 @@ export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVi
     <section>
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl">
             {/* Header */}
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">

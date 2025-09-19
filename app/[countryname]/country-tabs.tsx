@@ -9,21 +9,29 @@ interface CountryTabsProps {
 }
 
 const tabs = [
+  { id: 'overview', name: 'Overview', href: '' },
   { id: 'best-places', name: 'Best places to visit', href: '/best-places-to-visit' },
   { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
-  { id: 'deals', name: 'Good deals', href: '/good-deals' }
+  // { id: 'deals', name: 'Good deals', href: '/good-deals' } // Hidden as requested
 ]
 
 export default function CountryTabs({ countryName }: CountryTabsProps) {
   const pathname = usePathname()
   const countrySlug = countryNameToSlug(countryName)
   
+  // Safety check to ensure slug is valid
+  if (!countrySlug) {
+    console.error('Invalid country slug generation:', { countryName, countrySlug })
+    return null
+  }
+  
   // Determine active tab based on current path
   const getActiveTab = () => {
+    if (pathname === `/${countrySlug}`) return 'overview'
     if (pathname === `/${countrySlug}/best-places-to-visit`) return 'best-places'
     if (pathname === `/${countrySlug}/best-time-to-visit`) return 'best-time'
-    if (pathname === `/${countrySlug}/good-deals`) return 'deals'
-    return 'best-places'
+    // if (pathname === `/${countrySlug}/good-deals`) return 'deals' // Hidden tab
+    return 'overview'
   }
   
   const activeTab = getActiveTab()
@@ -34,7 +42,7 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
-            const href = `/${countrySlug}${tab.href}`
+            const href = tab.id === 'overview' ? `/${countrySlug}` : `/${countrySlug}${tab.href}`
             
             return (
               <Link

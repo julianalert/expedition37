@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cityNameToSlug } from '@/lib/cityUtils'
+import { countryNameToSlug } from '@/lib/countryUtils'
 
 interface PlaceTabsProps {
   placeName: string
@@ -10,20 +11,28 @@ interface PlaceTabsProps {
 }
 
 const tabs = [
+  { id: 'overview', name: 'Overview', href: '' },
   { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
-  { id: 'deals', name: 'Good deals', href: '/good-deals' }
+  // { id: 'deals', name: 'Good deals', href: '/good-deals' } // Hidden as requested
 ]
 
 export default function PlaceTabs({ placeName, countryName }: PlaceTabsProps) {
   const pathname = usePathname()
   const placeSlug = cityNameToSlug(placeName)
-  const countrySlug = cityNameToSlug(countryName) // Using same util function
+  const countrySlug = countryNameToSlug(countryName) // Using correct util function for countries
+  
+  // Safety check to ensure slugs are valid
+  if (!placeSlug || !countrySlug) {
+    console.error('Invalid slug generation:', { placeName, countryName, placeSlug, countrySlug })
+    return null
+  }
   
   // Determine active tab based on current path
   const getActiveTab = () => {
+    if (pathname === `/${countrySlug}/${placeSlug}`) return 'overview'
     if (pathname === `/${countrySlug}/${placeSlug}/best-time-to-visit`) return 'best-time'
-    if (pathname === `/${countrySlug}/${placeSlug}/good-deals`) return 'deals'
-    return 'best-time' // Default to best-time instead of where-to-go
+    // if (pathname === `/${countrySlug}/${placeSlug}/good-deals`) return 'deals' // Hidden tab
+    return 'overview' // Default to overview
   }
   
   const activeTab = getActiveTab()
@@ -34,7 +43,7 @@ export default function PlaceTabs({ placeName, countryName }: PlaceTabsProps) {
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
-            const href = `/${countrySlug}/${placeSlug}${tab.href}`
+            const href = tab.id === 'overview' ? `/${countrySlug}/${placeSlug}` : `/${countrySlug}/${placeSlug}${tab.href}`
             
             return (
               <Link
