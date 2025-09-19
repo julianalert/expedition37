@@ -49,7 +49,10 @@ export function generateMetadata(config: MetadataConfig): Metadata {
     keywords: seo.keywords,
     authors: seo.author ? [{ name: seo.author }] : undefined,
     robots: seo.robots || 'index, follow',
-    canonical: seo.canonical,
+    
+    alternates: seo.canonical ? {
+      canonical: seo.canonical,
+    } : undefined,
     
     openGraph: {
       title: openGraph.title,
