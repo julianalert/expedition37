@@ -19,6 +19,30 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
     })
   }, [placeName])
 
+  // Helper function to parse overview data
+  const parseOverviewData = (overview: OverviewData | string | null | undefined): OverviewData | null => {
+    if (!overview) return null
+    
+    if (typeof overview === 'string') {
+      try {
+        return JSON.parse(overview)
+      } catch (error) {
+        console.error('Error parsing overview data:', error)
+        return null
+      }
+    }
+    
+    return overview
+  }
+
+  // Helper function to get color based on rating score (same as thumbnail)
+  const getRatingColor = (score: number): string => {
+    if (score >= 75) return 'bg-green-500'    // Good: green (75+)
+    if (score >= 50) return 'bg-yellow-500'   // Middle: yellow (50-74)
+    if (score >= 30) return 'bg-orange-500'   // Low: orange (30-49)
+    return 'bg-red-500'                       // Very low: red (below 30)
+  }
+
   if (loading) {
     return (
       <section>
@@ -48,6 +72,8 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
     )
   }
 
+  const overviewData = parseOverviewData(city.overview)
+
   return (
     <section>
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
@@ -71,54 +97,95 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">About {city.name}</h3>
                 <div className="space-y-4">
                   <p className="text-gray-600">
-                    {city.name} is one of the most captivating destinations in {countryName}. 
-                    This vibrant city offers visitors an incredible mix of attractions, culture, 
-                    and experiences that make it a must-visit destination for travelers.
+                    {overviewData?.short_desc || `${city.name} is one of the most captivating destinations in ${countryName}. This vibrant city offers visitors an incredible mix of attractions, culture, and experiences that make it a must-visit destination for travelers.`}
                   </p>
                   <div className="grid grid-cols-2 gap-4 mt-6">
                     <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-600">🏛️</div>
-                      <div className="text-sm text-gray-600 mt-1">Historic Sites</div>
+                      <div className="text-2xl font-bold text-blue-600">🏳️</div>
+                      <div className="text-sm text-gray-600 mt-1">Country</div>
+                      <div className="text-lg font-semibold text-gray-900 mt-1">{countryName}</div>
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-2xl font-bold text-green-600">🌆</div>
-                      <div className="text-sm text-gray-600 mt-1">City Views</div>
-                    </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-2xl font-bold text-purple-600">🍽️</div>
-                      <div className="text-sm text-gray-600 mt-1">Local Cuisine</div>
-                    </div>
-                    <div className="text-center p-4 bg-orange-50 rounded-lg">
-                      <div className="text-2xl font-bold text-orange-600">🎭</div>
-                      <div className="text-sm text-gray-600 mt-1">Arts & Culture</div>
+                      <div className="text-2xl font-bold text-green-600">⭐</div>
+                      <div className="text-sm text-gray-600 mt-1">Overall Rating</div>
+                      <div className="text-lg font-semibold text-gray-900 mt-1">{city.overallRating ? `${city.overallRating}/100` : 'N/A'}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Quick facts */}
+              {/* Rating bars */}
               <div className="bg-white rounded-xl border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Facts</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Ratings</h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Location</span>
-                    <span className="font-medium text-gray-900">{countryName}</span>
+                  {/* Overall Rating */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 w-20">Overall</span>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`${getRatingColor(city.overallRating || 0)} h-2 rounded-full`}
+                          style={{ width: `${city.overallRating || 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-8">{city.overallRating || 0}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Best known for</span>
-                    <span className="font-medium text-gray-900">Culture & History</span>
+                  
+                  {/* Cost Rating */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 w-20">Cost</span>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`${getRatingColor(city.costRating || 0)} h-2 rounded-full`}
+                          style={{ width: `${city.costRating || 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-8">{city.costRating || 0}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Ideal visit duration</span>
-                    <span className="font-medium text-gray-900">2-4 days</span>
+                  
+                  {/* Safety Rating */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 w-20">Safety</span>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`${getRatingColor(city.safetyRating || 0)} h-2 rounded-full`}
+                          style={{ width: `${city.safetyRating || 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-8">{city.safetyRating || 0}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Transportation</span>
-                    <span className="font-medium text-gray-900">Public transport</span>
+                  
+                  {/* Fun Rating */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 w-20">Fun</span>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`${getRatingColor(city.funRating || 0)} h-2 rounded-full`}
+                          style={{ width: `${city.funRating || 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-8">{city.funRating || 0}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-600">Budget level</span>
-                    <span className="font-medium text-gray-900">Moderate</span>
+                  
+                  {/* Food Rating */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 w-20">Food</span>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`${getRatingColor(city.foodRating || 0)} h-2 rounded-full`}
+                          style={{ width: `${city.foodRating || 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-8">{city.foodRating || 0}</span>
                   </div>
                 </div>
               </div>
@@ -127,18 +194,29 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
               <div className="lg:col-span-2 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">What to Expect in {city.name}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">🏛️ Must-See Attractions</h4>
-                    <p className="text-sm text-gray-600">Discover iconic landmarks, museums, and historic sites that define the city's character.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">🍕 Local Food Scene</h4>
-                    <p className="text-sm text-gray-600">Experience authentic local cuisine at traditional restaurants and street food markets.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">🚶‍♂️ Getting Around</h4>
-                    <p className="text-sm text-gray-600">Navigate the city easily with public transport, walking tours, or bike rentals.</p>
-                  </div>
+                  {overviewData?.what_to_expect?.length ? (
+                    overviewData.what_to_expect.map((item, index) => (
+                      <div key={index}>
+                        <h4 className="font-medium text-gray-900 mb-2">{item.title}</h4>
+                        <p className="text-sm text-gray-600">{item.description}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <>
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-2">🏛️ Must-See Attractions</h4>
+                        <p className="text-sm text-gray-600">Discover iconic landmarks, museums, and historic sites that define the city's character.</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-2">🍕 Local Food Scene</h4>
+                        <p className="text-sm text-gray-600">Experience authentic local cuisine at traditional restaurants and street food markets.</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-2">🚶‍♂️ Getting Around</h4>
+                        <p className="text-sm text-gray-600">Navigate the city easily with public transport, walking tours, or bike rentals.</p>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -146,74 +224,52 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
               <div className="lg:col-span-2">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Top Experiences</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🏛️</div>
-                    <div className="text-sm font-medium text-gray-900">Historic Tours</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🎨</div>
-                    <div className="text-sm font-medium text-gray-900">Art Galleries</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🛍️</div>
-                    <div className="text-sm font-medium text-gray-900">Shopping</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🌃</div>
-                    <div className="text-sm font-medium text-gray-900">Nightlife</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🥘</div>
-                    <div className="text-sm font-medium text-gray-900">Food Tours</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🚶‍♂️</div>
-                    <div className="text-sm font-medium text-gray-900">Walking Tours</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">📸</div>
-                    <div className="text-sm font-medium text-gray-900">Photography</div>
-                  </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="text-3xl mb-2">🏞️</div>
-                    <div className="text-sm font-medium text-gray-900">Day Trips</div>
-                  </div>
+                  {overviewData?.top_experiences?.length ? (
+                    overviewData.top_experiences.map((experience, index) => (
+                      <div key={index} className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">{experience.emoji}</div>
+                        <div className="text-sm font-medium text-gray-900">{experience.name}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🏛️</div>
+                        <div className="text-sm font-medium text-gray-900">Historic Tours</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🎨</div>
+                        <div className="text-sm font-medium text-gray-900">Art Galleries</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🛍️</div>
+                        <div className="text-sm font-medium text-gray-900">Shopping</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🌃</div>
+                        <div className="text-sm font-medium text-gray-900">Nightlife</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🥘</div>
+                        <div className="text-sm font-medium text-gray-900">Food Tours</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🚶‍♂️</div>
+                        <div className="text-sm font-medium text-gray-900">Walking Tours</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">📸</div>
+                        <div className="text-sm font-medium text-gray-900">Photography</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                        <div className="text-3xl mb-2">🏞️</div>
+                        <div className="text-sm font-medium text-gray-900">Day Trips</div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
-              {/* Travel tips */}
-              <div className="lg:col-span-2 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mt-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">💡 Travel Tips for {city.name}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-sm">🚇</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-900">Public Transport</h4>
-                      <p className="text-sm text-gray-600">Get a city pass for convenient travel</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 text-sm">🏨</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-900">Best Areas</h4>
-                      <p className="text-sm text-gray-600">Stay in the city center for easy access</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
-                      <span className="text-purple-600 text-sm">💰</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-900">Budget Tips</h4>
-                      <p className="text-sm text-gray-600">Many attractions offer student discounts</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

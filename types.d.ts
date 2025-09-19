@@ -49,6 +49,9 @@ type Country = {
   "safetyRating"?: number,
   "funRating"?: number,
   "foodRating"?: number,
+  "bestTimeToVisit"?: MonthlyRating[],
+  "temperature"?: MonthlyTemperature[],
+  "overview"?: OverviewData,
   "created_at"?: string,
   "updated_at"?: string,
 }
@@ -83,6 +86,35 @@ type City = {
   "lowRacism"?: boolean,
   "muslimfriendly"?: boolean,
   "weeklyBudget"?: number,
+  "bestTimeToVisit"?: MonthlyRating[],
+  "temperature"?: MonthlyTemperature[],
+  "overview"?: OverviewData,
   "created_at"?: string,
   "updated_at"?: string,
+}
+
+type MonthlyRating = {
+  "month": string,
+  "rating": "good" | "medium" | "bad"
+}
+
+type MonthlyTemperature = {
+  "month": string,
+  "avg_temp": number
+}
+
+type OverviewData = {
+  "short_desc": string,
+  "what_to_expect": WhatToExpectItem[],
+  "top_experiences": TopExperienceItem[]
+}
+
+type WhatToExpectItem = {
+  "title": string,
+  "description": string
+}
+
+type TopExperienceItem = {
+  "emoji": string,
+  "name": string
 }
