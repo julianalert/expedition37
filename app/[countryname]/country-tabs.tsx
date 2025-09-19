@@ -19,18 +19,11 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
   const pathname = usePathname()
   const countrySlug = countryNameToSlug(countryName)
   
-  // Safety check to ensure slug is valid
-  if (!countrySlug) {
-    console.error('Invalid country slug generation:', { countryName, countrySlug })
-    return null
-  }
-  
   // Determine active tab based on current path
   const getActiveTab = () => {
     if (pathname === `/${countrySlug}`) return 'overview'
     if (pathname === `/${countrySlug}/best-places-to-visit`) return 'best-places'
     if (pathname === `/${countrySlug}/best-time-to-visit`) return 'best-time'
-    // if (pathname === `/${countrySlug}/good-deals`) return 'deals' // Hidden tab
     return 'overview'
   }
   

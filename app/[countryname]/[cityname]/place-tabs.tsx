@@ -19,20 +19,13 @@ const tabs = [
 export default function PlaceTabs({ placeName, countryName }: PlaceTabsProps) {
   const pathname = usePathname()
   const placeSlug = cityNameToSlug(placeName)
-  const countrySlug = countryNameToSlug(countryName) // Using correct util function for countries
-  
-  // Safety check to ensure slugs are valid
-  if (!placeSlug || !countrySlug) {
-    console.error('Invalid slug generation:', { placeName, countryName, placeSlug, countrySlug })
-    return null
-  }
+  const countrySlug = countryNameToSlug(countryName)
   
   // Determine active tab based on current path
   const getActiveTab = () => {
     if (pathname === `/${countrySlug}/${placeSlug}`) return 'overview'
     if (pathname === `/${countrySlug}/${placeSlug}/best-time-to-visit`) return 'best-time'
-    // if (pathname === `/${countrySlug}/${placeSlug}/good-deals`) return 'deals' // Hidden tab
-    return 'overview' // Default to overview
+    return 'overview'
   }
   
   const activeTab = getActiveTab()

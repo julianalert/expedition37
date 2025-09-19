@@ -132,7 +132,7 @@ export default function PostsList({ countryName }: PostsListProps) {
           
           // Add the city item using the same component as homepage
           items.push(
-            <CityItem key={city.id} {...city} />
+            <CityItem key={city.id} countryNameProp={countryName} {...city} />
           );
           
           // Add testimonials after the 6th city (index 5)
