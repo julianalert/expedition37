@@ -100,24 +100,24 @@ export default function Overview({ countryName }: OverviewProps) {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Facts</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Capital</span>
-                    <span className="font-medium text-gray-900">{country.capital || 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Currency</span>
-                    <span className="font-medium text-gray-900">{country.currency || 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Language</span>
-                    <span className="font-medium text-gray-900">{country.language || 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Time Zone</span>
-                    <span className="font-medium text-gray-900">{country.timezone || 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
                     <span className="text-gray-600">Continent</span>
                     <span className="font-medium text-gray-900">{country.continent || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Rank</span>
+                    <span className="font-medium text-gray-900">#{country.rank || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Weekly Budget</span>
+                    <span className="font-medium text-gray-900">{country.weeklyBudget ? `$${country.weeklyBudget}` : 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Overall Rating</span>
+                    <span className="font-medium text-gray-900">{country.overallRating ? `${country.overallRating}/100` : 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-600">Safe for Travel</span>
+                    <span className="font-medium text-gray-900">{country.safe ? 'Yes' : 'Check advisories'}</span>
                   </div>
                 </div>
               </div>
