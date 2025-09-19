@@ -69,6 +69,7 @@ export async function generateMetadata(
       ],
       type: 'article',
       locale: 'en_US',
+      publishedTime: post.date,
     },
     
     twitter: {
@@ -81,11 +82,15 @@ export async function generateMetadata(
     },
     
     authors: [{ name: post.name }],
-    category: 'Travel',
-    publishedTime: post.date,
+    
+    other: {
+      'article:section': 'Travel',
+    },
     
     robots: 'index, follow',
-    canonical: `${SITE_CONFIG.url}/posts/${params.id}`,
+    alternates: {
+      canonical: `${SITE_CONFIG.url}/posts/${params.id}`,
+    },
   }
 }
 
