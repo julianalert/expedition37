@@ -5,6 +5,7 @@ import { cityNameToSlug } from '@/lib/cityUtils'
 import { countryNameToSlug } from '@/lib/countryUtils'
 import getAllCountries from '@/lib/getAllCountries'
 import { useEffect, useState } from 'react'
+import RatingOverlay from '@/components/rating-overlay'
 
 interface CityItemProps extends City {}
 
@@ -63,8 +64,17 @@ export default function CityItem(props: CityItemProps) {
           </div>
         </div>
 
+        {/* Rating Overlay */}
+        <RatingOverlay 
+          overallRating={props.overallRating}
+          costRating={props.costRating}
+          safetyRating={props.safetyRating}
+          funRating={props.funRating}
+          foodRating={props.foodRating}
+        />
+
         {/* Content */}
-        <div className="absolute inset-0 p-6 flex flex-col justify-between">
+        <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
           {/* Empty top section - country moved to absolute positioning */}
           <div></div>
           

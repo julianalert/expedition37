@@ -121,23 +121,20 @@ export default function PostsList() {
 
     // Filter by criteria (What matters to you) - ALL selected criteria must match
     if (filters.criteria.length > 0) {
-      const cityCountry = countries.find((country: Country) => country.id === city.country)
-      if (!cityCountry) return false
-      
       const hasAllCriteria = filters.criteria.every((criteria: string) => {
         switch (criteria) {
           case 'safety':
-            return cityCountry.safe === true
+            return city.safe === true
           case 'fast-internet':
-            return cityCountry.fastInternet === true
+            return city.fastInternet === true
           case 'clean-air':
-            return cityCountry.cleanAir === true
+            return city.cleanAir === true
           case 'hidden-gem':
-            return cityCountry.hiddenGem === true
+            return city.hiddenGem === true
           case 'popular-now':
-            return cityCountry.popular === true
+            return city.popular === true
           case 'family-friendly':
-            return cityCountry.familyFriendly === true
+            return city.familyFriendly === true
           default:
             // For other criteria, fall back to mood tags
             return city.mood.includes(criteria)
@@ -146,47 +143,43 @@ export default function PostsList() {
       if (!hasAllCriteria) return false
     }
 
-    // Filter by budget (Weekly Budget from city's country)
+    // Filter by budget (Weekly Budget from city's own data)
     if (filters.budget) {
-      const cityCountry = countries.find((country: Country) => country.id === city.country)
-      if (!cityCountry || !cityCountry.weeklyBudget) return false // Skip cities without budget data
+      if (!city.weeklyBudget) return false // Skip cities without budget data
       
       switch (filters.budget) {
         case '<1k':
-          if (cityCountry.weeklyBudget >= 1000) return false
+          if (city.weeklyBudget >= 1000) return false
           break
         case '<2k':
-          if (cityCountry.weeklyBudget >= 2000) return false
+          if (city.weeklyBudget >= 2000) return false
           break
         case '<3k':
-          if (cityCountry.weeklyBudget >= 3000) return false
+          if (city.weeklyBudget >= 3000) return false
           break
       }
     }
 
     // Filter by additional preferences (You may also want) - ALL selected must match
     if (filters.additional.length > 0) {
-      const cityCountry = countries.find((country: Country) => country.id === city.country)
-      if (!cityCountry) return false
-      
       const hasAllAdditional = filters.additional.every((additional: string) => {
         switch (additional) {
           case 'amazing-food':
-            return cityCountry.amazingFood === true
+            return city.amazingFood === true
           case 'nightlife':
-            return cityCountry.nightlife === true
+            return city.nightlife === true
           case 'great-for-dating':
-            return cityCountry.greatForDating === true
+            return city.greatForDating === true
           case 'eco-friendly':
-            return cityCountry.ecofriendly === true
+            return city.ecofriendly === true
           case 'dog-friendly':
-            return cityCountry.dogfriendly === true
+            return city.dogfriendly === true
           case 'lgbtq-friendly':
-            return cityCountry.lgbtqfriendly === true
+            return city.lgbtqfriendly === true
           case 'low-racism':
-            return cityCountry.lowRacism === true
+            return city.lowRacism === true
           case 'muslim-friendly':
-            return cityCountry.muslimfriendly === true
+            return city.muslimfriendly === true
           default:
             // For other additional filters, fall back to mood tags
             return city.mood.includes(additional) || city.mood.includes(additional.replace('-', ''))
@@ -195,14 +188,13 @@ export default function PostsList() {
       if (!hasAllAdditional) return false
     }
 
-    // Filter by vacation goals (get vacation goal from city's country)
+    // Filter by vacation goals (use city's own vacation goals)
     if (filters.vacationGoal.length > 0) {
-      const cityCountry = countries.find((country: Country) => country.id === city.country)
-      if (!cityCountry || !cityCountry.vacationgoal) return false
+      if (!city.vacationgoal) return false
       
       const hasMatchingGoal = filters.vacationGoal.some((goal: string) => {
-        // Check if the city's country has this vacation goal
-        return cityCountry.vacationgoal && cityCountry.vacationgoal.includes(goal)
+        // Check if the city has this vacation goal
+        return city.vacationgoal && city.vacationgoal.includes(goal)
       })
       if (!hasMatchingGoal) return false
     }
@@ -223,7 +215,7 @@ export default function PostsList() {
               <PostItem key={country.id} {...country} />
             );
             
-            // Add testimonials after the 9th country (index 8)
+              // Add testimonials after the 9th country (index 8)
             if (index === 14 && filteredCountries.length > 15) {
               items.push(
                 <div key="testimonials" className="md:col-span-2 lg:col-span-3">
@@ -232,14 +224,14 @@ export default function PostsList() {
               );
             }
             
-            // Add newsletter after the 12th country (index 11)
+            {/* // Add newsletter after the 12th country (index 11)
             if (index === 29 && filteredCountries.length > 30) {
               items.push(
                 <div key="newsletter" className="md:col-span-2 lg:col-span-3">
                   <Newsletter />
                 </div>
               );
-            } 
+            } */}
             
             return items;
           }).flat()

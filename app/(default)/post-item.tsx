@@ -1,8 +1,21 @@
 import Link from 'next/link'
 import { countryNameToSlug } from '@/lib/countryUtils'
+import RatingOverlay from '@/components/rating-overlay'
 
 export default function PostItem({ ...props }) {
   const countrySlug = countryNameToSlug(props.name)
+  
+  // Debug: Log rating data for this country
+  if (props.name === 'France' || props.name === 'Thailand') {
+    console.log(`Rating data for ${props.name}:`, {
+      overallRating: props.overallRating,
+      costRating: props.costRating,
+      safetyRating: props.safetyRating,
+      funRating: props.funRating,
+      foodRating: props.foodRating
+    })
+  }
+  
   return (
     <Link href={`/${countrySlug}/best-places-to-visit`} className="group block">
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
@@ -40,8 +53,17 @@ export default function PostItem({ ...props }) {
           </div>
         </div>
 
+        {/* Rating Overlay */}
+        <RatingOverlay 
+          overallRating={props.overallRating}
+          costRating={props.costRating}
+          safetyRating={props.safetyRating}
+          funRating={props.funRating}
+          foodRating={props.foodRating}
+        />
+
         {/* Content */}
-        <div className="absolute inset-0 p-6 flex flex-col justify-between">
+        <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
           {/* Empty top section - continent moved to absolute positioning */}
           <div></div>
           
