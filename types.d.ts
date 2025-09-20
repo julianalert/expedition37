@@ -24,6 +24,7 @@ type Country = {
   "id": number,
   "name": string,
   "image": string,
+  "thumbnail": string,
   "featured": boolean,
   "continent": string,
   "mood": string[],
