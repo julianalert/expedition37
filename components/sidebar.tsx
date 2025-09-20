@@ -13,6 +13,7 @@ export default function Sidebar() {
   const [continents, setContinents] = useState<ContinentWithEmoji[]>([])
   const [countries, setCountries] = useState<Country[]>([])
   const [cities, setCities] = useState<City[]>([])
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
 
   // Check if we're on a country page (e.g., /france/best-places-to-visit)
   const isCountryPage = pathname && pathname.split('/').length >= 3 && pathname !== '/'
@@ -127,7 +128,18 @@ export default function Sidebar() {
             </div>
           )}
 
-          <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
+          {/* Show Filters Button - Only on mobile */}
+          <div className="mb-6 md:hidden">
+            <button
+              onClick={() => setShowMobileFilters(!showMobileFilters)}
+              className="w-full text-center text-indigo-500 font-medium text-sm hover:underline cursor-pointer"
+            >
+              {showMobileFilters ? 'Hide filters' : 'Show filters'}
+            </button>
+          </div>
+
+          {/* Detailed filters - hidden on mobile unless toggled */}
+          <div className={`grid grid-cols-2 md:grid-cols-1 gap-6 ${showMobileFilters ? 'block' : 'hidden md:grid'}`}>
             {/* Continent Filter - Hidden on country pages */}
             {!isCountryPage && (
               <div>
