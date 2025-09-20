@@ -8,7 +8,7 @@ export default function PostItem({ ...props }) {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(${props.image})`,
+            backgroundImage: `url(${props.thumbnail})`,
           }}
         />
         

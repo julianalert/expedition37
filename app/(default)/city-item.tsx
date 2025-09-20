@@ -46,7 +46,7 @@ export default function CityItem(props: CityItemProps) {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${props.image})`,
+              backgroundImage: `url(${props.thumbnail})`,
             }}
           />
           
@@ -116,7 +116,7 @@ export default function CityItem(props: CityItemProps) {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(${props.image})`,
+            backgroundImage: `url(${props.thumbnail})`,
           }}
         />
         

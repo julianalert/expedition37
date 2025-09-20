@@ -17,7 +17,7 @@ export default function PostItem({ countryName, ...props }: PostItemProps) {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(${props.image})`,
+            backgroundImage: `url(${props.thumbnail})`,
           }}
         />
         

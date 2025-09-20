@@ -62,6 +62,7 @@ type City = {
   "name": string,
   "country": number,
   "image": string,
+  "thumbnail": string,
   "featured": boolean,
   "rank"?: number,
   "mood": string[],
