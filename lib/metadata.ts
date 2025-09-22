@@ -89,7 +89,7 @@ export function generateMetadata(config: MetadataConfig): Metadata {
 // Site-wide constants
 export const SITE_CONFIG = {
   name: 'Detour',
-  url: 'https://www.trytrydetour.com',
+  url: 'https://www.trydetour.com',
   description: 'Discover your perfect travel destination with personalized recommendations based on season, budget, and preferences. Explore the world with confidence.',
   author: 'Detour Team',
   twitter: '@trydetour', // Update with your actual Twitter handle

@@ -4,7 +4,7 @@ import getAllPosts from './getAllPosts'
 import { countryNameToSlug } from './countryUtils'
 import { cityNameToSlug } from './cityUtils'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trytrydetour.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
 export interface SitemapUrl {
   url: string

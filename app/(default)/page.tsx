@@ -32,9 +32,9 @@ const metadataConfig: MetadataConfig = {
     siteName: SITE_CONFIG.name,
     images: [
       {
-        url: `${SITE_CONFIG.url}/images/Detour-og-image.png`,
-        width: 1200,
-        height: 630,
+        url: `${SITE_CONFIG.url}/images/detour-og-image.png`,
+        width: 2000,
+        height: 1085,
         alt: 'Detour - Discover Your Perfect Travel Destination',
         type: 'image/png',
       },
@@ -48,7 +48,7 @@ const metadataConfig: MetadataConfig = {
     creator: SITE_CONFIG.twitter,
     title: `${SITE_CONFIG.name} - Discover Your Perfect Travel Destination`,
     description: 'Find your ideal travel destination with personalized recommendations based on season, budget, and preferences. Start your next adventure today!',
-    images: [`${SITE_CONFIG.url}/images/Detour-og-image.png`],
+    images: [`${SITE_CONFIG.url}/images/detour-og-image.png`],
   },
 }
 

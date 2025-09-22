@@ -1,25 +1,40 @@
 import { NextResponse } from 'next/server'
-import { generateSitemapUrls, generateSitemapXml, validateSitemapUrls } from '@/lib/sitemapGenerator'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
 export async function GET() {
   try {
-    // Generate all sitemap URLs
-    const urls = await generateSitemapUrls()
-    
-    // Validate URLs
-    const validUrls = validateSitemapUrls(urls)
-    
-    // Generate XML sitemap
-    const sitemap = generateSitemapXml(validUrls)
+    const currentDate = new Date().toISOString()
 
-    return new NextResponse(sitemap, {
+    // Create sitemap index that points to sub-sitemaps
+    const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-static.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-countries.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-cities.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-posts.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+</sitemapindex>`
+
+    return new NextResponse(sitemapIndex, {
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
       },
     })
   } catch (error) {
-    console.error('Error generating sitemap:', error)
-    return new NextResponse('Error generating sitemap', { status: 500 })
+    console.error('Error generating sitemap index:', error)
+    return new NextResponse('Error generating sitemap index', { status: 500 })
   }
 }
