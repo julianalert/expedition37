@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:sitemap": "node scripts/test-sitemap.js",
+    "sitemap:ping": "curl \"https://www.google.com/ping?sitemap=${NEXT_PUBLIC_SITE_URL}/sitemap.xml\" && curl \"https://www.bing.com/ping?sitemap=${NEXT_PUBLIC_SITE_URL}/sitemap.xml\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

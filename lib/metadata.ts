@@ -88,10 +88,10 @@ export function generateMetadata(config: MetadataConfig): Metadata {
 
 // Site-wide constants
 export const SITE_CONFIG = {
-  name: 'Expedition37',
-  url: 'https://expedition37.com', // Update with your actual domain
+  name: 'Detour',
+  url: 'https://www.trydetour.com',
   description: 'Discover your perfect travel destination with personalized recommendations based on season, budget, and preferences. Explore the world with confidence.',
-  author: 'Expedition37 Team',
-  twitter: '@expedition37', // Update with your actual Twitter handle
-  image: '/images/expedition37-og-image.png', // We'll need to create this
+  author: 'Detour Team',
+  twitter: '@trydetour', // Update with your actual Twitter handle
+  image: '/images/detour-og-image.png',
 }
