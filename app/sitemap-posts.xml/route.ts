@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
 import getAllPosts from '@/lib/getAllPosts'
-import { generateSitemapXml } from '@/lib/sitemapGenerator'
+import { generateSitemapXml, SitemapUrl } from '@/lib/sitemapGenerator'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
 export async function GET() {
   try {
     const currentDate = new Date().toISOString()
-    const urls = []
+    const urls: SitemapUrl[] = []
 
     // Get all posts
     try {

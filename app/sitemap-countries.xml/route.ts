@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
 import getAllCountries from '@/lib/getAllCountries'
 import { countryNameToSlug } from '@/lib/countryUtils'
-import { generateSitemapXml } from '@/lib/sitemapGenerator'
+import { generateSitemapXml, SitemapUrl } from '@/lib/sitemapGenerator'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
 export async function GET() {
   try {
     const currentDate = new Date().toISOString()
-    const urls = []
+    const urls: SitemapUrl[] = []
 
     // Get all countries
     const countries: Country[] = await getAllCountries()

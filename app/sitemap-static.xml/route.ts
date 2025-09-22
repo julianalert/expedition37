@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { generateSitemapXml } from '@/lib/sitemapGenerator'
+import { generateSitemapXml, SitemapUrl } from '@/lib/sitemapGenerator'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
 export async function GET() {
   try {
     const currentDate = new Date().toISOString()
-    const urls = []
+    const urls: SitemapUrl[] = []
 
     // Static pages
     const staticPages = [
