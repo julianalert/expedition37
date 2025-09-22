@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -10,10 +11,13 @@ export default function Footer() {
             <div className="shrink-0 mr-4">
               {/* Logo */}
               <Link className="inline-flex group mb-8 md:mb-0" href="/" aria-label="Expedition37">
-                <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
-                  <path className="fill-indigo-500" d="M13.853 18.14 1 10.643 31 1l-.019.058z" />
-                  <path className="fill-indigo-300" d="M13.853 18.14 30.981 1.058 21.357 31l-7.5-12.857z" />
-                </svg>
+                <Image 
+                  src="/images/detour.svg" 
+                  alt="Expedition37" 
+                  width={180} 
+                  height={36}
+                  className="h-9 w-auto"
+                />
               </Link>
             </div>
             {/* Social links */}
