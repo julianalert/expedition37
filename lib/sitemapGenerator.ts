@@ -1,7 +1,8 @@
 import getAllCountries from './getAllCountries'
 import getCitiesByCountryId from './getCitiesByCountryId'
 import getAllPosts from './getAllPosts'
-import { countryNameToSlug, cityNameToSlug } from './countryUtils'
+import { countryNameToSlug } from './countryUtils'
+import { cityNameToSlug } from './cityUtils'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
