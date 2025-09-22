@@ -1,6 +1,6 @@
 # Complete Metadata Implementation Summary
 
-This document provides a comprehensive overview of all metadata implementations across the Expedition37 travel website.
+This document provides a comprehensive overview of all metadata implementations across the Detour travel website.
 
 ## 🎯 Overview
 
@@ -75,7 +75,7 @@ keywords: ["travel destinations", "travel recommendations", "holiday planning", 
 ```typescript
 title: "{Country} Travel Guide & Destinations"
 description: "Discover the best places to visit in {Country}..."
-canonical: "https://trydetour.com/{country-slug}"
+canonical: "https://trytrydetour.com/{country-slug}"
 ```
 
 ### Country Tabs
@@ -87,7 +87,7 @@ canonical: "https://trydetour.com/{country-slug}"
 ```typescript
 title: "{City}, {Country} Travel Guide & Things to Do"
 description: "Discover {City}, {Country} with our comprehensive travel guide..."
-canonical: "https://trydetour.com/{country-slug}/{city-slug}"
+canonical: "https://trytrydetour.com/{country-slug}/{city-slug}"
 ```
 
 ### City Tabs
@@ -106,7 +106,7 @@ category: "Travel"
 ### Auth Pages
 ```typescript
 robots: "noindex, nofollow" // Prevent indexing of auth pages
-title: "Sign In to Expedition37 - Access Your Travel Account"
+title: "Sign In to Detour - Access Your Travel Account"
 ```
 
 ## 🖼️ Image Strategy
@@ -128,7 +128,7 @@ title: "Sign In to Expedition37 - Access Your Travel Account"
 ```typescript
 export const SITE_CONFIG = {
   name: 'Detour',
-  url: 'https://trydetour.com', // Update with actual domain
+  url: 'https://trytrydetour.com', // Update with actual domain
   description: 'Discover your perfect travel destination...',
   author: 'Detour Team',
   twitter: '@trydetour', // Update with actual handle
@@ -178,7 +178,7 @@ export const SITE_CONFIG = {
 
 ### Structured Data (JSON-LD)
 Consider adding structured data for:
-- **Organization markup** for Expedition37
+- **Organization markup** for Detour
 - **Article markup** for blog posts
 - **Place markup** for destinations
 - **Review markup** for destination ratings
@@ -231,4 +231,4 @@ The complete metadata implementation provides:
 - **Maintainable architecture** for future updates
 - **Performance optimized** metadata generation
 
-This comprehensive implementation ensures Expedition37 is fully optimized for search engines and social media platforms, providing an excellent foundation for organic growth and user engagement.
+This comprehensive implementation ensures Detour is fully optimized for search engines and social media platforms, providing an excellent foundation for organic growth and user engagement.

@@ -7,7 +7,7 @@ const nextConfig = {
   },
   // Add environment variables for sitemap
   env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trytrydetour.com',
   },
   // Optimize for sitemap generation
   async rewrites() {

@@ -10,10 +10,10 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between mb-4 md:mb-6">
             <div className="shrink-0 mr-4">
               {/* Logo */}
-              <Link className="inline-flex group mb-8 md:mb-0" href="/" aria-label="Expedition37">
+              <Link className="inline-flex group mb-8 md:mb-0" href="/" aria-label="Detour">
                 <Image 
                   src="/images/detour.svg" 
-                  alt="Expedition37" 
+                  alt="Detour" 
                   width={180} 
                   height={36}
                   className="h-9 w-auto"
@@ -58,7 +58,7 @@ export default function Footer() {
             </div>
 
             {/* Copyright */}
-            <div className="text-sm text-gray-500">@Expedition37 | All rights reserved</div>
+            <div className="text-sm text-gray-500">@Detour | All rights reserved</div>
           </div>
         </div>
       </div>

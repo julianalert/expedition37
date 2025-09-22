@@ -1,6 +1,6 @@
 # Metadata Implementation Guide
 
-This document explains the comprehensive SEO, OpenGraph, and Twitter metadata implementation for Expedition37.
+This document explains the comprehensive SEO, OpenGraph, and Twitter metadata implementation for Detour.
 
 ## Overview
 
@@ -28,7 +28,7 @@ Homepage metadata implementation:
 
 ### 3. `/app/layout.tsx`
 Root layout metadata:
-- Template-based title system (`%s | Expedition37`)
+- Template-based title system (`%s | Detour`)
 - Default fallback metadata
 - Base URL configuration for absolute URLs
 
@@ -37,31 +37,31 @@ Root layout metadata:
 ### SEO Optimization
 ```typescript
 seo: {
-  title: 'Expedition37 - Discover Your Perfect Travel Destination',
+  title: 'Detour - Discover Your Perfect Travel Destination',
   description: 'Find your ideal travel destination with personalized recommendations...',
   keywords: [
     'travel destinations', 'travel recommendations', 'holiday planning',
     'vacation destinations', 'travel guide', 'best places to visit',
     // ... 15 targeted keywords
   ],
-  canonical: 'https://expedition37.com',
+  canonical: 'https://trydetour.com',
   robots: 'index, follow',
-  author: 'Expedition37 Team',
+  author: 'Detour Team',
 }
 ```
 
 ### Open Graph Configuration
 ```typescript
 openGraph: {
-  title: 'Expedition37 - Your Next Holiday Starts Here',
+  title: 'Detour - Your Next Holiday Starts Here',
   description: 'Explore the world with a tool that recommends the perfect destination...',
-  url: 'https://expedition37.com',
-  siteName: 'Expedition37',
+  url: 'https://trydetour.com',
+  siteName: 'Detour',
   images: [{
-    url: 'https://expedition37.com/images/expedition37-og-image.png',
+    url: 'https://trydetour.com/images/Detour-og-image.png',
     width: 1200,
     height: 630,
-    alt: 'Expedition37 - Discover Your Perfect Travel Destination',
+    alt: 'Detour - Discover Your Perfect Travel Destination',
     type: 'image/png',
   }],
   type: 'website',
@@ -73,11 +73,11 @@ openGraph: {
 ```typescript
 twitter: {
   card: 'summary_large_image',
-  site: '@expedition37',
-  creator: '@expedition37',
-  title: 'Expedition37 - Discover Your Perfect Travel Destination',
+  site: '@Detour',
+  creator: '@Detour',
+  title: 'Detour - Discover Your Perfect Travel Destination',
   description: 'Find your ideal travel destination with personalized recommendations...',
-  images: ['https://expedition37.com/images/expedition37-og-image.png'],
+  images: ['https://trydetour.com/images/Detour-og-image.png'],
 }
 ```
 
@@ -88,20 +88,20 @@ In `/lib/metadata.ts`, update the `SITE_CONFIG` object:
 
 ```typescript
 export const SITE_CONFIG = {
-  name: 'Expedition37',
+  name: 'Detour',
   url: 'https://your-actual-domain.com', // ← Update this
   description: 'Discover your perfect travel destination...',
-  author: 'Expedition37 Team',
+  author: 'Detour Team',
   twitter: '@your-twitter-handle', // ← Update this
-  image: '/images/expedition37-og-image.png',
+  image: '/images/Detour-og-image.png',
 }
 ```
 
 ### Required Assets
 
 #### Open Graph Image
-Create a **1200x630px PNG image** at `/public/images/expedition37-og-image.png`:
-- Include Expedition37 branding
+Create a **1200x630px PNG image** at `/public/images/Detour-og-image.png`:
+- Include Detour branding
 - Travel-themed visuals (maps, destinations, travel icons)
 - The tagline "Your Next Holiday Starts Here"
 - Clean, professional design

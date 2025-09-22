@@ -1,10 +1,10 @@
 # Open Graph Image Placeholder
 
-This is a placeholder file. You should create a 1200x630px PNG image named "expedition37-og-image.png" 
+This is a placeholder file. You should create a 1200x630px PNG image named "Detour-og-image.png" 
 in the /public/images/ directory.
 
 The image should include:
-- Expedition37 branding
+- Detour branding
 - Travel-themed visuals
 - The tagline "Your Next Holiday Starts Here"
 - A clean, professional design that represents the travel destination finder

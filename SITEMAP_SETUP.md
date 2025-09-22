@@ -27,7 +27,7 @@ Add these to your production environment:
 
 ```env
 # Required: Your production site URL
-NEXT_PUBLIC_SITE_URL=https://www.trydetour.com
+NEXT_PUBLIC_SITE_URL=https://www.trytrydetour.com
 
 # Supabase (already configured)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -44,17 +44,17 @@ The sitemap automatically updates when:
 
 ### URL Structure
 The sitemap includes these URL patterns:
-- `https://www.trydetour.com/` (homepage)
-- `https://www.trydetour.com/signin` (auth pages)
-- `https://www.trydetour.com/posts/{id}` (blog posts)
-- `https://www.trydetour.com/{country-slug}` (country pages)
-- `https://www.trydetour.com/{country-slug}/best-places-to-visit`
-- `https://www.trydetour.com/{country-slug}/best-time-to-visit`
-- `https://www.trydetour.com/{country-slug}/good-deals`
-- `https://www.trydetour.com/{country-slug}/{city-slug}`
-- `https://www.trydetour.com/{country-slug}/{city-slug}/best-time-to-visit`
-- `https://www.trydetour.com/{country-slug}/{city-slug}/good-deals`
-- `https://www.trydetour.com/{country-slug}/{city-slug}/where-to-go`
+- `https://www.trytrydetour.com/` (homepage)
+- `https://www.trytrydetour.com/signin` (auth pages)
+- `https://www.trytrydetour.com/posts/{id}` (blog posts)
+- `https://www.trytrydetour.com/{country-slug}` (country pages)
+- `https://www.trytrydetour.com/{country-slug}/best-places-to-visit`
+- `https://www.trytrydetour.com/{country-slug}/best-time-to-visit`
+- `https://www.trytrydetour.com/{country-slug}/good-deals`
+- `https://www.trytrydetour.com/{country-slug}/{city-slug}`
+- `https://www.trytrydetour.com/{country-slug}/{city-slug}/best-time-to-visit`
+- `https://www.trytrydetour.com/{country-slug}/{city-slug}/good-deals`
+- `https://www.trytrydetour.com/{country-slug}/{city-slug}/where-to-go`
 
 ### SEO Optimization
 - **Priority**: Homepage (1.0), Countries (0.8), Country sub-pages (0.7), Cities (0.6), Posts (0.6), City sub-pages (0.5)
@@ -69,13 +69,13 @@ Set `NEXT_PUBLIC_SITE_URL` in your production environment:
 **Vercel:**
 ```bash
 vercel env add NEXT_PUBLIC_SITE_URL
-# Enter: https://www.trydetour.com
+# Enter: https://www.trytrydetour.com
 ```
 
 **Netlify:**
 Go to Site Settings → Environment Variables → Add:
 - Key: `NEXT_PUBLIC_SITE_URL`
-- Value: `https://www.trydetour.com`
+- Value: `https://www.trytrydetour.com`
 
 **Other platforms:**
 Add the environment variable through your hosting platform's dashboard.
@@ -86,20 +86,20 @@ Add the environment variable through your hosting platform's dashboard.
 1. Go to [Google Search Console](https://search.google.com/search-console/)
 2. Add your property if not already added
 3. Go to Sitemaps
-4. Submit: `https://www.trydetour.com/sitemap.xml`
+4. Submit: `https://www.trytrydetour.com/sitemap.xml`
 
 **Bing Webmaster Tools:**
 1. Go to [Bing Webmaster Tools](https://www.bing.com/webmasters/)
 2. Add your site if not already added
 3. Go to Sitemaps
-4. Submit: `https://www.trydetour.com/sitemap.xml`
+4. Submit: `https://www.trytrydetour.com/sitemap.xml`
 
 ### 3. Verify Setup
 
 Test your sitemap:
 ```bash
-curl https://www.trydetour.com/sitemap.xml
-curl https://www.trydetour.com/robots.txt
+curl https://www.trytrydetour.com/sitemap.xml
+curl https://www.trytrydetour.com/robots.txt
 ```
 
 ## Performance Considerations
@@ -157,10 +157,10 @@ npm run dev
 You can manually notify search engines of updates:
 ```bash
 # Google
-curl "https://www.google.com/ping?sitemap=https://www.trydetour.com/sitemap.xml"
+curl "https://www.google.com/ping?sitemap=https://www.trytrydetour.com/sitemap.xml"
 
 # Bing
-curl "https://www.bing.com/ping?sitemap=https://www.trydetour.com/sitemap.xml"
+curl "https://www.bing.com/ping?sitemap=https://www.trytrydetour.com/sitemap.xml"
 ```
 
 ## Advanced Features
@@ -200,14 +200,14 @@ The sitemap will automatically update every time you deploy, ensuring search eng
 
 ✅ **Set your environment variable:**
 ```bash
-NEXT_PUBLIC_SITE_URL=https://www.trydetour.com
+NEXT_PUBLIC_SITE_URL=https://www.trytrydetour.com
 ```
 
 ✅ **Deploy and test:**
 - Deploy your changes
-- Visit `https://www.trydetour.com/sitemap.xml`
-- Visit `https://www.trydetour.com/robots.txt`
+- Visit `https://www.trytrydetour.com/sitemap.xml`
+- Visit `https://www.trytrydetour.com/robots.txt`
 
 ✅ **Submit to search engines:**
-- Submit `https://www.trydetour.com/sitemap.xml` to Google Search Console
-- Submit `https://www.trydetour.com/sitemap.xml` to Bing Webmaster Tools
+- Submit `https://www.trytrydetour.com/sitemap.xml` to Google Search Console
+- Submit `https://www.trytrydetour.com/sitemap.xml` to Bing Webmaster Tools

@@ -17,11 +17,11 @@ const nycd = Nothing_You_Could_Do({
 
 export const metadata = {
   title: {
-    template: '%s | Expedition37',
-    default: 'Expedition37 - Your next holiday starts here',
+    template: '%s | Detour',
+    default: 'Detour - Your next holiday starts here',
   },
   description: 'Find your ideal travel destination with personalized recommendations based on season, budget, and preferences. Explore the world with confidence.',
-  metadataBase: new URL('https://expedition37.com'), // Update with your actual domain
+  metadataBase: new URL('https://trydetour.com'), // Update with your actual domain
 }
 
 export default function RootLayout({

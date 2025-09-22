@@ -19,7 +19,7 @@ export default function Testimonials() {
             </div>
             <figure>
               <blockquote className="text-lg font-bold m-0 pb-1">
-                <p>I can't believe it's free lol. Who needs ChatPT when you have Expedition37?</p>
+                <p>I can't believe it's free lol. Who needs ChatPT when you have Detour?</p>
               </blockquote>
               <figcaption className="text-sm font-medium">
               <span className="text-teal-500">Patrick</span> @ 37yo, from New-York, USA
@@ -38,7 +38,7 @@ export default function Testimonials() {
             </div>
             <figure>
               <blockquote className="text-lg font-bold m-0 pb-1">
-                <p>I didn't know where to go for my next holiday, Expedition37 helped me find and organize the perfect getaway.</p>
+                <p>I didn't know where to go for my next holiday, Detour helped me find and organize the perfect getaway.</p>
               </blockquote>
               <figcaption className="text-sm font-medium">
               <span className="text-sky-500">Anne</span> @ 32yo, from Paris, France{' '}

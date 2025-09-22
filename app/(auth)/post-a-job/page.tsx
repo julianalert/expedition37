@@ -30,7 +30,7 @@ const metadataConfig: MetadataConfig = {
     siteName: SITE_CONFIG.name,
     images: [
       {
-        url: `${SITE_CONFIG.url}/images/expedition37-og-image.png`,
+        url: `${SITE_CONFIG.url}/images/Detour-og-image.png`,
         width: 1200,
         height: 630,
         alt: `Share your travel experience with ${SITE_CONFIG.name}`,
@@ -46,7 +46,7 @@ const metadataConfig: MetadataConfig = {
     creator: SITE_CONFIG.twitter,
     title: `Share Your Travel Experience`,
     description: `Join our community and share your amazing travel experiences with fellow adventurers.`,
-    images: [`${SITE_CONFIG.url}/images/expedition37-og-image.png`],
+    images: [`${SITE_CONFIG.url}/images/Detour-og-image.png`],
   },
 }
 

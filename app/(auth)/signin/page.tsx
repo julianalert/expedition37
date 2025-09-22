@@ -12,7 +12,7 @@ const metadataConfig: MetadataConfig = {
       'travel community',
       'personalized travel',
       'travel recommendations',
-      'expedition37 login'
+      'Detour login'
     ],
     canonical: `${SITE_CONFIG.url}/signin`,
     robots: 'noindex, nofollow', // Auth pages typically shouldn't be indexed
@@ -25,7 +25,7 @@ const metadataConfig: MetadataConfig = {
     siteName: SITE_CONFIG.name,
     images: [
       {
-        url: `${SITE_CONFIG.url}/images/expedition37-og-image.png`,
+        url: `${SITE_CONFIG.url}/images/Detour-og-image.png`,
         width: 1200,
         height: 630,
         alt: `Sign in to ${SITE_CONFIG.name}`,
@@ -41,7 +41,7 @@ const metadataConfig: MetadataConfig = {
     creator: SITE_CONFIG.twitter,
     title: `Sign In to ${SITE_CONFIG.name}`,
     description: `Access your travel account for personalized destination recommendations.`,
-    images: [`${SITE_CONFIG.url}/images/expedition37-og-image.png`],
+    images: [`${SITE_CONFIG.url}/images/Detour-og-image.png`],
   },
 }
 

@@ -61,8 +61,8 @@ async function testSitemap() {
    console.log('   2. Visit: http://localhost:3000/sitemap.xml')
    console.log('   3. Visit: http://localhost:3000/robots.txt')
    console.log('\n🌐 Production URLs:')
-   console.log('   • https://www.trydetour.com/sitemap.xml')
-   console.log('   • https://www.trydetour.com/robots.txt')
+   console.log('   • https://www.trytrydetour.com/sitemap.xml')
+   console.log('   • https://www.trytrydetour.com/robots.txt')
     
   } catch (error) {
     console.error('\n❌ Sitemap test failed:')
