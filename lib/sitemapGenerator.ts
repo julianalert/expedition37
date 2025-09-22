@@ -36,8 +36,8 @@ export async function generateSitemapUrls(): Promise<SitemapUrl[]> {
 
     // Get all posts for the posts section
     try {
-      const posts = await getAllPosts()
-      posts.forEach(post => {
+      const posts: Post[] = await getAllPosts()
+      posts.forEach((post: Post) => {
         urls.push({
           url: `${SITE_URL}/posts/${post.id}`,
           lastModified: post.date || currentDate,
@@ -50,7 +50,7 @@ export async function generateSitemapUrls(): Promise<SitemapUrl[]> {
     }
 
     // Get all countries
-    const countries = await getAllCountries()
+    const countries: Country[] = await getAllCountries()
     
     for (const country of countries) {
       const countrySlug = countryNameToSlug(country.name)
@@ -81,7 +81,7 @@ export async function generateSitemapUrls(): Promise<SitemapUrl[]> {
 
       // Get cities for this country
       try {
-        const cities = await getCitiesByCountryId(country.id.toString())
+        const cities: City[] = await getCitiesByCountryId(country.id.toString())
         
         for (const city of cities) {
           const citySlug = cityNameToSlug(city.name)

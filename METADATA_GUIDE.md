@@ -174,7 +174,7 @@ This implementation can be extended to other pages:
 // For destination pages
 const destinationMetadata: MetadataConfig = {
   seo: {
-    title: `${destination.name}, ${destination.country} - Travel Guide | Expedition37`,
+    title: `${destination.name}, ${destination.country} - Travel Guide | Detour`,
     description: `Discover ${destination.name} with our comprehensive travel guide...`,
     // ... destination-specific configuration
   },

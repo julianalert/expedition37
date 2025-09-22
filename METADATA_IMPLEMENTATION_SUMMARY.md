@@ -66,7 +66,7 @@ We have successfully implemented comprehensive SEO, OpenGraph, and Twitter metad
 
 ### Homepage
 ```typescript
-title: "Expedition37 - Discover Your Perfect Travel Destination"
+title: "Detour - Discover Your Perfect Travel Destination"
 description: "Find your ideal travel destination with personalized recommendations..."
 keywords: ["travel destinations", "travel recommendations", "holiday planning", ...]
 ```
@@ -75,7 +75,7 @@ keywords: ["travel destinations", "travel recommendations", "holiday planning", 
 ```typescript
 title: "{Country} Travel Guide & Destinations"
 description: "Discover the best places to visit in {Country}..."
-canonical: "https://expedition37.com/{country-slug}"
+canonical: "https://trydetour.com/{country-slug}"
 ```
 
 ### Country Tabs
@@ -87,7 +87,7 @@ canonical: "https://expedition37.com/{country-slug}"
 ```typescript
 title: "{City}, {Country} Travel Guide & Things to Do"
 description: "Discover {City}, {Country} with our comprehensive travel guide..."
-canonical: "https://expedition37.com/{country-slug}/{city-slug}"
+canonical: "https://trydetour.com/{country-slug}/{city-slug}"
 ```
 
 ### City Tabs
@@ -97,7 +97,7 @@ canonical: "https://expedition37.com/{country-slug}/{city-slug}"
 
 ### Post Pages
 ```typescript
-title: "{Post Title} | {Author Name} - Expedition37"
+title: "{Post Title} | {Author Name} - Detour"
 description: "Discover {Post Title} with {Author Name}..."
 type: "article"
 category: "Travel"
@@ -112,7 +112,7 @@ title: "Sign In to Expedition37 - Access Your Travel Account"
 ## 🖼️ Image Strategy
 
 ### Open Graph Images
-- **Homepage**: `/images/expedition37-og-image.png` (1200x630px)
+- **Homepage**: `/images/detour-og-image.png` (1200x630px)
 - **Countries**: Database images or `/images/destinations/{country-slug}-og.jpg`
 - **Cities**: Database images or `/images/destinations/{city-slug}-{country-slug}.jpg`
 - **Posts**: User-uploaded images from post data
@@ -127,12 +127,12 @@ title: "Sign In to Expedition37 - Access Your Travel Account"
 ### Site Configuration (`/lib/metadata.ts`)
 ```typescript
 export const SITE_CONFIG = {
-  name: 'Expedition37',
-  url: 'https://expedition37.com', // Update with actual domain
+  name: 'Detour',
+  url: 'https://trydetour.com', // Update with actual domain
   description: 'Discover your perfect travel destination...',
-  author: 'Expedition37 Team',
-  twitter: '@expedition37', // Update with actual handle
-  image: '/images/expedition37-og-image.png',
+  author: 'Detour Team',
+  twitter: '@trydetour', // Update with actual handle
+  image: '/images/detour-og-image.png',
 }
 ```
 
