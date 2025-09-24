@@ -16,11 +16,11 @@ export default async function getCountryByName(countrySlug: string): Promise<Cou
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ')
     
-    // First try direct lookup by name
+    // First try direct lookup by name (properly escaped)
     const { data, error } = await supabase
       .from('country')
       .select('*')
-      .ilike('name', potentialName)
+      .eq('name', potentialName) // Use exact match instead of ilike to avoid injection
       .single()
     
     if (!error && data) {

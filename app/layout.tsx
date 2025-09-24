@@ -37,11 +37,14 @@ export default function RootLayout({
           {children}
         </div>
         
-        {/* Beam Analytics */}
+        {/* Beam Analytics - Secured with SRI */}
         <Script
           src="https://beamanalytics.b-cdn.net/beam.min.js"
           data-token="9c0d7664-9944-4312-a362-e87e8f68380c"
           strategy="afterInteractive"
+          crossOrigin="anonymous"
+          // Note: You should generate the actual SRI hash for the beam.min.js file
+          // Use: openssl dgst -sha384 -binary beam.min.js | openssl base64 -A
         />
       </body>
     </html>

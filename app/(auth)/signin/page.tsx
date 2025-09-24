@@ -55,25 +55,112 @@ export default function SignIn() {
         <div className="text-gray-500">Enter your email and we'll email you a magic link for a password-free sign in.</div>
       </div>
 
-      {/* Form */}
-      <form>
+      {/* Secure Form */}
+      <form action="/api/auth/signin" method="POST" className="secure-form">
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="email">
               Email
             </label>
-            <input id="email" className="form-input w-full" type="email" required />
+            <input 
+              id="email" 
+              name="email"
+              className="form-input w-full" 
+              type="email" 
+              required 
+              maxLength={254}
+              autoComplete="email"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              title="Please enter a valid email address"
+            />
           </div>
+          {/* CSRF Protection */}
+          <input 
+            type="hidden" 
+            name="csrf_token" 
+            id="csrf_token"
+            value="" 
+          />
         </div>
         <div className="mt-6">
-          <button className="btn w-full text-white bg-indigo-500 hover:bg-indigo-600 shadow-xs group">
-            Get Magic Link{' '}
-            <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">
-              -&gt;
+          <button 
+            type="submit" 
+            className="btn w-full text-white bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-400 shadow-xs group"
+            id="submit-btn"
+          >
+            <span id="btn-text">
+              Get Magic Link{' '}
+              <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">
+                -&gt;
+              </span>
+            </span>
+            <span id="btn-loading" className="hidden">
+              Sending...
             </span>
           </button>
         </div>
+        <div id="form-message" className="mt-4 text-sm hidden"></div>
       </form>
+
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          // Secure form handling
+          document.addEventListener('DOMContentLoaded', async function() {
+            const form = document.querySelector('.secure-form');
+            const csrfInput = document.getElementById('csrf_token');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoading = document.getElementById('btn-loading');
+            const messageDiv = document.getElementById('form-message');
+            
+            // Get CSRF token
+            try {
+              const response = await fetch('/api/auth/signin');
+              const data = await response.json();
+              csrfInput.value = data.csrf_token;
+            } catch (error) {
+              console.error('Failed to get CSRF token:', error);
+            }
+            
+            form.addEventListener('submit', async function(e) {
+              e.preventDefault();
+              
+              // Show loading state
+              submitBtn.disabled = true;
+              btnText.classList.add('hidden');
+              btnLoading.classList.remove('hidden');
+              messageDiv.classList.add('hidden');
+              
+              try {
+                const formData = new FormData(form);
+                const response = await fetch('/api/auth/signin', {
+                  method: 'POST',
+                  body: formData,
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                  messageDiv.className = 'mt-4 text-sm text-green-600';
+                  messageDiv.textContent = result.message;
+                } else {
+                  messageDiv.className = 'mt-4 text-sm text-red-600';
+                  messageDiv.textContent = result.error;
+                }
+              } catch (error) {
+                messageDiv.className = 'mt-4 text-sm text-red-600';
+                messageDiv.textContent = 'Network error. Please try again.';
+              } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                messageDiv.classList.remove('hidden');
+              }
+            });
+          });
+        `
+      }} />
 
       {/* Divider */}
       <div className="flex items-center my-6">
