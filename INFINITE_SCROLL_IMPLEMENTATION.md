@@ -44,6 +44,9 @@ const { data, error } = await supabase
   .not('overallRating', 'is', null)  // Only cities with ratings
   .order('overallRating', { ascending: false })  // Highest rated first
   .range(from, to)  // from = page * pageSize, to = from + pageSize - 1
+
+// For other queries (with null handling):
+// .order('overallRating', { ascending: false, nullsFirst: false })  // nullsFirst, not nullsLast
 ```
 
 #### Scroll Detection

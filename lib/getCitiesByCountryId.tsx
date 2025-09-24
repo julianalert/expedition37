@@ -14,7 +14,7 @@ export default async function getCitiesByCountryId(countryId: string): Promise<C
       .from('city')
       .select('*')
       .eq('country', countryId)
-      .order('overallRating', { ascending: false, nullsLast: true })
+      .order('overallRating', { ascending: false, nullsFirst: false })
       .order('name', { ascending: true })
 
     console.log('Supabase response:', { data, error })
