@@ -16,7 +16,7 @@ export default function InfiniteScrollPostsList() {
   const [hasMore, setHasMore] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
-  const { filters } = useFilters()
+  const { filters, updateFilters } = useFilters()
   const loadingRef = useRef<HTMLDivElement>(null)
 
   // Load initial data
@@ -28,10 +28,11 @@ export default function InfiniteScrollPostsList() {
         const countriesData = await getAllCountries()
         setCountries(countriesData)
 
+        // HOMEPAGE BLOCK: Don't load cities for homepage to reduce database usage
         // Load first page of cities (100 items)
-        const citiesResult = await getPaginatedCities(0, 100)
-        setCities(citiesResult.cities)
-        setHasMore(citiesResult.hasMore)
+        // const citiesResult = await getPaginatedCities(0, 100)
+        setCities([])
+        setHasMore(false)
         setCurrentPage(1) // Next page to load
       } catch (error) {
         console.error('Error loading initial data:', error)
@@ -43,8 +44,12 @@ export default function InfiniteScrollPostsList() {
     loadInitialData()
   }, [])
 
-  // Load more cities
+  // Load more cities - BLOCKED for homepage
   const loadMoreCities = useCallback(async () => {
+    // HOMEPAGE BLOCK: Don't load more cities to reduce database usage
+    console.log('Cities loading blocked on homepage')
+    return
+    
     if (isLoading || !hasMore || filters.filterType !== 'places') {
       return
     }
@@ -95,17 +100,14 @@ export default function InfiniteScrollPostsList() {
     return () => observer.disconnect()
   }, [loadMoreCities])
 
-  // Reset cities when switching between countries and places
+  // Reset cities when switching between countries and places - BLOCKED for homepage
   useEffect(() => {
+    // HOMEPAGE BLOCK: Don't reload cities to reduce database usage
     if (filters.filterType === 'places' && cities.length === 0 && !isInitialLoad) {
-      // Reload cities if we switched to places and have no cities
-      const reloadCities = async () => {
-        const citiesResult = await getPaginatedCities(0, 100)
-        setCities(citiesResult.cities)
-        setHasMore(citiesResult.hasMore)
-        setCurrentPage(1)
-      }
-      reloadCities()
+      console.log('Cities reload blocked on homepage')
+      // Keep cities empty and hasMore false
+      setCities([])
+      setHasMore(false)
     }
   }, [filters.filterType, cities.length, isInitialLoad])
 
@@ -328,25 +330,25 @@ export default function InfiniteScrollPostsList() {
             return items;
           }).flat()
         ) : (
-          filteredCities.map((city: City, index: number) => {
-            const items = [];
-            
-            // Add the city item with unique key combining id and index to prevent duplicates
-            items.push(
-              <CityItem key={`city-${city.id}-${index}`} {...city} />
-            );
-            
-            // Add testimonials after the 30th city (index 29)
-            if (index === 29 && filteredCities.length > 30) {
-              items.push(
-                <div key="testimonials-cities" className="md:col-span-2 lg:col-span-3">
-                  <Testimonials />
-                </div>
-              );
-            }
-            
-            return items;
-          }).flat()
+          // Show "Coming Soon" message when places filter is selected
+          <div className="md:col-span-2 lg:col-span-3 flex flex-col items-center justify-center py-16 px-6 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl border-2 border-dashed border-orange-200">
+            <div className="bg-orange-500 text-white p-3 rounded-full mb-4">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Places Coming Soon!</h3>
+            <p className="text-gray-600 text-center max-w-md">
+              We're working hard to bring you amazing city destinations. In the meantime, explore our fantastic country recommendations!
+            </p>
+            <button 
+              onClick={() => updateFilters({ filterType: 'countries' })}
+              className="mt-4 px-6 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
+            >
+              Explore Countries Instead
+            </button>
+          </div>
         )}
       </div>
 

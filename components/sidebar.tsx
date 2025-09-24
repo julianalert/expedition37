@@ -21,7 +21,9 @@ export default function Sidebar() {
   useEffect(() => {
     getAllContinents().then(setContinents)
     getAllCountries().then(setCountries)
-    getAllCities().then(setCities)
+    // HOMEPAGE BLOCK: Don't load cities on homepage sidebar to reduce database usage
+    // getAllCities().then(setCities)
+    setCities([]) // Keep cities empty for homepage
   }, [])
 
   // Set default filter to 'places' when on a country page
@@ -113,16 +115,12 @@ export default function Sidebar() {
                   Countries
                 </button>
                 <button
-                  onClick={() => handleFilterTypeChange('places')}
-                  className={`
-                    flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer
-                    ${filters.filterType === 'places'
-                      ? 'bg-indigo-500 text-white shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                    }
-                  `}
+                  className="flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-not-allowed opacity-50 relative text-gray-400 bg-gray-100"
                 >
                   Places
+                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold text-[10px]">
+                    Soon
+                  </span>
                 </button>
               </div>
             </div>
