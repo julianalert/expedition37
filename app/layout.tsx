@@ -1,4 +1,5 @@
 import './css/style.css'
+import Script from 'next/script'
 
 import { Inter, Nothing_You_Could_Do } from 'next/font/google'
 
@@ -35,6 +36,13 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           {children}
         </div>
+        
+        {/* Beam Analytics */}
+        <Script
+          src="https://beamanalytics.b-cdn.net/beam.min.js"
+          data-token="9c0d7664-9944-4312-a362-e87e8f68380c"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
