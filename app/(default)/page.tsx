@@ -56,7 +56,7 @@ export const metadata = generateMetadata(metadataConfig)
 import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
-import PostsList from './posts-list'
+import InfiniteScrollPostsList from '@/components/infinite-scroll-posts-list'
 import { FilterProvider } from '@/contexts/FilterContext'
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
 
                 {/* Main content */}
                 <div className="md:grow">
-                  <PostsList />
+                  <InfiniteScrollPostsList />
 
                 </div>
 

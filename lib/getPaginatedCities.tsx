@@ -1,59 +1,95 @@
 import { supabase } from './supabase'
 
-export default async function getCitiesByCountryId(countryId: string): Promise<City[]> {
+interface PaginatedCitiesResult {
+  cities: City[]
+  totalCount: number
+  hasMore: boolean
+}
+
+export default async function getPaginatedCities(page: number = 0, pageSize: number = 100): Promise<PaginatedCitiesResult> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured, using fallback data for cities')
-    return getFallbackCitiesByCountryId(countryId)
+    console.log('🔴 SUPABASE NOT CONFIGURED - Using fallback data for paginated cities')
+    return getPaginatedFallbackCities(page, pageSize)
   }
+  
+  console.log('🟢 SUPABASE CONFIGURED - Fetching paginated cities from database')
 
   try {
-    console.log(`Fetching cities for country ID: ${countryId}`)
+    const from = page * pageSize
+    const to = from + pageSize - 1
     
+    console.log(`📄 Page ${page + 1}: Requesting range ${from}-${to} (pageSize: ${pageSize})`)
+
+    // First, get the total count of cities WITH ratings only
+    const { count, error: countError } = await supabase
+      .from('city')
+      .select('*', { count: 'exact', head: true })
+      .not('overallRating', 'is', null)
+
+    if (countError) {
+      console.error('Error getting cities count from Supabase:', countError)
+      return getPaginatedFallbackCities(page, pageSize)
+    }
+
+    // Then get the paginated data, only cities WITH ratings, ordered by overallRating (highest first)
     const { data, error } = await supabase
       .from('city')
       .select('*')
-      .eq('country', countryId)
-      .order('overallRating', { ascending: false, nullsLast: true })
-      .order('name', { ascending: true })
-
-    console.log('Supabase response:', { data, error })
+      .not('overallRating', 'is', null)
+      .order('overallRating', { ascending: false })
+      .range(from, to)
 
     if (error) {
-      console.error('Error fetching cities from Supabase:', error)
-      console.log('Error details:', JSON.stringify(error, null, 2))
-      console.log('Falling back to local city data')
-      // Return fallback data if Supabase fails
-      return getFallbackCitiesByCountryId(countryId)
+      console.error('Error fetching paginated cities from Supabase:', error)
+      return getPaginatedFallbackCities(page, pageSize)
     }
 
+    const totalCount = count || 0
+    const hasMore = from + pageSize < totalCount
+
+    console.log(`Successfully fetched ${data?.length || 0} cities (page ${page + 1}, ${from}-${to}) from Supabase. Total: ${totalCount}, hasMore: ${hasMore}`)
+    
+    // Debug: Log first 5 cities to check ordering and detect duplicates
     if (data && data.length > 0) {
-      console.log(`Successfully fetched ${data.length} cities from Supabase`)
-      return data
-    } else {
-      console.log('No cities found in Supabase, using fallback data')
-      return getFallbackCitiesByCountryId(countryId)
+      console.log(`📊 All ${data.length} cities in this batch have ratings`)
+      console.log('First 5 cities:', data.slice(0, 5).map(city => ({
+        id: city.id,
+        name: city.name,
+        overallRating: city.overallRating
+      })))
+      
+      // Check for duplicate IDs within this batch
+      const ids = data.map(city => city.id)
+      const uniqueIds = new Set(ids)
+      if (ids.length !== uniqueIds.size) {
+        console.error('🚨 DUPLICATE IDs FOUND IN THIS BATCH:', ids.filter((id, index) => ids.indexOf(id) !== index))
+      }
+    }
+
+    return {
+      cities: data || [],
+      totalCount,
+      hasMore
     }
   } catch (error) {
-    console.error('Error connecting to Supabase for cities:', error)
-    console.log('Falling back to local city data')
-    // Return fallback data if connection fails
-    return getFallbackCitiesByCountryId(countryId)
+    console.error('Error connecting to Supabase for paginated cities:', error)
+    return getPaginatedFallbackCities(page, pageSize)
   }
 }
 
 // Fallback data in case Supabase is not available or configured
-function getFallbackCitiesByCountryId(countryId: string): City[] {
+function getPaginatedFallbackCities(page: number, pageSize: number): PaginatedCitiesResult {
   const fallbackCities: City[] = [
     // Thailand cities
     { id: 1, name: "Bangkok", country: 1, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: true, rank: 1, mood: ["vibrant", "cultural", "affordable"], description: "Thailand's bustling capital city, known for its vibrant street life, ornate temples, and incredible street food scene.", overallRating: 87, costRating: 88, safetyRating: 78, funRating: 92, foodRating: 96 },
     { id: 2, name: "Chiang Mai", country: 1, image: "https://images.unsplash.com/photo-1596622897385-0086202d383d?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", thumbnail: "https://images.unsplash.com/photo-1596622897385-0086202d383d?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", featured: true, rank: 3, mood: ["cultural", "peaceful", "affordable", "temples"], description: "A cultural hub in northern Thailand, famous for its ancient temples, night markets, and laid-back mountain atmosphere.", overallRating: 85, costRating: 90, safetyRating: 85, funRating: 82, foodRating: 88 },
     
     // Indonesia cities
-    { id: 3, name: "Canggu", country: 2, image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 2, mood: ["beach", "surf", "relaxed", "spiritual"] },
+    { id: 3, name: "Canggu", country: 2, image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 2, mood: ["beach", "surf", "relaxed", "spiritual"], description: "A laid-back beach town in Bali, perfect for surfing, yoga retreats, and enjoying stunning sunsets over rice paddies.", overallRating: 91 },
     
     // Malaysia cities
-    { id: 4, name: "Kuala Lumpur", country: 3, image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 4, mood: ["modern", "multicultural", "urban", "affordable"] },
+    { id: 4, name: "Kuala Lumpur", country: 3, image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 4, mood: ["modern", "multicultural", "urban", "affordable"], description: "Malaysia's dynamic capital, home to the iconic Petronas Towers and a melting pot of cultures, cuisines, and modern attractions.", overallRating: 79 },
     
     // Georgia cities
     { id: 5, name: "Tbilisi", country: 4, image: "https://images.unsplash.com/photo-1603350576276-24747f7bbf40?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGJpbGlzaXxlbnwwfHwwfHx8MA%3D%3D", thumbnail: "https://images.unsplash.com/photo-1603350576276-24747f7bbf40?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGJpbGlzaXxlbnwwfHwwfHx8MA%3D%3D", featured: false, rank: 5, mood: ["historic", "affordable", "emerging", "cultural"] },
@@ -78,7 +114,7 @@ function getFallbackCitiesByCountryId(countryId: string): City[] {
     { id: 11, name: "Medellín", country: 10, image: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 11, mood: ["emerging", "affordable", "spring-weather", "innovative"] },
     
     // South Africa cities
-    { id: 12, name: "Cape Town", country: 11, image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: true, rank: 12, mood: ["scenic", "wine", "adventure", "coastal"] },
+    { id: 12, name: "Cape Town", country: 11, image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: true, rank: 12, mood: ["scenic", "wine", "adventure", "coastal"], overallRating: 88 },
     
     // UAE cities
     { id: 13, name: "Dubai", country: 12, image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", thumbnail: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", featured: false, rank: 13, mood: ["luxury", "modern", "desert", "shopping"] },
@@ -95,6 +131,28 @@ function getFallbackCitiesByCountryId(countryId: string): City[] {
     // Germany cities
     { id: 18, name: "Berlin", country: 16, image: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVybGlufGVufDB8fDB8fHww", thumbnail: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVybGlufGVufDB8fDB8fHww", featured: false, rank: 18, mood: ["alternative", "nightlife", "historic", "affordable"] }
   ]
-  
-  return fallbackCities.filter(city => city.country.toString() === countryId)
+
+  // Filter to only cities with ratings, then sort by overallRating (highest first)
+  const ratedCities = fallbackCities.filter(city => city.overallRating !== undefined)
+  const sortedFallbackCities = ratedCities.sort((a, b) => {
+    return (b.overallRating || 0) - (a.overallRating || 0)
+  })
+
+  const totalCount = sortedFallbackCities.length
+  const from = page * pageSize
+  const to = Math.min(from + pageSize, totalCount)
+  const paginatedCities = sortedFallbackCities.slice(from, to)
+  const hasMore = to < totalCount
+
+  console.log(`📊 FALLBACK DATA - ${paginatedCities.length} rated cities (filtered from ${fallbackCities.length} total)`)
+  console.log('First 3 cities:', paginatedCities.slice(0, 3).map(city => ({
+    name: city.name,
+    overallRating: city.overallRating
+  })))
+
+  return {
+    cities: paginatedCities,
+    totalCount,
+    hasMore
+  }
 }

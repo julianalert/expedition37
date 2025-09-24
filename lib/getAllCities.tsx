@@ -11,6 +11,7 @@ export default async function getAllCities(): Promise<City[]> {
     const { data, error } = await supabase
       .from('city')
       .select('*')
+      .order('overallRating', { ascending: false, nullsLast: true })
       .order('name', { ascending: true })
 
     if (error) {
