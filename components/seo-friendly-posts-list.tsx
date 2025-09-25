@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import getPaginatedCountries from '@/lib/getPaginatedCountries'
-import PostItem from '@/app/(default)/post-item'
 import ClientSideInfiniteScroll from './client-side-infinite-scroll'
+import FilteredInitialCountries from './filtered-initial-countries'
 import StructuredData from './structured-data'
 
 interface SEOFriendlyPostsListProps {
@@ -17,12 +17,8 @@ export default function SEOFriendlyPostsList({ initialCountries, hasMore, total 
       {/* Structured Data for SEO */}
       <StructuredData countries={initialCountries} totalCountries={total} />
       
-      {/* Server-rendered initial countries for SEO */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="countries-grid">
-        {initialCountries.map((country: Country, index: number) => (
-          <PostItem key={`server-${country.id}`} {...country} />
-        ))}
-      </div>
+      {/* Client-side filtered initial countries */}
+      <FilteredInitialCountries initialCountries={initialCountries} />
 
       {/* Client-side infinite scroll component */}
       <Suspense fallback={<div className="mt-8 text-center">Loading more destinations...</div>}>
