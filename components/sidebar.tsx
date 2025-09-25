@@ -89,7 +89,7 @@ export default function Sidebar() {
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
           {/* Header with title and clear button */}
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
+            <h2 className="text-lg font-semibold text-gray-800">Destination</h2>
             <button 
               onClick={clearFilters}
               className="text-sm font-medium text-indigo-500 hover:underline cursor-pointer"

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import getAllCountries from '@/lib/getAllCountries'
+import getPaginatedCountries from '@/lib/getPaginatedCountries'
 import getPaginatedCities from '@/lib/getPaginatedCities'
 import PostItem from '@/app/(default)/post-item'
 import CityItem from '@/app/(default)/city-item'
@@ -12,8 +13,10 @@ import { useFilters } from '@/contexts/FilterContext'
 export default function InfiniteScrollPostsList() {
   const [countries, setCountries] = useState<Country[]>([])
   const [cities, setCities] = useState<City[]>([])
-  const [currentPage, setCurrentPage] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
+  const [countriesCurrentPage, setCountriesCurrentPage] = useState(0)
+  const [citiesCurrentPage, setCitiesCurrentPage] = useState(0)
+  const [countriesHasMore, setCountriesHasMore] = useState(true)
+  const [citiesHasMore, setCitiesHasMore] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const { filters, updateFilters } = useFilters()
@@ -24,16 +27,16 @@ export default function InfiniteScrollPostsList() {
     const loadInitialData = async () => {
       setIsInitialLoad(true)
       try {
-        // Load countries (all at once as before)
-        const countriesData = await getAllCountries()
-        setCountries(countriesData)
+        // Load first page of countries (36 items)
+        const countriesResult = await getPaginatedCountries(0, 36)
+        setCountries(countriesResult.countries)
+        setCountriesHasMore(countriesResult.hasMore)
+        setCountriesCurrentPage(1) // Next page to load
 
         // HOMEPAGE BLOCK: Don't load cities for homepage to reduce database usage
-        // Load first page of cities (100 items)
-        // const citiesResult = await getPaginatedCities(0, 100)
         setCities([])
-        setHasMore(false)
-        setCurrentPage(1) // Next page to load
+        setCitiesHasMore(false)
+        setCitiesCurrentPage(0)
       } catch (error) {
         console.error('Error loading initial data:', error)
       } finally {
@@ -44,19 +47,50 @@ export default function InfiniteScrollPostsList() {
     loadInitialData()
   }, [])
 
+  // Load more countries
+  const loadMoreCountries = useCallback(async () => {
+    if (isLoading || !countriesHasMore || filters.filterType !== 'countries') {
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      const countriesResult = await getPaginatedCountries(countriesCurrentPage, 36)
+      
+      // Filter out any countries that are already in the list to prevent duplicates
+      const newCountries = countriesResult.countries.filter(newCountry => 
+        !countries.some(existingCountry => existingCountry.id === newCountry.id)
+      )
+      
+      if (newCountries.length > 0) {
+        setCountries(prevCountries => [...prevCountries, ...newCountries])
+        console.log(`Loaded countries page ${countriesCurrentPage + 1}, got ${newCountries.length} new countries (${countriesResult.countries.length} total from API), hasMore: ${countriesResult.hasMore}`)
+      } else {
+        console.warn(`Countries page ${countriesCurrentPage + 1} returned ${countriesResult.countries.length} countries but all were duplicates`)
+      }
+      
+      setCountriesHasMore(countriesResult.hasMore)
+      setCountriesCurrentPage(prev => prev + 1)
+    } catch (error) {
+      console.error('Error loading more countries:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [countriesCurrentPage, countriesHasMore, isLoading, filters.filterType, countries])
+
   // Load more cities - BLOCKED for homepage
   const loadMoreCities = useCallback(async () => {
     // HOMEPAGE BLOCK: Don't load more cities to reduce database usage
     console.log('Cities loading blocked on homepage')
     return
     
-    if (isLoading || !hasMore || filters.filterType !== 'places') {
+    if (isLoading || !citiesHasMore || filters.filterType !== 'places') {
       return
     }
 
     setIsLoading(true)
     try {
-      const citiesResult = await getPaginatedCities(currentPage, 100)
+      const citiesResult = await getPaginatedCities(citiesCurrentPage, 100)
       
       // Filter out any cities that are already in the list to prevent duplicates
       const newCities = citiesResult.cities.filter(newCity => 
@@ -65,19 +99,19 @@ export default function InfiniteScrollPostsList() {
       
       if (newCities.length > 0) {
         setCities(prevCities => [...prevCities, ...newCities])
-        console.log(`Loaded page ${currentPage + 1}, got ${newCities.length} new cities (${citiesResult.cities.length} total from API), hasMore: ${citiesResult.hasMore}`)
+        console.log(`Loaded page ${citiesCurrentPage + 1}, got ${newCities.length} new cities (${citiesResult.cities.length} total from API), hasMore: ${citiesResult.hasMore}`)
       } else {
-        console.warn(`Page ${currentPage + 1} returned ${citiesResult.cities.length} cities but all were duplicates`)
+        console.warn(`Page ${citiesCurrentPage + 1} returned ${citiesResult.cities.length} cities but all were duplicates`)
       }
       
-      setHasMore(citiesResult.hasMore)
-      setCurrentPage(prev => prev + 1)
+      setCitiesHasMore(citiesResult.hasMore)
+      setCitiesCurrentPage(prev => prev + 1)
     } catch (error) {
       console.error('Error loading more cities:', error)
     } finally {
       setIsLoading(false)
     }
-  }, [currentPage, hasMore, isLoading, filters.filterType])
+  }, [citiesCurrentPage, citiesHasMore, isLoading, filters.filterType, cities])
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
@@ -86,7 +120,11 @@ export default function InfiniteScrollPostsList() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          loadMoreCities()
+          if (filters.filterType === 'countries') {
+            loadMoreCountries()
+          } else {
+            loadMoreCities()
+          }
         }
       },
       {
@@ -98,7 +136,7 @@ export default function InfiniteScrollPostsList() {
     observer.observe(loadingRef.current)
 
     return () => observer.disconnect()
-  }, [loadMoreCities])
+  }, [loadMoreCountries, loadMoreCities, filters.filterType])
 
   // Reset cities when switching between countries and places - BLOCKED for homepage
   useEffect(() => {
@@ -107,7 +145,7 @@ export default function InfiniteScrollPostsList() {
       console.log('Cities reload blocked on homepage')
       // Keep cities empty and hasMore false
       setCities([])
-      setHasMore(false)
+      setCitiesHasMore(false)
     }
   }, [filters.filterType, cities.length, isInitialLoad])
 
@@ -352,8 +390,8 @@ export default function InfiniteScrollPostsList() {
         )}
       </div>
 
-      {/* Infinite scroll trigger for cities only */}
-      {filters.filterType === 'places' && hasMore && (
+      {/* Infinite scroll trigger */}
+      {((filters.filterType === 'countries' && countriesHasMore) || (filters.filterType === 'places' && citiesHasMore)) && (
         <div
           ref={loadingRef}
           className="mt-8 flex justify-center items-center h-20"
@@ -370,7 +408,12 @@ export default function InfiniteScrollPostsList() {
       )}
 
       {/* No more content message */}
-      {filters.filterType === 'places' && !hasMore && cities.length > 0 && (
+      {filters.filterType === 'countries' && !countriesHasMore && countries.length > 0 && (
+        <div className="mt-8 text-center text-gray-500 text-sm">
+          You've reached the end! ✈️ ({filteredCountries.length} countries shown)
+        </div>
+      )}
+      {filters.filterType === 'places' && !citiesHasMore && cities.length > 0 && (
         <div className="mt-8 text-center text-gray-500 text-sm">
           You've reached the end! ✈️ ({filteredCities.length} destinations shown)
         </div>

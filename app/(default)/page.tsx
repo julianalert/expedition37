@@ -57,9 +57,14 @@ import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
 import InfiniteScrollPostsList from '@/components/infinite-scroll-posts-list'
+import SEOFriendlyPostsList, { getInitialCountriesForHomepage } from '@/components/seo-friendly-posts-list'
+import HomepageTestimonials from '@/components/homepage-testimonials'
 import { FilterProvider } from '@/contexts/FilterContext'
 
-export default function Home() {
+export default async function Home() {
+  // Server-side data loading for SEO
+  const initialData = await getInitialCountriesForHomepage()
+
   return (
     <>
       <Hero />
@@ -76,8 +81,11 @@ export default function Home() {
 
                 {/* Main content */}
                 <div className="md:grow">
-                  <InfiniteScrollPostsList />
-
+                  <SEOFriendlyPostsList 
+                    initialCountries={initialData.countries}
+                    hasMore={initialData.hasMore}
+                    total={initialData.total}
+                  />
                 </div>
 
               </div>
@@ -85,6 +93,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <HomepageTestimonials />
     </>
   )
 }
