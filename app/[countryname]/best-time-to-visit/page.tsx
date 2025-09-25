@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: BestTimePageProps): Promise<M
   const metadataConfig: MetadataConfig = {
     seo: {
       title: `Best Time to Visit ${displayName} - Weather & Seasons Guide`,
-      description: `Discover the best time to visit ${displayName} with our comprehensive weather guide. Find out about seasons, temperatures, and ideal travel months for your ${displayName} trip.`,
+      description: `Find out when to visit ${displayName}. Get insights on weather, peak and low seasons, costs and seasonal highlights.`,
       keywords: [
         `best time to visit ${displayName}`,
         `${displayName} weather`,

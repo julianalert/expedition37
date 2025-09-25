@@ -66,15 +66,15 @@ We have successfully implemented comprehensive SEO, OpenGraph, and Twitter metad
 
 ### Homepage
 ```typescript
-title: "Detour - Discover Your Perfect Travel Destination"
-description: "Find your ideal travel destination with personalized recommendations..."
+title: "Find the Best Travel Destinations for You - TryDetour"
+description: "Explore the best vacation spots with TryDetour. Get complete travel guides with cost, safety, best time to visit, and top attractions."
 keywords: ["travel destinations", "travel recommendations", "holiday planning", ...]
 ```
 
 ### Country Pages
 ```typescript
-title: "{Country} Travel Guide & Destinations"
-description: "Discover the best places to visit in {Country}..."
+title: "Visit {Country} - Travel Guide, Infos, Tips & Best Places"
+description: "Explore {Country} Now: Overview of cities, attractions, best time to visit, travel costs and guides in one place."
 canonical: "https://trytrydetour.com/{country-slug}"
 ```
 
@@ -85,8 +85,8 @@ canonical: "https://trytrydetour.com/{country-slug}"
 
 ### City Pages
 ```typescript
-title: "{City}, {Country} Travel Guide & Things to Do"
-description: "Discover {City}, {Country} with our comprehensive travel guide..."
+title: "Visit {City}, {Country} - Travel Guide, Tips & Best Places"
+description: "Discover {City}: things to do, best time to visit, travel costs, and complete city guides in one place..."
 canonical: "https://trytrydetour.com/{country-slug}/{city-slug}"
 ```
 

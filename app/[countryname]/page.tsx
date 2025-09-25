@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   const metadataConfig: MetadataConfig = {
     seo: {
-      title: `${displayName} Travel Guide & Destinations`,
-      description: `Discover the best places to visit in ${displayName}. Find travel recommendations, best time to visit, and hidden gems for your perfect ${displayName} holiday.`,
+      title: `Visit ${displayName} - Travel Infos, Tips & Best Places`,
+      description: `Explore ${displayName} now: Overview of cities, attractions, best time to visit, travel costs and guides in one place.`,
       keywords: [
         `${displayName} travel`,
         `${displayName} destinations`,
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
       author: SITE_CONFIG.author,
     },
     openGraph: {
-      title: `${displayName} Travel Guide | ${SITE_CONFIG.name}`,
-      description: `Explore ${displayName} with our comprehensive travel guide. Discover the best destinations, travel tips, and perfect timing for your ${displayName} adventure.`,
+      title: `Visit ${displayName} - Travel Infos, Tips & Best Places | ${SITE_CONFIG.name}`,
+      description: `Explore ${displayName} now: Overview of cities, attractions, best time to visit, travel costs and guides in one place.`,
       url: `${SITE_CONFIG.url}/${countrySlug}`,
       siteName: SITE_CONFIG.name,
       images: [

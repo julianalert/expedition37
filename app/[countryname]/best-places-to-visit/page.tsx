@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: BestPlacesToVisitPageProps): 
 
   const metadataConfig: MetadataConfig = {
     seo: {
-      title: `Best Places to Visit in ${displayName} - Top Destinations & Cities`,
-      description: `Discover the best places to visit in ${displayName}. Explore top destinations, must-see cities, and hidden gems for your perfect ${displayName} adventure.`,
+      title: `Best Places to Visit in ${displayName}`,
+      description: `Find where to go in ${displayName}. From regions to visit to must-see cities and hidden gems, explore country best destinations.`,
       keywords: [
         `best places to visit in ${displayName}`,
         `${displayName} destinations`,

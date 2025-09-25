@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: PlacePageProps): Promise<Meta
 
   const metadataConfig: MetadataConfig = {
     seo: {
-      title: `${displayCityName}, ${displayCountryName} Travel Guide & Things to Do`,
-      description: `Discover ${displayCityName}, ${displayCountryName} with our comprehensive travel guide. Find the best attractions, activities, and travel tips for your perfect ${displayCityName} adventure.`,
+      title: `Visit ${displayCityName}, ${displayCountryName} - Travel Info, Top Attractions & Tips`,
+      description: `Explore ${displayCityName} with TryDetour: things to do, best time to visit, travel costs, and complete city guides in one place.`,
       keywords: [
         `${displayCityName} travel guide`,
         `${displayCityName} ${displayCountryName}`,
@@ -52,8 +52,8 @@ export async function generateMetadata({ params }: PlacePageProps): Promise<Meta
       author: SITE_CONFIG.author,
     },
     openGraph: {
-      title: `${displayCityName}, ${displayCountryName} Travel Guide | ${SITE_CONFIG.name}`,
-      description: `Explore ${displayCityName}, ${displayCountryName} with our comprehensive travel guide. Discover the best attractions, activities, and local insights.`,
+      title: `Visit ${displayCityName}, ${displayCountryName} - Travel Info, Top Attractions & Tips | ${SITE_CONFIG.name}`,
+      description: `Explore ${displayCityName} with TryDetour: things to do, best time to visit, travel costs, and complete city guides in one place.`,
       url: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}`,
       siteName: SITE_CONFIG.name,
       images: [
