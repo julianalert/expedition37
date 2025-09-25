@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Illustration from '@/public/images/auth-illustration.svg'
-import TestimonialAuth01 from '@/public/images/testimonial-auth-01.jpg'
-import TestimonialAuth02 from '@/public/images/testimonial-auth-02.jpg'
-import TestimonialAuth03 from '@/public/images/testimonial-auth-03.jpg'
+import TestimonialAuth01 from '@/public/images/testimonial-01.jpg'
+import TestimonialAuth02 from '@/public/images/testimonial-02.jpg'
+import TestimonialAuth03 from '@/public/images/testimonial-auth-05.jpg'
 import HeaderLogo from '@/components/ui/header-logo'
 
 export default function AuthLayout({
@@ -58,12 +58,12 @@ export default function AuthLayout({
                     </div>
                     <figure>
                       <blockquote className="font-bold m-0 pb-1">
-                        <p>Listing our jobs through JobBoard was simple, quick, and helped us find amazing candidates.</p>
+                        <p>Detour helped me discover the perfect hidden gems in Southeast Asia. The recommendations were spot-on!</p>
                       </blockquote>
                       <figcaption className="text-sm font-medium">
-                        Lisa Smith, developer at{' '}
+                        Sarah Chen, from{' '}
                         <a className="text-sky-500 hover:underline" href="#0">
-                          AppyYou
+                          San Francisco, USA
                         </a>
                       </figcaption>
                     </figure>
@@ -80,12 +80,12 @@ export default function AuthLayout({
                     </div>
                     <figure>
                       <blockquote className="font-bold m-0 pb-1">
-                        <p>Listing our jobs through JobBoard was simple, quick, and helped us find amazing candidates.</p>
+                        <p>As a digital nomad, finding destinations with fast internet was crucial. This platform nailed it every time!</p>
                       </blockquote>
                       <figcaption className="text-sm font-medium">
-                        Mark Mills, developer at{' '}
+                        Marcus Johnson, from{' '}
                         <a className="text-sky-500 hover:underline" href="#0">
-                          App.com
+                          London, UK
                         </a>
                       </figcaption>
                     </figure>
@@ -102,12 +102,12 @@ export default function AuthLayout({
                     </div>
                     <figure>
                       <blockquote className="font-bold m-0 pb-1">
-                        <p>Listing our jobs through JobBoard was simple, quick, and helped us find amazing candidates.</p>
+                        <p>The budget filters saved me so much time! I found amazing destinations that matched my student budget perfectly.</p>
                       </blockquote>
                       <figcaption className="text-sm font-medium">
-                        Lisa Smith, developer at{' '}
+                        Elena Rodriguez, from{' '}
                         <a className="text-sky-500 hover:underline" href="#0">
-                          AppyYou
+                          Barcelona, Spain
                         </a>
                       </figcaption>
                     </figure>
