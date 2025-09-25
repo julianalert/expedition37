@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import getCountryByName from '@/lib/getCountryByName'
 import PostsList from './posts-list'
 import Sidebar from '@/components/sidebar'
+import { TravelGuideStructuredData } from '@/components/structured-data'
+import { SITE_CONFIG } from '@/lib/metadata'
 
 interface BestPlacesToVisitProps {
   countryName: string
@@ -49,9 +51,25 @@ export default function BestPlacesToVisit({ countryName }: BestPlacesToVisitProp
     )
   }
 
+  const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
+  
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+    <>
+      {/* Structured Data for SEO */}
+      {country && (
+        <TravelGuideStructuredData
+          title={`Best Places to Visit in ${country.name}`}
+          description={`Discover the top destinations and cities to visit in ${country.name}. Complete travel guide with must-see attractions and hidden gems.`}
+          location={country.name}
+          guideType="best-places"
+          url={`${SITE_CONFIG.url}/${countrySlug}/best-places-to-visit`}
+          image={country.image || country.thumbnail}
+          country={country}
+        />
+      )}
+      
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
           <div className="md:flex md:justify-between" data-sticky-container>
             
@@ -77,5 +95,6 @@ export default function BestPlacesToVisit({ countryName }: BestPlacesToVisitProp
         </div>
       </div>
     </section>
+    </>
   )
 }

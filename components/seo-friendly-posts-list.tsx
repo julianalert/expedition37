@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import getPaginatedCountries from '@/lib/getPaginatedCountries'
 import ClientSideInfiniteScroll from './client-side-infinite-scroll'
 import FilteredInitialCountries from './filtered-initial-countries'
-import StructuredData from './structured-data'
+import { HomepageStructuredData } from './structured-data'
 
 interface SEOFriendlyPostsListProps {
   initialCountries: Country[]
@@ -15,7 +15,7 @@ export default function SEOFriendlyPostsList({ initialCountries, hasMore, total 
   return (
     <div className="pb-8 md:pb-16">
       {/* Structured Data for SEO */}
-      <StructuredData countries={initialCountries} totalCountries={total} />
+      <HomepageStructuredData countries={initialCountries} totalCountries={total} />
       
       {/* Client-side filtered initial countries */}
       <FilteredInitialCountries initialCountries={initialCountries} />

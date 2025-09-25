@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import getCountryByName from '@/lib/getCountryByName'
+import { CountryStructuredData } from '@/components/structured-data'
 
 interface OverviewProps {
   countryName: string
@@ -74,8 +75,12 @@ export default function Overview({ countryName }: OverviewProps) {
   const overviewData = parseOverviewData(country.overview)
 
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+    <>
+      {/* Structured Data for SEO */}
+      {country && <CountryStructuredData country={country} />}
+      
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
           <div className="max-w-6xl">
             {/* Header */}
@@ -274,5 +279,6 @@ export default function Overview({ countryName }: OverviewProps) {
         </div>
       </div>
     </section>
+    </>
   )
 }

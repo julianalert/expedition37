@@ -1,5 +1,6 @@
 import './css/style.css'
 import Script from 'next/script'
+import { OrganizationStructuredData } from '@/components/structured-data'
 
 import { Inter, Nothing_You_Could_Do } from 'next/font/google'
 
@@ -33,6 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${nycd.variable} font-inter antialiased bg-white text-gray-800 tracking-tight`}>
+        {/* Organization Structured Data */}
+        <OrganizationStructuredData />
+        
         <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           {children}
         </div>

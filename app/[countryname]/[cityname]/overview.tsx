@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import getCityByName from '@/lib/getCityByName'
+import getCountryByName from '@/lib/getCountryByName'
+import { CityStructuredData } from '@/components/structured-data'
 
 interface OverviewProps {
   placeName: string
@@ -10,14 +12,19 @@ interface OverviewProps {
 
 export default function Overview({ placeName, countryName }: OverviewProps) {
   const [city, setCity] = useState<City | null>(null)
+  const [country, setCountry] = useState<Country | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getCityByName(placeName).then((data) => {
-      setCity(data)
+    Promise.all([
+      getCityByName(placeName),
+      getCountryByName(countryName)
+    ]).then(([cityData, countryData]) => {
+      setCity(cityData)
+      setCountry(countryData)
       setLoading(false)
     })
-  }, [placeName])
+  }, [placeName, countryName])
 
   // Helper function to parse overview data
   const parseOverviewData = (overview: OverviewData | string | null | undefined): OverviewData | null => {
@@ -75,8 +82,12 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
   const overviewData = parseOverviewData(city.overview)
 
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+    <>
+      {/* Structured Data for SEO */}
+      {city && country && <CityStructuredData city={city} country={country} />}
+      
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
           <div className="max-w-6xl">
             {/* Header */}
@@ -275,5 +286,6 @@ export default function Overview({ placeName, countryName }: OverviewProps) {
         </div>
       </div>
     </section>
+    </>
   )
 }

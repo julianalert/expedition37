@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import getCountryByName from '@/lib/getCountryByName'
 import MonthlyRating from '@/components/monthly-rating'
 import TemperatureChart from '@/components/temperature-chart'
+import { TravelGuideStructuredData } from '@/components/structured-data'
+import { SITE_CONFIG } from '@/lib/metadata'
 
 interface BestTimeToVisitProps {
   countryName: string
@@ -49,9 +51,25 @@ export default function BestTimeToVisit({ countryName }: BestTimeToVisitProps) {
     )
   }
 
+  const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
+  
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+    <>
+      {/* Structured Data for SEO */}
+      {country && (
+        <TravelGuideStructuredData
+          title={`Best Time to Visit ${country.name}`}
+          description={`Find the perfect time to visit ${country.name}. Complete weather guide with seasonal recommendations, temperatures, and travel tips.`}
+          location={country.name}
+          guideType="best-time"
+          url={`${SITE_CONFIG.url}/${countrySlug}/best-time-to-visit`}
+          image={country.image || country.thumbnail}
+          country={country}
+        />
+      )}
+      
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
           <div className="max-w-4xl">
             {/* Header */}
@@ -81,5 +99,6 @@ export default function BestTimeToVisit({ countryName }: BestTimeToVisitProps) {
         </div>
       </div>
     </section>
+    </>
   )
 }

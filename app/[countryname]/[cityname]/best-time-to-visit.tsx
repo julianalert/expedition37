@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import getCityByName from '@/lib/getCityByName'
+import getCountryByName from '@/lib/getCountryByName'
 import MonthlyRating from '@/components/monthly-rating'
 import TemperatureChart from '@/components/temperature-chart'
+import { TravelGuideStructuredData } from '@/components/structured-data'
+import { SITE_CONFIG } from '@/lib/metadata'
 
 interface BestTimeToVisitProps {
   placeName: string
@@ -12,14 +15,19 @@ interface BestTimeToVisitProps {
 
 export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVisitProps) {
   const [city, setCity] = useState<City | null>(null)
+  const [country, setCountry] = useState<Country | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getCityByName(placeName).then((data) => {
-      setCity(data)
+    Promise.all([
+      getCityByName(placeName),
+      getCountryByName(countryName)
+    ]).then(([cityData, countryData]) => {
+      setCity(cityData)
+      setCountry(countryData)
       setLoading(false)
     })
-  }, [placeName])
+  }, [placeName, countryName])
 
   if (loading) {
     return (
@@ -50,9 +58,27 @@ export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVi
     )
   }
 
+  const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
+  const citySlug = placeName.toLowerCase().replace(/\s+/g, '-')
+  
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+    <>
+      {/* Structured Data for SEO */}
+      {city && country && (
+        <TravelGuideStructuredData
+          title={`Best Time to Visit ${city.name}, ${country.name}`}
+          description={`Find the perfect time to visit ${city.name}, ${country.name}. Complete weather guide with seasonal recommendations and travel tips.`}
+          location={city.name}
+          guideType="best-time"
+          url={`${SITE_CONFIG.url}/${countrySlug}/${citySlug}/best-time-to-visit`}
+          image={city.image || city.thumbnail}
+          country={country}
+          city={city}
+        />
+      )}
+      
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">
           <div className="max-w-4xl">
             {/* Header */}
@@ -82,5 +108,6 @@ export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVi
         </div>
       </div>
     </section>
+    </>
   )
 }
