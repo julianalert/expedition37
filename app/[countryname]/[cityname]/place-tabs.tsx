@@ -12,6 +12,7 @@ interface PlaceTabsProps {
 
 const tabs = [
   { id: 'overview', name: 'Overview', href: '' },
+  { id: 'things-to-do', name: 'Things to do', href: '/things-to-do' },
   { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
   // { id: 'deals', name: 'Good deals', href: '/good-deals' } // Hidden as requested
 ]
@@ -24,6 +25,7 @@ export default function PlaceTabs({ placeName, countryName }: PlaceTabsProps) {
   // Determine active tab based on current path
   const getActiveTab = () => {
     if (pathname === `/${countrySlug}/${placeSlug}`) return 'overview'
+    if (pathname === `/${countrySlug}/${placeSlug}/things-to-do`) return 'things-to-do'
     if (pathname === `/${countrySlug}/${placeSlug}/best-time-to-visit`) return 'best-time'
     return 'overview'
   }

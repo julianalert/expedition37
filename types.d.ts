@@ -91,6 +91,7 @@ type City = {
   "bestTimeToVisit"?: MonthlyRating[],
   "temperature"?: MonthlyTemperature[],
   "overview"?: OverviewData,
+  "thingstodo"?: ThingsToDoData,
   "created_at"?: string,
   "updated_at"?: string,
 }
@@ -119,4 +120,21 @@ type WhatToExpectItem = {
 type TopExperienceItem = {
   "emoji": string,
   "name": string
+}
+
+type ThingsToDoData = {
+  "categories": ThingsToDoCategory[]
+}
+
+type ThingsToDoCategory = {
+  "key": string,
+  "title": string,
+  "intro": string,
+  "emoji": string,
+  "items": ThingsToDoItem[]
+}
+
+type ThingsToDoItem = {
+  "name": string,
+  "short_desc": string
 }
