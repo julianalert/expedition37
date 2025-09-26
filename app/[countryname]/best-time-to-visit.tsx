@@ -63,9 +63,9 @@ export default function BestTimeToVisit({ countryName, initialCountry }: BestTim
           <div className="max-w-4xl">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 Best time to visit {country.name}
-              </h2>
+              </h1>
               <p className="text-gray-600">
                 Plan your perfect trip with our seasonal guide and weather insights
               </p>

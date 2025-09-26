@@ -73,9 +73,9 @@ export default function ThingsToDo({ placeName, countryName }: ThingsToDoProps) 
           <div className="max-w-6xl">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 Things to do in {city.name}
-              </h2>
+              </h1>
               <p className="text-gray-600">
                 Discover the best attractions and experiences {city.name} has to offer
               </p>

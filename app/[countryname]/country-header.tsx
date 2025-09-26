@@ -108,9 +108,9 @@ export default function CountryHeader({ countryName }: CountryHeaderProps) {
                 
                 {/* Country name and moods */}
                 <div className="text-left">
-                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
+                  <div className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
                     {country.name}
-                  </h1>
+                  </div>
                   <div className="flex flex-wrap gap-2 md:gap-3">
                     {country.mood && country.mood.map((mood: string, index: number) => (
                       <span key={index} className="text-xs md:text-sm text-white/80 bg-white/15 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">

@@ -9,6 +9,19 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trytrydetour.com',
   },
+  // Configure allowed image domains
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wcxnzbyatpvwnbawemmx.supabase.co',
+      },
+    ],
+  },
   // Optimize for sitemap generation
   async rewrites() {
     return [

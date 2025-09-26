@@ -72,9 +72,9 @@ export default function TemperatureChart({ temperature, placeName }: Temperature
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-      <h3 className="text-xl font-semibold text-gray-900 mb-6">
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
         Average Temperature by Month
-      </h3>
+      </h2>
       
       {/* Chart container */}
       <div className="relative">

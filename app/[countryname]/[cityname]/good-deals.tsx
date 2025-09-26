@@ -95,9 +95,9 @@ export default function GoodDeals({ placeName, countryName }: GoodDealsProps) {
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 Good deals for {city.name}
-              </h2>
+              </h1>
               <p className="text-gray-600">
                 Save money on your trip with these exclusive offers and discounts
               </p>

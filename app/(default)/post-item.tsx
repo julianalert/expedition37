@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { countryNameToSlug } from '@/lib/countryUtils'
 import RatingOverlay from '@/components/rating-overlay'
 
-export default function PostItem({ ...props }) {
+export default function PostItem({ hideContinentTag = false, ...props }) {
   const countrySlug = countryNameToSlug(props.name)
   
   // Debug: Log rating data for this country
@@ -47,11 +47,13 @@ export default function PostItem({ ...props }) {
         )}
         
         {/* Continent indicator */}
-        <div className="absolute top-4 left-4 z-10">
-          <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-            {props.continent}
+        {!hideContinentTag && (
+          <div className="absolute top-4 left-4 z-10">
+            <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+              {props.continent}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Rating Overlay */}
         <RatingOverlay 

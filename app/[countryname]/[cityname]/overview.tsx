@@ -93,9 +93,9 @@ export default function Overview({ placeName, countryName, initialCity, initialC
           <div className="max-w-6xl">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 {city.name} Overview
-              </h2>
+              </h1>
               <p className="text-gray-600">
                 Your complete guide to visiting {city.name}, {countryName}
               </p>
@@ -106,7 +106,7 @@ export default function Overview({ placeName, countryName, initialCity, initialC
               
               {/* About section */}
               <div className="bg-white rounded-xl border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">About {city.name}</h3>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">About {city.name}</h2>
                 <div className="space-y-4">
                   <p className="text-gray-600">
                     {overviewData?.short_desc || `${city.name} is one of the most captivating destinations in ${countryName}. This vibrant city offers visitors an incredible mix of attractions, culture, and experiences that make it a must-visit destination for travelers.`}
@@ -128,7 +128,7 @@ export default function Overview({ placeName, countryName, initialCity, initialC
 
               {/* Rating bars */}
               <div className="bg-white rounded-xl border border-gray-200 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Ratings</h3>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Ratings</h2>
                 <div className="space-y-4">
                   {/* Overall Rating */}
                   <div className="flex items-center justify-between">
@@ -204,7 +204,7 @@ export default function Overview({ placeName, countryName, initialCity, initialC
 
               {/* What to expect */}
               <div className="lg:col-span-2 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">What to Expect in {city.name}</h3>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">What to Expect in {city.name}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {overviewData?.what_to_expect?.length ? (
                     overviewData.what_to_expect.map((item, index) => (
@@ -234,7 +234,7 @@ export default function Overview({ placeName, countryName, initialCity, initialC
 
               {/* Top experiences */}
               <div className="lg:col-span-2">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Top Experiences</h3>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Top Experiences</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {overviewData?.top_experiences?.length ? (
                     overviewData.top_experiences.map((experience, index) => (

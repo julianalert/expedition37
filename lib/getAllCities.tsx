@@ -16,6 +16,7 @@ export default async function getAllCities(): Promise<City[]> {
 
     if (error) {
       console.error('Error fetching cities from Supabase:', error)
+      console.log('Error details:', JSON.stringify(error, null, 2))
       console.log('Falling back to local city data')
       return getFallbackCities()
     }

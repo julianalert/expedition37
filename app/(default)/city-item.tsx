@@ -9,6 +9,7 @@ import RatingOverlay from '@/components/rating-overlay'
 
 interface CityItemProps extends City {
   countryNameProp?: string
+  hideCountryTag?: boolean
 }
 
 export default function CityItem(props: CityItemProps) {
@@ -79,11 +80,13 @@ export default function CityItem(props: CityItemProps) {
           )}
           
           {/* Country indicator placeholder */}
-          <div className="absolute top-4 left-4 z-10">
-            <div className="text-sm font-medium text-white/50 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-              ...
+          {!props.hideCountryTag && (
+            <div className="absolute top-4 left-4 z-10">
+              <div className="text-sm font-medium text-white/50 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+                ...
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Content */}
           <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
@@ -142,11 +145,13 @@ export default function CityItem(props: CityItemProps) {
         )}
         
         {/* Country indicator (instead of continent for cities) */}
-        <div className="absolute top-4 left-4 z-10">
-          <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
-            {countryName}
+        {!props.hideCountryTag && (
+          <div className="absolute top-4 left-4 z-10">
+            <div className="text-sm font-medium text-white/70 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+              {countryName}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Rating Overlay */}
         <RatingOverlay 

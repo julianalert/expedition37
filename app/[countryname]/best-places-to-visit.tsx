@@ -68,9 +68,9 @@ export default function BestPlacesToVisit({ countryName, initialCountry }: BestP
             <div className="md:grow">
               {/* Section title for cities */}
               <div className="mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                   Best places to visit in {country.name}
-                </h2>
+                </h1>
                 <p className="text-gray-600">
                   Discover the top destinations and cities to visit in {country.name}.
                 </p>

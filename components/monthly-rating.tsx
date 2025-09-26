@@ -63,7 +63,9 @@ export default function MonthlyRating({ bestTimeToVisit, placeName }: MonthlyRat
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-      
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+        When to visit {placeName}
+      </h2>
       
       {/* Month headers */}
       <div className="grid grid-cols-12 gap-2 mb-4">
