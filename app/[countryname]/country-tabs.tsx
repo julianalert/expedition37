@@ -34,7 +34,7 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
   return (
     <section className="border-b border-gray-200 bg-white sticky top-0 z-40 mt-4 mb-4">
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+        <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide" aria-label="Tabs">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
             const href = tab.id === 'overview' ? `/${countrySlug}` : `/${countrySlug}${tab.href}`
@@ -44,7 +44,7 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
                 key={tab.id}
                 href={href}
                 className={`
-                  whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200
+                  whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 flex-shrink-0
                   ${isActive
                     ? 'border-indigo-500 text-indigo-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
