@@ -33,18 +33,7 @@ export function HomepageStructuredData({ countries, totalCountries }: HomepageSt
           "addressCountry": country.name
         },
         "url": `${SITE_CONFIG.url}/${country.name.toLowerCase().replace(/\s+/g, '-')}`,
-        "image": country.image || country.thumbnail,
-        "aggregateRating": country.overallRating ? {
-          "@type": "AggregateRating",
-          "itemReviewed": {
-            "@type": "Place",
-            "name": country.name
-          },
-          "ratingValue": (country.overallRating / 20).toFixed(1), // Convert to 5-star scale
-          "bestRating": "5",
-          "worstRating": "1",
-          "ratingCount": 100 // Default rating count - you can make this dynamic if you track actual review counts
-        } : undefined
+        "image": country.image || country.thumbnail
       }))
     }
   }
@@ -78,17 +67,6 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
     "url": `${SITE_CONFIG.url}/${countrySlug}`,
     "image": country.image || country.thumbnail,
     "touristType": country.mood || [],
-    "aggregateRating": country.overallRating ? {
-      "@type": "AggregateRating",
-      "itemReviewed": {
-        "@type": "TouristDestination",
-        "name": country.name
-      },
-      "ratingValue": (country.overallRating / 20).toFixed(1),
-      "bestRating": "5",
-      "worstRating": "1",
-      "ratingCount": 100 // Default rating count - you can make this dynamic if you track actual review counts
-    } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}`,
     "containedInPlace": {
       "@type": "Continent",
@@ -108,18 +86,7 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
       "name": city.name,
       "description": city.description || `Explore ${city.name} in ${country.name}`,
       "url": `${SITE_CONFIG.url}/${countrySlug}/${city.name.toLowerCase().replace(/\s+/g, '-')}`,
-      "image": city.image || city.thumbnail,
-      "aggregateRating": city.overallRating ? {
-        "@type": "AggregateRating",
-        "itemReviewed": {
-          "@type": "City",
-          "name": city.name
-        },
-        "ratingValue": (city.overallRating / 20).toFixed(1),
-        "bestRating": "5",
-        "worstRating": "1",
-        "ratingCount": 50 // Default rating count for cities
-      } : undefined
+      "image": city.image || city.thumbnail
     }))
   }
 
@@ -159,17 +126,6 @@ export function CityStructuredData({ city, country }: CityStructuredDataProps) {
       "name": country.name,
       "url": `${SITE_CONFIG.url}/${countrySlug}`
     },
-    "aggregateRating": city.overallRating ? {
-      "@type": "AggregateRating",
-      "itemReviewed": {
-        "@type": "City",
-        "name": city.name
-      },
-      "ratingValue": (city.overallRating / 20).toFixed(1),
-      "bestRating": "5",
-      "worstRating": "1",
-      "ratingCount": 75 // Default rating count for cities
-    } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}/${citySlug}`,
     "maximumAttendeeCapacity": "unlimited"
   }
