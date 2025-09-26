@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import Illustration from '@/public/images/hero-illustration.svg'
@@ -7,14 +5,9 @@ import Avatar01 from '@/public/images/avatar-01.jpg'
 import Avatar02 from '@/public/images/avatar-02.jpg'
 import Avatar03 from '@/public/images/avatar-03.jpg'
 import Avatar04 from '@/public/images/avatar-04.jpg'
+import HeroButton from '@/components/hero-button'
 
 export default function Hero() {
-  const scrollToDestinations = () => {
-    const element = document.getElementById('countries');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className="relative overflow-hidden">
@@ -41,12 +34,7 @@ export default function Hero() {
             {/* Button + Avatars */}
             <div className="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
               <div>
-                <button 
-                  className="btn text-white bg-indigo-500 hover:bg-indigo-600 shadow-xs" 
-                  onClick={scrollToDestinations}
-                >
-                  Find your perfect destination
-                </button>
+                <HeroButton />
               </div>
               <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3">
                 <div className="inline-flex -space-x-3 -ml-0.5">
