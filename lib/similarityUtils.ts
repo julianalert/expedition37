@@ -184,7 +184,7 @@ function calculateArraySimilarity(arr1: string[], arr2: string[]): number {
   const set1 = new Set(arr1.map(item => item.toLowerCase()))
   const set2 = new Set(arr2.map(item => item.toLowerCase()))
   
-  const intersection = new Set([...set1].filter(x => set2.has(x)))
+  const intersection = new Set(Array.from(set1).filter(x => set2.has(x)))
   
   // Use a more generous formula: intersection / average of both sets
   // This gives higher scores for any overlap
