@@ -23,7 +23,7 @@ export function HomepageStructuredData({ countries, totalCountries }: HomepageSt
       "name": "Travel Destinations",
       "description": `Discover ${totalCountries}+ amazing travel destinations worldwide`,
       "numberOfItems": totalCountries,
-      "itemListElement": countries.slice(0, 10).map((country, index) => ({
+      "itemListElement": countries.slice(0, 50).map((country, index) => ({
         "@type": "Place",
         "position": index + 1,
         "name": country.name,

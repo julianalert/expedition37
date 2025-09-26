@@ -1,6 +1,4 @@
-import { Suspense } from 'react'
-import getPaginatedCountries from '@/lib/getPaginatedCountries'
-import ClientSideInfiniteScroll from './client-side-infinite-scroll'
+import getAllCountries from '@/lib/getAllCountries'
 import FilteredInitialCountries from './filtered-initial-countries'
 import { HomepageStructuredData } from './structured-data'
 
@@ -20,29 +18,28 @@ export default function SEOFriendlyPostsList({ initialCountries, hasMore, total 
       {/* Client-side filtered initial countries */}
       <FilteredInitialCountries initialCountries={initialCountries} />
 
-      {/* Client-side infinite scroll component */}
-      <Suspense fallback={<div className="mt-8 text-center">Loading more destinations...</div>}>
-        <ClientSideInfiniteScroll 
-          initialCountries={initialCountries}
-          initialHasMore={hasMore}
-          totalCountries={total}
-        />
-      </Suspense>
+      {/* Note: Infinite scroll removed - all countries are loaded server-side for maximum SEO */}
     </div>
   )
 }
 
-// Server action to get initial countries for homepage
+// Server action to get ALL countries for homepage (Option 1: Best SEO)
 export async function getInitialCountriesForHomepage() {
   try {
-    const result = await getPaginatedCountries(0, 36)
+    // Load ALL countries server-side for maximum SEO benefit
+    // Google will see every single country on the homepage
+    const countries = await getAllCountries()
+    
+    console.log(`✅ SEO Optimization: Loaded ${countries.length} countries server-side for Google crawling`)
+    
     return {
-      countries: result.countries,
-      hasMore: result.hasMore,
-      total: result.total
+      countries: countries,
+      hasMore: false, // No more countries to load since we have them all
+      total: countries.length
     }
   } catch (error) {
-    console.error('Error loading initial countries for SEO:', error)
+    console.error('❌ Error loading all countries for SEO:', error)
+    // Return empty but don't break the page
     return {
       countries: [],
       hasMore: false,
