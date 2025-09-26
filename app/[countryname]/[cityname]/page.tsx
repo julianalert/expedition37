@@ -4,6 +4,7 @@ import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
 import getCityByName from '@/lib/getCityByName'
 import getCountryByName from '@/lib/getCountryByName'
+import { CityStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
 interface PlacePageProps {
@@ -83,6 +84,26 @@ export async function generateMetadata({ params }: PlacePageProps): Promise<Meta
 
 export default async function PlacePage({ params }: PlacePageProps) {
   const resolvedParams = await params
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
   
-  return <Overview placeName={resolvedParams.cityname} countryName={resolvedParams.countryname} />
+  // Fetch data server-side for SEO
+  const [city, country] = await Promise.all([
+    getCityByName(citySlug),
+    getCountryByName(countrySlug)
+  ])
+  
+  return (
+    <>
+      {/* Server-side structured data for SEO */}
+      {city && country && <CityStructuredData city={city} country={country} />}
+      
+      <Overview 
+        placeName={citySlug} 
+        countryName={countrySlug} 
+        initialCity={city}
+        initialCountry={country}
+      />
+    </>
+  )
 }

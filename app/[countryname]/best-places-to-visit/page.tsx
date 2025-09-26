@@ -2,6 +2,7 @@ import BestPlacesToVisit from '../best-places-to-visit'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
+import { TravelGuideStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
 interface BestPlacesToVisitPageProps {
@@ -72,5 +73,27 @@ export async function generateMetadata({ params }: BestPlacesToVisitPageProps): 
 
 export default async function BestPlacesToVisitPage({ params }: BestPlacesToVisitPageProps) {
   const resolvedParams = await params
-  return <BestPlacesToVisit countryName={resolvedParams.countryname} />
+  const countrySlug = resolvedParams.countryname
+  
+  // Fetch country data server-side for SEO
+  const country = await getCountryByName(countrySlug)
+  
+  return (
+    <>
+      {/* Server-side structured data for SEO */}
+      {country && (
+        <TravelGuideStructuredData
+          title={`Best Places to Visit in ${country.name}`}
+          description={`Discover the top destinations and cities to visit in ${country.name}. Complete travel guide with must-see attractions and hidden gems.`}
+          location={country.name}
+          guideType="best-places"
+          url={`${SITE_CONFIG.url}/${countrySlug}/best-places-to-visit`}
+          image={country.image}
+          country={country}
+        />
+      )}
+      
+      <BestPlacesToVisit countryName={countrySlug} initialCountry={country} />
+    </>
+  )
 }

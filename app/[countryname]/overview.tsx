@@ -2,22 +2,25 @@
 
 import { useState, useEffect } from 'react'
 import getCountryByName from '@/lib/getCountryByName'
-import { CountryStructuredData } from '@/components/structured-data'
 
 interface OverviewProps {
   countryName: string
+  initialCountry?: Country | null
 }
 
-export default function Overview({ countryName }: OverviewProps) {
-  const [country, setCountry] = useState<Country | null>(null)
-  const [loading, setLoading] = useState(true)
+export default function Overview({ countryName, initialCountry }: OverviewProps) {
+  const [country, setCountry] = useState<Country | null>(initialCountry || null)
+  const [loading, setLoading] = useState(!initialCountry)
 
   useEffect(() => {
-    getCountryByName(countryName).then((data) => {
-      setCountry(data)
-      setLoading(false)
-    })
-  }, [countryName])
+    // Only fetch if we don't have initial data
+    if (!initialCountry) {
+      getCountryByName(countryName).then((data) => {
+        setCountry(data)
+        setLoading(false)
+      })
+    }
+  }, [countryName, initialCountry])
 
   // Helper function to parse overview data
   const parseOverviewData = (overview: OverviewData | string | null | undefined): OverviewData | null => {
@@ -75,10 +78,7 @@ export default function Overview({ countryName }: OverviewProps) {
   const overviewData = parseOverviewData(country.overview)
 
   return (
-    <>
-      {/* Structured Data for SEO */}
-      {country && <CountryStructuredData country={country} />}
-      
+    <>      
       <section>
         <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">

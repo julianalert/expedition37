@@ -2,6 +2,7 @@ import Overview from './overview'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
+import { CountryStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
 interface CountryPageProps {
@@ -73,6 +74,17 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
 export default async function CountryPage({ params }: CountryPageProps) {
   const resolvedParams = await params
+  const countrySlug = resolvedParams.countryname
   
-  return <Overview countryName={resolvedParams.countryname} />
+  // Fetch country data server-side for SEO
+  const country = await getCountryByName(countrySlug)
+  
+  return (
+    <>
+      {/* Server-side structured data for SEO */}
+      {country && <CountryStructuredData country={country} />}
+      
+      <Overview countryName={countrySlug} initialCountry={country} />
+    </>
+  )
 }

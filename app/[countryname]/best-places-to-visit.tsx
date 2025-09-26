@@ -4,23 +4,25 @@ import { useState, useEffect } from 'react'
 import getCountryByName from '@/lib/getCountryByName'
 import PostsList from './posts-list'
 import Sidebar from '@/components/sidebar'
-import { TravelGuideStructuredData } from '@/components/structured-data'
-import { SITE_CONFIG } from '@/lib/metadata'
 
 interface BestPlacesToVisitProps {
   countryName: string
+  initialCountry?: Country | null
 }
 
-export default function BestPlacesToVisit({ countryName }: BestPlacesToVisitProps) {
-  const [country, setCountry] = useState<Country | null>(null)
-  const [loading, setLoading] = useState(true)
+export default function BestPlacesToVisit({ countryName, initialCountry }: BestPlacesToVisitProps) {
+  const [country, setCountry] = useState<Country | null>(initialCountry || null)
+  const [loading, setLoading] = useState(!initialCountry)
 
   useEffect(() => {
-    getCountryByName(countryName).then((data) => {
-      setCountry(data)
-      setLoading(false)
-    })
-  }, [countryName])
+    // Only fetch if we don't have initial data
+    if (!initialCountry) {
+      getCountryByName(countryName).then((data) => {
+        setCountry(data)
+        setLoading(false)
+      })
+    }
+  }, [countryName, initialCountry])
 
   if (loading) {
     return (
@@ -54,20 +56,7 @@ export default function BestPlacesToVisit({ countryName }: BestPlacesToVisitProp
   const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
   
   return (
-    <>
-      {/* Structured Data for SEO */}
-      {country && (
-        <TravelGuideStructuredData
-          title={`Best Places to Visit in ${country.name}`}
-          description={`Discover the top destinations and cities to visit in ${country.name}. Complete travel guide with must-see attractions and hidden gems.`}
-          location={country.name}
-          guideType="best-places"
-          url={`${SITE_CONFIG.url}/${countrySlug}/best-places-to-visit`}
-          image={country.image || country.thumbnail}
-          country={country}
-        />
-      )}
-      
+    <>      
       <section>
         <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="pt-4 pb-8 md:pt-4 md:pb-16">

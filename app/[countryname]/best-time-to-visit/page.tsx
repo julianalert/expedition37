@@ -2,6 +2,7 @@ import BestTimeToVisit from '../best-time-to-visit'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
+import { TravelGuideStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
 interface BestTimePageProps {
@@ -71,5 +72,27 @@ export async function generateMetadata({ params }: BestTimePageProps): Promise<M
 
 export default async function BestTimePage({ params }: BestTimePageProps) {
   const resolvedParams = await params
-  return <BestTimeToVisit countryName={resolvedParams.countryname} />
+  const countrySlug = resolvedParams.countryname
+  
+  // Fetch country data server-side for SEO
+  const country = await getCountryByName(countrySlug)
+  
+  return (
+    <>
+      {/* Server-side structured data for SEO */}
+      {country && (
+        <TravelGuideStructuredData
+          title={`Best Time to Visit ${country.name}`}
+          description={`Find the perfect time to visit ${country.name}. Complete weather guide with seasonal recommendations, temperatures, and travel tips.`}
+          location={country.name}
+          guideType="best-time"
+          url={`${SITE_CONFIG.url}/${countrySlug}/best-time-to-visit`}
+          image={country.image}
+          country={country}
+        />
+      )}
+      
+      <BestTimeToVisit countryName={countrySlug} initialCountry={country} />
+    </>
+  )
 }
