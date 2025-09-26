@@ -79,10 +79,10 @@ export default async function SimilarCountriesPage({ params }: SimilarCountriesP
       {/* Server-side structured data for SEO */}
       {country && (
         <TravelGuideStructuredData
-          title={`Countries Similar to ${country.name}`}
+          title={`Alternatives To ${country.name}`}
           description={`Discover countries with similar vibes, budgets, and experiences to ${country.name}. Perfect destinations for travelers who loved ${country.name}.`}
           location={country.name}
-          guideType="similar-countries"
+          guideType="overview"
           url={`${SITE_CONFIG.url}/${countrySlug}/alternatives`}
           image={country.image}
           country={country}
