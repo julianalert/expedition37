@@ -36,10 +36,6 @@ export function HomepageStructuredData({ countries, totalCountries }: HomepageSt
         "image": country.image || country.thumbnail,
         "aggregateRating": country.overallRating ? {
           "@type": "AggregateRating",
-          "itemReviewed": {
-            "@type": "Place",
-            "name": country.name
-          },
           "ratingValue": (country.overallRating / 20).toFixed(1), // Convert to 5-star scale
           "bestRating": "5",
           "worstRating": "1",
@@ -80,10 +76,6 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
     "touristType": country.mood || [],
     "aggregateRating": country.overallRating ? {
       "@type": "AggregateRating",
-      "itemReviewed": {
-        "@type": "TouristDestination",
-        "name": country.name
-      },
       "ratingValue": (country.overallRating / 20).toFixed(1),
       "bestRating": "5",
       "worstRating": "1",
@@ -111,10 +103,6 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
       "image": city.image || city.thumbnail,
       "aggregateRating": city.overallRating ? {
         "@type": "AggregateRating",
-        "itemReviewed": {
-          "@type": "City",
-          "name": city.name
-        },
         "ratingValue": (city.overallRating / 20).toFixed(1),
         "bestRating": "5",
         "worstRating": "1",
@@ -161,10 +149,6 @@ export function CityStructuredData({ city, country }: CityStructuredDataProps) {
     },
     "aggregateRating": city.overallRating ? {
       "@type": "AggregateRating",
-      "itemReviewed": {
-        "@type": "City",
-        "name": city.name
-      },
       "ratingValue": (city.overallRating / 20).toFixed(1),
       "bestRating": "5",
       "worstRating": "1",
