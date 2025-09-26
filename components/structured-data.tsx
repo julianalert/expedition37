@@ -79,11 +79,7 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
       "ratingValue": (country.overallRating / 20).toFixed(1),
       "bestRating": "5",
       "worstRating": "1",
-      "ratingCount": 100, // Default rating count - you can make this dynamic if you track actual review counts
-      "itemReviewed": {
-        "@type": "TouristDestination",
-        "name": country.name
-      }
+      "ratingCount": 100 // Default rating count - you can make this dynamic if you track actual review counts
     } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}`,
     "containedInPlace": {
@@ -110,11 +106,7 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
         "ratingValue": (city.overallRating / 20).toFixed(1),
         "bestRating": "5",
         "worstRating": "1",
-        "ratingCount": 50, // Default rating count for cities
-        "itemReviewed": {
-          "@type": "City",
-          "name": city.name
-        }
+        "ratingCount": 50 // Default rating count for cities
       } : undefined
     }))
   }
@@ -160,11 +152,7 @@ export function CityStructuredData({ city, country }: CityStructuredDataProps) {
       "ratingValue": (city.overallRating / 20).toFixed(1),
       "bestRating": "5",
       "worstRating": "1",
-      "ratingCount": 75, // Default rating count for cities
-      "itemReviewed": {
-        "@type": "City",
-        "name": city.name
-      }
+      "ratingCount": 75 // Default rating count for cities
     } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}/${citySlug}`,
     "maximumAttendeeCapacity": "unlimited"
