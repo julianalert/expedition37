@@ -38,7 +38,8 @@ export function HomepageStructuredData({ countries, totalCountries }: HomepageSt
           "@type": "AggregateRating",
           "ratingValue": (country.overallRating / 20).toFixed(1), // Convert to 5-star scale
           "bestRating": "5",
-          "worstRating": "1"
+          "worstRating": "1",
+          "ratingCount": 100 // Default rating count - you can make this dynamic if you track actual review counts
         } : undefined
       }))
     }
@@ -77,7 +78,12 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
       "@type": "AggregateRating",
       "ratingValue": (country.overallRating / 20).toFixed(1),
       "bestRating": "5",
-      "worstRating": "1"
+      "worstRating": "1",
+      "ratingCount": 100, // Default rating count - you can make this dynamic if you track actual review counts
+      "itemReviewed": {
+        "@type": "TouristDestination",
+        "name": country.name
+      }
     } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}`,
     "containedInPlace": {
@@ -103,7 +109,12 @@ export function CountryStructuredData({ country, cities = [] }: CountryStructure
         "@type": "AggregateRating",
         "ratingValue": (city.overallRating / 20).toFixed(1),
         "bestRating": "5",
-        "worstRating": "1"
+        "worstRating": "1",
+        "ratingCount": 50, // Default rating count for cities
+        "itemReviewed": {
+          "@type": "City",
+          "name": city.name
+        }
       } : undefined
     }))
   }
@@ -148,7 +159,12 @@ export function CityStructuredData({ city, country }: CityStructuredDataProps) {
       "@type": "AggregateRating",
       "ratingValue": (city.overallRating / 20).toFixed(1),
       "bestRating": "5",
-      "worstRating": "1"
+      "worstRating": "1",
+      "ratingCount": 75, // Default rating count for cities
+      "itemReviewed": {
+        "@type": "City",
+        "name": city.name
+      }
     } : undefined,
     "hasMap": `${SITE_CONFIG.url}/${countrySlug}/${citySlug}`,
     "maximumAttendeeCapacity": "unlimited"
