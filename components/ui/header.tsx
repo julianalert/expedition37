@@ -11,22 +11,16 @@ export default function Header() {
             <HeaderLogo />
           </div>
 
-          {/* Desktop navigation 
+          {/* Desktop navigation */}
           <nav className="flex grow">
-            {/* Desktop sign in links 
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
-                <Link className="text-sm font-medium text-indigo-500 hover:underline px-3 lg:px-5 py-2 flex items-center" href="/signin">
-                  Sign in
-                </Link>
-              </li>
-              <li className="ml-3">
-                <Link className="btn-sm text-white bg-indigo-500 hover:bg-indigo-600 w-full shadow-xs" href="/post-a-job">
-                  Post a job - $299
+                <Link className="text-sm font-medium text-gray-600 hover:text-indigo-600 px-3 lg:px-5 py-2 flex items-center transition-colors duration-200" href="/blog">
+                  Blog
                 </Link>
               </li>
             </ul>
-          </nav>*/}
+          </nav>
         </div>
       </div>
     </header>

@@ -27,7 +27,7 @@ export default function Footer() {
                 <li>
                   <a
                     className="flex justify-center items-center text-indigo-500 bg-indigo-100 hover:text-white hover:bg-indigo-500 rounded-full transition duration-150 ease-in-out"
-                    href="https://x.com/Clement_brnrd"
+                    href="https://x.com/trydetour"
                     aria-label="Twitter"
                   >
                     <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -50,9 +50,9 @@ export default function Footer() {
                   </a>
                 </li>
                 <li className="after:content-['·'] last:after:hidden after:text-gray-400 after:px-2">
-                  <a className="text-gray-500 hover:text-gray-500 hover:underline" href="https://x.com/Clement_brnrd">
-                    X
-                  </a>
+                  <Link className="text-gray-500 hover:text-gray-500 hover:underline" href="/blog">
+                    Blog
+                  </Link>
                 </li>
               </ul>
             </div>
