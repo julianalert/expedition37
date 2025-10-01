@@ -18,21 +18,21 @@ function extractBlogDataFromFile(filePath: string): BlogPostListing | null {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
     
-    // Look for the articleData object in the file
-    const articleDataMatch = content.match(/const articleData: SimpleBlogArticle = \{([\s\S]*?)\}/);
+    // Look for the articleData object in the file (supports both SimpleBlogArticle and BlogArticleData)
+    const articleDataMatch = content.match(/const articleData: (?:SimpleBlogArticle|BlogArticleData) = \{([\s\S]*?)\}/);
     if (!articleDataMatch) {
       return null;
     }
     
-    // Extract individual fields using regex
-    const titleMatch = content.match(/title: ["']([^"']+)["']/);
-    const excerptMatch = content.match(/excerpt: ["']([^"']+)["']/);
-    const publishDateMatch = content.match(/publishDate: ["']([^"']+)["']/);
-    const authorMatch = content.match(/author: ["']([^"']+)["']/);
-    const readTimeMatch = content.match(/readTime: ["']([^"']+)["']/);
-    const categoryMatch = content.match(/category: ["']([^"']+)["']/);
-    const heroImageMatch = content.match(/heroImage: ["']([^"']+)["']/);
-    const slugMatch = content.match(/slug: ["']([^"']+)["']/);
+    // Extract individual fields using regex - handles quotes and apostrophes properly
+    const titleMatch = content.match(/title: "([^"]*)"/) || content.match(/title: '([^']*)'/);
+    const excerptMatch = content.match(/excerpt: "([^"]*)"/) || content.match(/excerpt: '([^']*)'/);
+    const publishDateMatch = content.match(/publishDate: "([^"]*)"/) || content.match(/publishDate: '([^']*)'/);
+    const authorMatch = content.match(/author: "([^"]*)"/) || content.match(/author: '([^']*)'/);
+    const readTimeMatch = content.match(/readTime: "([^"]*)"/) || content.match(/readTime: '([^']*)'/);
+    const categoryMatch = content.match(/category: "([^"]*)"/) || content.match(/category: '([^']*)'/);
+    const heroImageMatch = content.match(/heroImage: "([^"]*)"/) || content.match(/heroImage: '([^']*)'/);
+    const slugMatch = content.match(/slug: "([^"]*)"/) || content.match(/slug: '([^']*)'/) || content.match(/canonicalSlug: "([^"]*)"/) || content.match(/canonicalSlug: '([^']*)'/);
     
     if (!titleMatch || !excerptMatch || !publishDateMatch || !slugMatch) {
       return null;

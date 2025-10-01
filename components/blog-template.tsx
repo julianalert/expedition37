@@ -73,9 +73,7 @@ function renderSection(section: BlogSection, index: number) {
   switch (section.type) {
     case 'paragraph':
       return (
-        <p key={index} className="text-gray-700 leading-relaxed mb-6">
-          {section.content}
-        </p>
+        <p key={index} className="text-gray-700 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: section.content as string }} />
       );
     
     case 'heading':
@@ -83,6 +81,13 @@ function renderSection(section: BlogSection, index: number) {
         <h2 key={index} className="text-2xl md:text-3xl font-bold text-gray-900 mt-8 mb-4">
           {section.content}
         </h2>
+      );
+    
+    case 'heading3':
+      return (
+        <h3 key={index} className="text-xl md:text-2xl font-semibold text-gray-900 mt-6 mb-3">
+          {section.content}
+        </h3>
       );
     
     case 'list':

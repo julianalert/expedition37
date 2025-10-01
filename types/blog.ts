@@ -38,7 +38,7 @@ export interface BlogArticleData {
 }
 
 export interface BlogSection {
-  type: 'paragraph' | 'heading' | 'list' | 'quote' | 'image';
+  type: 'paragraph' | 'heading' | 'heading3' | 'list' | 'quote' | 'image';
   content: string | string[]; // String for paragraph/heading/quote, array for lists
   heading?: string; // For lists, optional heading
   imageAlt?: string; // For images
