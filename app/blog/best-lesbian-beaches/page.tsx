@@ -53,7 +53,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Official guide to Provincetown beaches</a>'
+      content: '👉 <a href="https://www.nps.gov/caco/planyourvisit/herring-cove-beach.htm" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Official guide to Provincetown beaches</a>'
     },
     {
       type: 'image',
@@ -75,7 +75,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Barcelona Tourism on Mar Bella</a>'
+      content: '👉 <a href="https://www.barcelonaturisme.com/wv3/en/page/1117/mar-bella-beach.html" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Barcelona Tourism on Mar Bella</a>'
     },
     {
       type: 'heading',
@@ -91,7 +91,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">National Park Service on Gunnison Beach</a>'
+      content: '👉 <a href="https://www.nps.gov/gate/planyourvisit/beaches.htm" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">National Park Service on Gunnison Beach</a>'
     },
     {
       type: 'heading',
@@ -107,7 +107,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">NYC Parks on Hallet\'s Cove</a>'
+      content: '👉 <a href="https://www.nycgovparks.org/parks/astoria-park/facilities/beaches" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">NYC Parks on Hallet\'s Cove</a>'
     },
     {
       type: 'heading',
@@ -123,7 +123,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Visit Victoria on Melbourne beaches</a>'
+      content: '👉 <a href="https://www.visitvictoria.com/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Visit Victoria on Melbourne beaches</a>'
     },
     {
       type: 'heading',
@@ -139,7 +139,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Mykonos Official Tourism</a>'
+      content: '👉 <a href="https://www.visitgreece.gr/islands/cyclades/mykonos/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Mykonos Official Tourism</a>'
     },
     {
       type: 'heading',
@@ -155,7 +155,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Gallipoli Tourism Info</a>'
+      content: '👉 <a href="https://www.viaggiareinpuglia.it/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Gallipoli Tourism Info</a>'
     },
     {
       type: 'image',
@@ -177,7 +177,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">All you need to know about Jericoacoara</a>'
+      content: '👉 <a href="https://www.trydetour.com/brazil/jericoacoara" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">All you need to know about Jericoacoara</a>'
     },
     {
       type: 'heading',
@@ -193,7 +193,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Mexico Tourism on Tulum</a>'
+      content: '👉 <a href="https://www.trydetour.com/mexico/best-places-to-visit" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Best spots in Mexico</a>'
     },
     {
       type: 'image',
@@ -215,7 +215,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">LGBTQIA+ travel guide to Rehoboth Beach</a>'
+      content: '👉 <a href="https://www.visitdelaware.com/blog/post/lgbtqia-travel-guide-to-rehoboth-beach-delaware/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">LGBTQIA+ travel guide to Rehoboth Beach</a>'
     },
     {
       type: 'heading',
@@ -223,7 +223,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: "Some lesbian travelers want more than just a sun lounger. They want community events, spontaneous volleyball matches, even queer film festivals by the shore. If that's you, consider timing your trip with local Pride celebrations. Provincetown, Mykonos, and Barcelona all host events that spill onto the beaches, and that's where you'll find the heart of the community."
+      content: "Some lesbian travelers want more than just a sun lounger. They want community events, spontaneous volleyball matches, even queer film festivals by the shore. If that's you, consider timing your trip with local Pride celebrations. Provincetown, <a href=\"https://www.trydetour.com/greece/mykonos\" class=\"text-blue-600 hover:text-blue-800 underline\" target=\"_blank\" rel=\"noopener noreferrer\">Mykonos</a>, and Barcelona all host events that spill onto the beaches, and that's where you'll find the heart of the community."
     },
     {
       type: 'heading',

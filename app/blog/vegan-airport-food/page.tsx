@@ -123,7 +123,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Official site: Denver International Airport dining</a>'
+      content: '👉 <a href="https://www.flydenver.com/dine_shops" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Official site: Denver International Airport dining</a>'
     },
     {
       type: 'heading3',
@@ -143,7 +143,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">DFW dining guide</a>'
+      content: '👉 <a href="https://www.dfwairport.com/dining/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">DFW dining guide</a>'
     },
     {
       type: 'heading3',
@@ -163,7 +163,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Chicago O\'Hare restaurants</a>'
+      content: '👉 <a href="https://www.flychicago.com/ohare" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Chicago O\'Hare restaurants</a>'
     },
     {
       type: 'heading3',
@@ -183,7 +183,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">ATL airport dining</a>'
+      content: '👉 <a href="https://www.atl.com/restaurants/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">ATL airport dining</a>'
     },
     {
       type: 'heading3',
@@ -203,7 +203,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">LAX airport dining</a>'
+      content: '👉 <a href="https://www.laxshopdine.com/retailer-category/dine/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">LAX airport dining</a>'
     },
     {
       type: 'heading3',
@@ -219,7 +219,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">JFK Dining options</a>'
+      content: '👉 <a href="https://www.jfkairport.com/at-airport/shops-restaurants-and-services" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">JFK Dining options</a>'
     },
     {
       type: 'heading3',
@@ -239,7 +239,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">SFO Dining</a>'
+      content: '👉 <a href="https://www.flysfo.com/passengers/shop-dine-relax?location=All&gate_area=All&security=All&service_tags=All&content_type=dining" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">SFO Dining</a>'
     },
     {
       type: 'heading3',
@@ -259,7 +259,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">MIA dining</a>'
+      content: '👉 <a href="https://www.shopmiamiairport.com/retailer-category/dine/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">MIA dining</a>'
     },
     {
       type: 'heading3',
@@ -275,7 +275,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">IAD dining</a>'
+      content: '👉 <a href="https://www.flydulles.com/shopping-dining-advanced-directory" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">IAD dining</a>'
     },
     {
       type: 'heading3',
@@ -291,7 +291,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">BOS dining</a>'
+      content: '👉 <a href="https://www.massport.com/logan-airport/dining-shopping/restaurants" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">BOS dining</a>'
     },
     {
       type: 'heading3',
@@ -307,7 +307,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">SEA dining</a>'
+      content: '👉 <a href="https://www.portseattle.org/page/sea-tac-airport-restaurants" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">SEA dining</a>'
     },
     {
       type: 'image',
@@ -329,7 +329,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Heathrow restaurants</a>'
+      content: '👉 <a href="https://www.heathrow.com/fr/at-the-airport/restaurants-a-z?type=restaurant" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Heathrow restaurants</a>'
     },
     {
       type: 'heading3',
@@ -341,7 +341,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Schiphol dining</a>'
+      content: '👉 <a href="https://www.schiphol.nl/en/at-schiphol/eat-and-drink/facilities/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Schiphol dining</a>'
     },
     {
       type: 'heading3',
@@ -353,7 +353,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">Changi dining</a>'
+      content: '👉 <a href="https://www.changiairport.com/en/dine-and-shop/dining-directory.html" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">Changi dining</a>'
     },
     {
       type: 'heading3',
@@ -365,7 +365,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">BER dining</a>'
+      content: '👉 <a href="https://ber.berlin-airport.de/en/cafes-shops-service/sgs-poi.html" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">BER dining</a>'
     },
     {
       type: 'heading3',
@@ -377,7 +377,7 @@ const articleData: BlogArticleData = {
     },
     {
       type: 'paragraph',
-      content: '👉 <a href="#" class="text-blue-600 hover:text-blue-800 underline">DXB dining</a>'
+      content: '👉 <a href="https://www.emirates.com/lb/french/before-you-fly/dubai-international-airport/food-beverage-outlets/" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">DXB dining</a>'
     },
     {
       type: 'heading',
