@@ -1,6 +1,7 @@
 import './css/style.css'
 import Script from 'next/script'
 import { OrganizationStructuredData } from '@/components/structured-data'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 import { Inter, Nothing_You_Could_Do } from 'next/font/google'
 
@@ -41,6 +42,9 @@ export default function RootLayout({
           {children}
         </div>
         
+        {/* Google Analytics */}
+        <GoogleAnalytics gaId="G-R4MJ2RNHD0" />
+        
         {/* Beam Analytics - Secured with SRI */}
         <Script
           src="https://beamanalytics.b-cdn.net/beam.min.js"
@@ -50,20 +54,6 @@ export default function RootLayout({
           // Note: You should generate the actual SRI hash for the beam.min.js file
           // Use: openssl dgst -sha384 -binary beam.min.js | openssl base64 -A
         />
-        
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-R4MJ2RNHD0"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-R4MJ2RNHD0');
-          `}
-        </Script>
       </body>
     </html>
   )
