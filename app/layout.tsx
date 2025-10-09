@@ -50,6 +50,20 @@ export default function RootLayout({
           // Note: You should generate the actual SRI hash for the beam.min.js file
           // Use: openssl dgst -sha384 -binary beam.min.js | openssl base64 -A
         />
+        
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-R4MJ2RNHD0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-R4MJ2RNHD0');
+          `}
+        </Script>
       </body>
     </html>
   )
