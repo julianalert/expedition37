@@ -17,11 +17,11 @@ export function middleware(request: NextRequest) {
   // Content Security Policy
   const csp = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://beamanalytics.b-cdn.net;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://beamanalytics.b-cdn.net https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
     img-src 'self' data: https: blob:;
-    connect-src 'self' https://*.supabase.co https://*.supabase.com https://*.beamanalytics.io;
+    connect-src 'self' https://*.supabase.co https://*.supabase.com https://*.beamanalytics.io https://www.google-analytics.com https://analytics.google.com;
     frame-ancestors 'none';
     base-uri 'self';
     form-action 'self';
