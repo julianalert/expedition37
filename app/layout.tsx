@@ -33,7 +33,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
+      <body className={`${inter.variable} ${nycd.variable} font-inter antialiased bg-white text-gray-800 tracking-tight`}>
+        {/* Organization Structured Data */}
+        <OrganizationStructuredData />
+        
+        <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
+          {children}
+        </div>
+        
         {/* Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-R4MJ2RNHD0" />
         <Script id="google-analytics">
@@ -44,14 +51,6 @@ export default function RootLayout({
             gtag('config', 'G-R4MJ2RNHD0');
           `}
         </Script>
-      </head>
-      <body className={`${inter.variable} ${nycd.variable} font-inter antialiased bg-white text-gray-800 tracking-tight`}>
-        {/* Organization Structured Data */}
-        <OrganizationStructuredData />
-        
-        <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
-          {children}
-        </div>
         
         {/* Beam Analytics - Secured with SRI */}
         <Script
