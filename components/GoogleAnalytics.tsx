@@ -1,6 +1,5 @@
 'use client'
 
-import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, Suspense } from 'react'
 
@@ -9,7 +8,7 @@ function GoogleAnalyticsTracker({ gaId }: { gaId: string }) {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    if (pathname) {
+    if (pathname && typeof window.gtag !== 'undefined') {
       // Track page views on route change
       window.gtag('config', gaId, {
         page_path: pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : ''),
@@ -21,30 +20,36 @@ function GoogleAnalyticsTracker({ gaId }: { gaId: string }) {
 }
 
 export default function GoogleAnalytics({ gaId }: { gaId: string }) {
+  useEffect(() => {
+    // Load gtag.js script
+    const script1 = document.createElement('script')
+    script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
+    script1.async = true
+    document.head.appendChild(script1)
+
+    // Initialize Google Analytics
+    const script2 = document.createElement('script')
+    script2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${gaId}', {
+        page_path: window.location.pathname,
+      });
+    `
+    document.head.appendChild(script2)
+
+    return () => {
+      // Cleanup scripts on unmount (optional)
+      document.head.removeChild(script1)
+      document.head.removeChild(script2)
+    }
+  }, [gaId])
+
   return (
-    <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gaId}', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
-      <Suspense fallback={null}>
-        <GoogleAnalyticsTracker gaId={gaId} />
-      </Suspense>
-    </>
+    <Suspense fallback={null}>
+      <GoogleAnalyticsTracker gaId={gaId} />
+    </Suspense>
   )
 }
 
