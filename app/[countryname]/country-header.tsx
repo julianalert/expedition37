@@ -57,9 +57,9 @@ export default function CountryHeader({ countryName }: CountryHeaderProps) {
   return (
     <section className="w-full">
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="py-4 md:py-12 pb-2 md:pb-4">
+        <div className="py-8 md:py-12 pb-2 md:pb-4">
           {/* Back navigation */}
-          <div className="mb-4 md:mb-8">
+          <div className="mb-8">
             <Link 
               href="/" 
               className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -71,8 +71,8 @@ export default function CountryHeader({ countryName }: CountryHeaderProps) {
             </Link>
           </div>
 
-          {/* Country hero section - hidden on mobile */}
-          <div className="mb-0 hidden md:block">
+          {/* Country hero section */}
+          <div className="mb-0">
             <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg">
               {/* Background image */}
               <div 
