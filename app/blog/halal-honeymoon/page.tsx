@@ -13,7 +13,7 @@ const articleData: BlogArticleData = {
   ogImageAlt: "Beautiful romantic destination representing halal honeymoon locations around the world",
   
   publishDate: "2025-10-05",
-  author: "Travel Team",
+  author: "Sarah S.",
   readTime: "18 min read",
   category: "Muslim Travel",
   categoryColor: "blue",

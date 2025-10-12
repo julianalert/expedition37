@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { generateSitemapXml, SitemapUrl } from '@/lib/sitemapGenerator'
+import { getAllBlogPosts } from '@/lib/blog-discovery'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
@@ -13,6 +14,7 @@ export async function GET() {
       { url: '', priority: 1.0, changeFreq: 'daily' as const },
       { url: '/signin', priority: 0.3, changeFreq: 'monthly' as const },
       { url: '/post-a-job', priority: 0.5, changeFreq: 'monthly' as const },
+      { url: '/blog', priority: 0.8, changeFreq: 'weekly' as const },
     ]
 
     staticPages.forEach(page => {
@@ -23,6 +25,21 @@ export async function GET() {
         priority: page.priority
       })
     })
+
+    // Add blog posts
+    try {
+      const blogPosts = getAllBlogPosts()
+      blogPosts.forEach(post => {
+        urls.push({
+          url: `${SITE_URL}/blog/${post.id}`,
+          lastModified: post.publishedAt || currentDate,
+          changeFrequency: 'monthly' as const,
+          priority: 0.7
+        })
+      })
+    } catch (error) {
+      console.error('Error fetching blog posts for sitemap:', error)
+    }
 
     const sitemap = generateSitemapXml(urls)
 

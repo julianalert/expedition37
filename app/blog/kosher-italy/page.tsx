@@ -38,7 +38,7 @@ const articleData: BlogArticleData = {
   ogImageAlt: "Italy's most beautiful destinations with kosher-friendly accommodations and restaurants",
   
   publishDate: "2025-10-12",
-  author: "Travel Team",
+  author: "Sarah S.",
   readTime: "12 min read",
   category: "Travel Guide",
   categoryColor: "purple",

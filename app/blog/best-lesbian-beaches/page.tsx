@@ -13,7 +13,7 @@ const articleData: BlogArticleData = {
   ogImageAlt: "Beautiful beach scene representing lesbian-friendly beaches around the world",
   
   publishDate: "2025-09-28",
-  author: "Travel Team",
+  author: "Sarah S.",
   readTime: "12 min read",
   category: "LGBTQ+ Travel",
   categoryColor: "purple",

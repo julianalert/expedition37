@@ -13,7 +13,7 @@ const articleData: BlogArticleData = {
   ogImageAlt: "Vegan food options available at airports showing healthy plant-based meals",
   
   publishDate: "2025-10-01",
-  author: "Travel Team",
+  author: "Sarah S.",
   readTime: "15 min read",
   category: "Travel Tips",
   categoryColor: "green",
