@@ -12,6 +12,7 @@ const tabs = [
   { id: 'overview', name: 'Overview', href: '' },
   { id: 'best-places', name: 'Best places to visit', href: '/best-places-to-visit' },
   { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
+  { id: 'itinerary', name: 'Itinerary', href: '/itinerary' },
   { id: 'alternatives', name: 'Alternatives', href: '/alternatives' },
   // { id: 'deals', name: 'Good deals', href: '/good-deals' } // Hidden as requested
 ]
@@ -25,6 +26,7 @@ export default function CountryTabs({ countryName }: CountryTabsProps) {
     if (pathname === `/${countrySlug}`) return 'overview'
     if (pathname === `/${countrySlug}/best-places-to-visit`) return 'best-places'
     if (pathname === `/${countrySlug}/best-time-to-visit`) return 'best-time'
+    if (pathname === `/${countrySlug}/itinerary`) return 'itinerary'
     if (pathname === `/${countrySlug}/alternatives`) return 'alternatives'
     return 'overview'
   }

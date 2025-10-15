@@ -10,6 +10,8 @@
   strategy: base;
 }
 
+@plugin "@tailwindcss/typography";
+
 
 
 @theme {
