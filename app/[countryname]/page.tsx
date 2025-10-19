@@ -13,9 +13,9 @@ export const revalidate = 86400
 export async function generateStaticParams() {
   const countries = await getAllCountries()
   
-  // Only pre-render top 50 most popular countries (by rank)
+  // Pre-render top 100 most popular countries for better performance
   // Others will be generated on-demand and cached
-  const topCountries = countries.slice(0, 50)
+  const topCountries = countries.slice(0, 100)
   
   return topCountries.map((country) => ({
     countryname: countryNameToSlug(country.name),

@@ -1,7 +1,14 @@
 import { supabase } from './supabase'
 import { logSupabaseStatus } from './supabase-health'
+import { queryCache } from './queryCache'
 
 export default async function getAllCities(): Promise<City[]> {
+  // Check cache first
+  const cacheKey = 'all_cities'
+  const cachedData = queryCache.get<City[]>(cacheKey)
+  if (cachedData) {
+    return cachedData
+  }
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     console.log('Supabase not configured, using fallback cities')
@@ -80,10 +87,15 @@ export default async function getAllCities(): Promise<City[]> {
 
     if (data && data.length > 0) {
       console.log(`Successfully fetched ${data.length} cities from Supabase`)
+      // Cache the successful result
+      queryCache.set(cacheKey, data, 30 * 60 * 1000) // Cache for 30 minutes
       return data
     } else {
       console.log('No cities found in database, using fallback')
-      return getFallbackCities()
+      const fallbackData = getFallbackCities()
+      // Cache fallback data for shorter time
+      queryCache.set(cacheKey, fallbackData, 5 * 60 * 1000) // Cache for 5 minutes
+      return fallbackData
     }
   } catch (error) {
     console.error('Network error in getAllCities:', {

@@ -24,6 +24,19 @@ export function getValidImageUrl(
   // Check if URL is valid
   try {
     new URL(imageUrl)
+    
+    // Add timeout protection for Supabase images
+    if (imageUrl.includes('supabase.co')) {
+      // For Supabase images, add query parameters for optimization
+      const url = new URL(imageUrl)
+      // Add resize parameters for better performance
+      if (!url.searchParams.has('width')) {
+        url.searchParams.set('width', '800')
+        url.searchParams.set('quality', '85')
+      }
+      return url.toString()
+    }
+    
     return imageUrl
   } catch {
     // Invalid URL, return fallback
