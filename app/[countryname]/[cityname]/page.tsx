@@ -7,6 +7,9 @@ import getCountryByName from '@/lib/getCountryByName'
 import { CityStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
+// Revalidate this page every 24 hours (86400 seconds)
+export const revalidate = 86400
+
 interface PlacePageProps {
   params: Promise<{
     countryname: string

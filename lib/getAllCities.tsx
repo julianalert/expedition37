@@ -3,7 +3,6 @@ import { supabase } from './supabase'
 export default async function getAllCities(): Promise<City[]> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured, using fallback data for cities')
     return getFallbackCities()
   }
 
@@ -15,37 +14,15 @@ export default async function getAllCities(): Promise<City[]> {
       .order('name', { ascending: true })
 
     if (error) {
-      console.error('Error fetching cities from Supabase:', error)
-      console.log('Error details:', JSON.stringify(error, null, 2))
-      console.log('Falling back to local city data')
       return getFallbackCities()
     }
 
     if (data && data.length > 0) {
-      console.log(`Successfully fetched ${data.length} cities from Supabase`)
-      
-      // Debug: Log sample city data to see what properties are available
-      console.log('Sample city data (first 2 cities):', data.slice(0, 2))
-      if (data[0]) {
-        console.log('First city filter properties:', {
-          name: data[0].name,
-          safe: data[0].safe,
-          fastInternet: data[0].fastInternet,
-          weeklyBudget: data[0].weeklyBudget,
-          amazingFood: data[0].amazingFood,
-          nightlife: data[0].nightlife,
-          vacationgoal: data[0].vacationgoal
-        })
-      }
-      
       return data
     } else {
-      console.log('No cities found in Supabase, using fallback data')
       return getFallbackCities()
     }
   } catch (error) {
-    console.error('Error connecting to Supabase for cities:', error)
-    console.log('Falling back to local city data')
     return getFallbackCities()
   }
 }

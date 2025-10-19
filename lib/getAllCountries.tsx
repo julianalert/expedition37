@@ -8,39 +8,12 @@ export default async function getAllCountries(): Promise<Country[]> {
       .order('rank', { ascending: true })
 
     if (error) {
-      console.error('Error fetching countries:', error)
       // Return fallback data if Supabase fails
       return getFallbackCountries()
     }
 
-    // Debug: Log the first few countries to see what data we're getting
-    if (data && data.length > 0) {
-      console.log('Sample country data from Supabase (first 2 countries):', data.slice(0, 2))
-      console.log('Rating fields for first country:', {
-        name: data[0].name,
-        overallRating: data[0].overallRating,
-        costRating: data[0].costRating,
-        safetyRating: data[0].safetyRating,
-        funRating: data[0].funRating,
-        foodRating: data[0].foodRating
-      })
-      
-      // Check if France exists and log its data
-      const france = data.find(country => country.name === 'France')
-      if (france) {
-        console.log('France rating data:', {
-          overallRating: france.overallRating,
-          costRating: france.costRating,
-          safetyRating: france.safetyRating,
-          funRating: france.funRating,
-          foodRating: france.foodRating
-        })
-      }
-    }
-
     return data || []
   } catch (error) {
-    console.error('Error connecting to Supabase:', error)
     // Return fallback data if connection fails
     return getFallbackCountries()
   }

@@ -9,17 +9,12 @@ interface PaginatedCitiesResult {
 export default async function getPaginatedCities(page: number = 0, pageSize: number = 100): Promise<PaginatedCitiesResult> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('🔴 SUPABASE NOT CONFIGURED - Using fallback data for paginated cities')
     return getPaginatedFallbackCities(page, pageSize)
   }
-  
-  console.log('🟢 SUPABASE CONFIGURED - Fetching paginated cities from database')
 
   try {
     const from = page * pageSize
     const to = from + pageSize - 1
-    
-    console.log(`📄 Page ${page + 1}: Requesting range ${from}-${to} (pageSize: ${pageSize})`)
 
     // First, get the total count of cities WITH ratings only
     const { count, error: countError } = await supabase
@@ -28,7 +23,6 @@ export default async function getPaginatedCities(page: number = 0, pageSize: num
       .not('overallRating', 'is', null)
 
     if (countError) {
-      console.error('Error getting cities count from Supabase:', countError)
       return getPaginatedFallbackCities(page, pageSize)
     }
 
@@ -41,31 +35,11 @@ export default async function getPaginatedCities(page: number = 0, pageSize: num
       .range(from, to)
 
     if (error) {
-      console.error('Error fetching paginated cities from Supabase:', error)
       return getPaginatedFallbackCities(page, pageSize)
     }
 
     const totalCount = count || 0
     const hasMore = from + pageSize < totalCount
-
-    console.log(`Successfully fetched ${data?.length || 0} cities (page ${page + 1}, ${from}-${to}) from Supabase. Total: ${totalCount}, hasMore: ${hasMore}`)
-    
-    // Debug: Log first 5 cities to check ordering and detect duplicates
-    if (data && data.length > 0) {
-      console.log(`📊 All ${data.length} cities in this batch have ratings`)
-      console.log('First 5 cities:', data.slice(0, 5).map(city => ({
-        id: city.id,
-        name: city.name,
-        overallRating: city.overallRating
-      })))
-      
-      // Check for duplicate IDs within this batch
-      const ids = data.map(city => city.id)
-      const uniqueIds = new Set(ids)
-      if (ids.length !== uniqueIds.size) {
-        console.error('🚨 DUPLICATE IDs FOUND IN THIS BATCH:', ids.filter((id, index) => ids.indexOf(id) !== index))
-      }
-    }
 
     return {
       cities: data || [],
@@ -73,7 +47,6 @@ export default async function getPaginatedCities(page: number = 0, pageSize: num
       hasMore
     }
   } catch (error) {
-    console.error('Error connecting to Supabase for paginated cities:', error)
     return getPaginatedFallbackCities(page, pageSize)
   }
 }
@@ -143,12 +116,6 @@ function getPaginatedFallbackCities(page: number, pageSize: number): PaginatedCi
   const to = Math.min(from + pageSize, totalCount)
   const paginatedCities = sortedFallbackCities.slice(from, to)
   const hasMore = to < totalCount
-
-  console.log(`📊 FALLBACK DATA - ${paginatedCities.length} rated cities (filtered from ${fallbackCities.length} total)`)
-  console.log('First 3 cities:', paginatedCities.slice(0, 3).map(city => ({
-    name: city.name,
-    overallRating: city.overallRating
-  })))
 
   return {
     cities: paginatedCities,

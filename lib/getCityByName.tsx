@@ -5,7 +5,6 @@ import { findCityBySlug, cityNameToSlug } from './cityUtils'
 export default async function getCityByName(citySlug: string): Promise<City | null> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured, using fallback data for city')
     return getFallbackCityBySlug(citySlug)
   }
 
@@ -29,7 +28,6 @@ export default async function getCityByName(citySlug: string): Promise<City | nu
 
     // If direct lookup fails, fall back to fetching all and finding by slug
     // This handles cases where the slug doesn't perfectly match the name conversion
-    console.log('Direct city lookup failed, trying slug-based search')
     const cities = await getAllCities()
     const city = findCityBySlug(cities, citySlug)
     
@@ -37,11 +35,8 @@ export default async function getCityByName(citySlug: string): Promise<City | nu
       return city
     }
 
-    console.log('City not found, falling back to local data')
     return getFallbackCityBySlug(citySlug)
   } catch (error) {
-    console.error('Error connecting to Supabase for city:', error)
-    console.log('Falling back to local city data')
     // Return fallback data if connection fails
     return getFallbackCityBySlug(citySlug)
   }

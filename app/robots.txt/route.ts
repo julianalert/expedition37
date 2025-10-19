@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trytrydetour.com'
 
+// Revalidate robots.txt every 7 days (604800 seconds)
+export const revalidate = 604800
+
 export async function GET() {
   const robotsTxt = `User-agent: *
 Allow: /

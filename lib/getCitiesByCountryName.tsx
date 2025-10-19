@@ -7,7 +7,6 @@ export default async function getCitiesByCountryName(countrySlug: string): Promi
   const country = await getCountryByName(countrySlug)
   
   if (!country) {
-    console.log(`Country not found for slug: ${countrySlug}`)
     return []
   }
 

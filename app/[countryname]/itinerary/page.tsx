@@ -4,6 +4,9 @@ import { slugToCountryName } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
 import type { Metadata } from 'next'
 
+// Revalidate this page every 24 hours (86400 seconds)
+export const revalidate = 86400
+
 interface ItineraryPageProps {
   params: Promise<{
     countryname: string

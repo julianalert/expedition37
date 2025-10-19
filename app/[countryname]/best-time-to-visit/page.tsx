@@ -5,6 +5,9 @@ import getCountryByName from '@/lib/getCountryByName'
 import { TravelGuideStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
+// Revalidate this page every 24 hours (86400 seconds)
+export const revalidate = 86400
+
 interface BestTimePageProps {
   params: Promise<{
     countryname: string

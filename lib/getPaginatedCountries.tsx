@@ -19,7 +19,6 @@ export default async function getPaginatedCountries(
       .select('*', { count: 'exact', head: true })
 
     if (countError) {
-      console.error('Error getting countries count:', countError)
       return getFallbackPaginatedCountries(page, limit)
     }
 
@@ -31,13 +30,10 @@ export default async function getPaginatedCountries(
       .range(offset, offset + limit - 1)
 
     if (error) {
-      console.error('Error fetching paginated countries:', error)
       return getFallbackPaginatedCountries(page, limit)
     }
 
     const hasMore = count ? (offset + limit) < count : false
-
-    console.log(`Loaded countries page ${page + 1}: ${data?.length || 0} countries, hasMore: ${hasMore}`)
 
     return {
       countries: data || [],
@@ -45,7 +41,6 @@ export default async function getPaginatedCountries(
       total: count || 0
     }
   } catch (error) {
-    console.error('Error connecting to Supabase for paginated countries:', error)
     return getFallbackPaginatedCountries(page, limit)
   }
 }

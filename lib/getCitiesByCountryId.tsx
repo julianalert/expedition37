@@ -3,13 +3,10 @@ import { supabase } from './supabase'
 export default async function getCitiesByCountryId(countryId: string): Promise<City[]> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured, using fallback data for cities')
     return getFallbackCitiesByCountryId(countryId)
   }
 
   try {
-    console.log(`Fetching cities for country ID: ${countryId}`)
-    
     const { data, error } = await supabase
       .from('city')
       .select('*')
@@ -17,26 +14,17 @@ export default async function getCitiesByCountryId(countryId: string): Promise<C
       .order('overallRating', { ascending: false, nullsFirst: false })
       .order('name', { ascending: true })
 
-    console.log('Supabase response:', { data, error })
-
     if (error) {
-      console.error('Error fetching cities from Supabase:', error)
-      console.log('Error details:', JSON.stringify(error, null, 2))
-      console.log('Falling back to local city data')
       // Return fallback data if Supabase fails
       return getFallbackCitiesByCountryId(countryId)
     }
 
     if (data && data.length > 0) {
-      console.log(`Successfully fetched ${data.length} cities from Supabase`)
       return data
     } else {
-      console.log('No cities found in Supabase, using fallback data')
       return getFallbackCitiesByCountryId(countryId)
     }
   } catch (error) {
-    console.error('Error connecting to Supabase for cities:', error)
-    console.log('Falling back to local city data')
     // Return fallback data if connection fails
     return getFallbackCitiesByCountryId(countryId)
   }

@@ -5,6 +5,9 @@ import { generateSitemapXml, SitemapUrl } from '@/lib/sitemapGenerator'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.trydetour.com'
 
+// Revalidate countries sitemap every 24 hours (86400 seconds)
+export const revalidate = 86400
+
 export async function GET() {
   try {
     const currentDate = new Date().toISOString()

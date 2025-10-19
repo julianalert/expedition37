@@ -5,7 +5,6 @@ import { findCountryBySlug, countryNameToSlug } from './countryUtils'
 export default async function getCountryByName(countrySlug: string): Promise<Country | null> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured, using fallback data for country')
     return getFallbackCountryBySlug(countrySlug)
   }
 
@@ -29,7 +28,6 @@ export default async function getCountryByName(countrySlug: string): Promise<Cou
 
     // If direct lookup fails, fall back to fetching all and finding by slug
     // This handles cases where the slug doesn't perfectly match the name conversion
-    console.log('Direct country lookup failed, trying slug-based search')
     const countries = await getAllCountries()
     const country = findCountryBySlug(countries, countrySlug)
     
@@ -37,11 +35,8 @@ export default async function getCountryByName(countrySlug: string): Promise<Cou
       return country
     }
 
-    console.log('Country not found, falling back to local data')
     return getFallbackCountryBySlug(countrySlug)
   } catch (error) {
-    console.error('Error connecting to Supabase for country:', error)
-    console.log('Falling back to local country data')
     // Return fallback data if connection fails
     return getFallbackCountryBySlug(countrySlug)
   }

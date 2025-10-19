@@ -1,9 +1,26 @@
 import Overview from './overview'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
-import { slugToCountryName } from '@/lib/countryUtils'
+import { slugToCountryName, countryNameToSlug } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
+import getAllCountries from '@/lib/getAllCountries'
 import { CountryStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
+
+// Revalidate this page every 24 hours (86400 seconds)
+export const revalidate = 86400
+
+// Pre-render top 50 countries at build time to reduce serverless function calls
+export async function generateStaticParams() {
+  const countries = await getAllCountries()
+  
+  // Only pre-render top 50 most popular countries (by rank)
+  // Others will be generated on-demand and cached
+  const topCountries = countries.slice(0, 50)
+  
+  return topCountries.map((country) => ({
+    countryname: countryNameToSlug(country.name),
+  }))
+}
 
 interface CountryPageProps {
   params: Promise<{
