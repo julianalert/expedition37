@@ -40,8 +40,10 @@ export async function GET() {
           // City sub-pages
           const citySubPages = [
             'best-time-to-visit',
-            'good-deals',
-            'where-to-go'
+            'things-to-do',
+            'cost',
+            'itinerary',
+            'alternatives'
           ]
 
           citySubPages.forEach(subPage => {

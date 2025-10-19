@@ -31,7 +31,9 @@ export async function GET() {
       const countrySubPages = [
         'best-places-to-visit',
         'best-time-to-visit',
-        'good-deals'
+        'cost',
+        'itinerary',
+        'alternatives'
       ]
 
       countrySubPages.forEach(subPage => {
