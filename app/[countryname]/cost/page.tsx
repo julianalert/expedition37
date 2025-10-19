@@ -1,5 +1,5 @@
 import Cost from '../cost'
-import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { generateMetadata as generateMetadataUtil, generateViewport, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
 import type { Metadata } from 'next'
@@ -71,6 +71,8 @@ export async function generateMetadata({ params }: CostPageProps): Promise<Metad
 
   return generateMetadataUtil(metadataConfig)
 }
+
+export { generateViewport } from '@/lib/metadata'
 
 export default async function CostPage({ params }: CostPageProps) {
   const resolvedParams = await params

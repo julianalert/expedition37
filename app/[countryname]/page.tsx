@@ -1,5 +1,5 @@
 import Overview from './overview'
-import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { generateMetadata as generateMetadataUtil, generateViewport, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName, countryNameToSlug } from '@/lib/countryUtils'
 import getCountryByName from '@/lib/getCountryByName'
 import getAllCountries from '@/lib/getAllCountries'
@@ -88,6 +88,8 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   return generateMetadataUtil(metadataConfig)
 }
+
+export { generateViewport } from '@/lib/metadata'
 
 export default async function CountryPage({ params }: CountryPageProps) {
   const resolvedParams = await params

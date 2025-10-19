@@ -1,5 +1,5 @@
 import Overview from './overview'
-import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { generateMetadata as generateMetadataUtil, generateViewport, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
 import getCityByName from '@/lib/getCityByName'
@@ -104,6 +104,8 @@ export async function generateMetadata({ params }: PlacePageProps): Promise<Meta
 
   return generateMetadataUtil(metadataConfig)
 }
+
+export { generateViewport } from '@/lib/metadata'
 
 export default async function PlacePage({ params }: PlacePageProps) {
   const resolvedParams = await params

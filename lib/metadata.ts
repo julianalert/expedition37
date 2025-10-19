@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 
 export interface SEOConfig {
   title: string
@@ -73,9 +73,7 @@ export function generateMetadata(config: MetadataConfig): Metadata {
       images: twitter.images,
     },
     
-    // Additional metadata
-    viewport: 'width=device-width, initial-scale=1',
-    themeColor: '#6366f1', // Indigo-500 from the design
+    // Additional metadata (viewport and themeColor moved to separate export)
     
     // Verification tags (you can add these later)
     // verification: {
@@ -83,6 +81,15 @@ export function generateMetadata(config: MetadataConfig): Metadata {
     //   yandex: 'your-yandex-verification',
     //   yahoo: 'your-yahoo-verification',
     // },
+  }
+}
+
+// Viewport configuration (separate from metadata in Next.js 14+)
+export function generateViewport(): Viewport {
+  return {
+    width: 'device-width',
+    initialScale: 1,
+    themeColor: '#6366f1', // Indigo-500 from the design
   }
 }
 

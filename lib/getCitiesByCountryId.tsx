@@ -3,18 +3,40 @@ import { supabase } from './supabase'
 export default async function getCitiesByCountryId(countryId: string): Promise<City[]> {
   // Check if Supabase environment variables are configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.log(`Supabase not configured, using fallback cities for country ${countryId}`)
     return getFallbackCitiesByCountryId(countryId)
   }
 
   try {
-    const { data, error } = await supabase
+    // Try with overallRating ordering first
+    let data, error
+    
+    const fullQuery = await supabase
       .from('city')
       .select('*')
       .eq('country', countryId)
       .order('overallRating', { ascending: false, nullsFirst: false })
       .order('name', { ascending: true })
 
+    if (fullQuery.error) {
+      console.warn(`Query with overallRating failed for country ${countryId}, trying simpler query:`, fullQuery.error)
+      
+      // Fallback to simpler query without overallRating ordering
+      const simpleQuery = await supabase
+        .from('city')
+        .select('*')
+        .eq('country', countryId)
+        .order('name', { ascending: true })
+      
+      data = simpleQuery.data
+      error = simpleQuery.error
+    } else {
+      data = fullQuery.data
+      error = fullQuery.error
+    }
+
     if (error) {
+      console.error(`All Supabase queries failed in getCitiesByCountryId for country ${countryId}:`, error)
       // Return fallback data if Supabase fails
       return getFallbackCitiesByCountryId(countryId)
     }
@@ -22,9 +44,11 @@ export default async function getCitiesByCountryId(countryId: string): Promise<C
     if (data && data.length > 0) {
       return data
     } else {
+      console.log(`No cities found for country ${countryId}, using fallback`)
       return getFallbackCitiesByCountryId(countryId)
     }
   } catch (error) {
+    console.error(`Network error in getCitiesByCountryId for country ${countryId}:`, error)
     // Return fallback data if connection fails
     return getFallbackCitiesByCountryId(countryId)
   }

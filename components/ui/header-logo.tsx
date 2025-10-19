@@ -7,9 +7,10 @@ export default function HeaderLogo() {
       <Image 
         src="/images/detour.svg" 
         alt="Detour" 
-        width={180} 
-        height={36}
-        className="h-9 w-auto"
+        width={120} 
+        height={24}
+        className="h-6"
+        style={{ width: 'auto', height: 'auto', maxWidth: '120px', maxHeight: '24px' }}
       />
     </Link>
   )

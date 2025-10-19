@@ -1,4 +1,4 @@
-import { generateMetadata, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { generateMetadata, generateViewport, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 
 // Revalidate homepage every 6 hours (21600 seconds)
 export const revalidate = 21600
@@ -56,6 +56,7 @@ const metadataConfig: MetadataConfig = {
 }
 
 export const metadata = generateMetadata(metadataConfig)
+export const viewport = generateViewport()
 import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'

@@ -1,5 +1,5 @@
 import BestTimeToVisit from '../best-time-to-visit'
-import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
+import { generateMetadata as generateMetadataUtil, generateViewport, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
 import getCityByName from '@/lib/getCityByName'
@@ -78,6 +78,8 @@ export async function generateMetadata({ params }: BestTimePageProps): Promise<M
 
   return generateMetadataUtil(metadataConfig)
 }
+
+export { generateViewport } from '@/lib/metadata'
 
 export default async function BestTimePage({ params }: BestTimePageProps) {
   const resolvedParams = await params
