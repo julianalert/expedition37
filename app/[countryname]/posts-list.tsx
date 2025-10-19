@@ -1,31 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import getCitiesByCountryName from '@/lib/getCitiesByCountryName'
+import { useMemo } from 'react'
 import CityItem from '@/app/(default)/city-item'
 import Newsletter from '@/components/newsletter'
 import Testimonials from '@/components/testimonials'
 import { useFilters } from '@/contexts/FilterContext'
 
 interface PostsListProps {
+  cities: City[]
   countryName: string
 }
 
-export default function PostsList({ countryName }: PostsListProps) {
-  const [cities, setCities] = useState<City[]>([])
-  const [loading, setLoading] = useState(true)
+export default function PostsList({ cities, countryName }: PostsListProps) {
   const { filters } = useFilters()
 
-  useEffect(() => {
-    setLoading(true)
-    getCitiesByCountryName(countryName).then((data) => {
-      setCities(data)
-      setLoading(false)
-    })
-  }, [countryName])
-
   // Filter cities based on selected filters - using same logic as homepage
-  const filteredCities = cities.filter((city: City) => {
+  const filteredCities = useMemo(() => cities.filter((city: City) => {
     // Filter by criteria (What matters to you) - ALL selected criteria must match
     if (filters.criteria.length > 0) {
       const hasAllCriteria = filters.criteria.every((criteria: string) => {
@@ -107,26 +97,7 @@ export default function PostsList({ countryName }: PostsListProps) {
     }
 
     return true
-  })
-
-  if (loading) {
-    return (
-      <div className="pb-8 md:pb-16" id="cities">
-        <div className="flex flex-col items-center justify-center py-16 gap-4">
-          {/* Spinner Icon */}
-          <div className="relative w-16 h-16">
-            <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
-            <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
-          </div>
-          {/* Loading Message */}
-          <div className="text-center">
-            <div className="text-lg font-semibold text-gray-900 mb-1">Loading destinations...</div>
-            <div className="text-sm text-gray-600">Discovering the best places to visit</div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  }), [cities, filters])
 
   if (cities.length === 0) {
     return (

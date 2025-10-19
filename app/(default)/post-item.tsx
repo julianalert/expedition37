@@ -1,30 +1,25 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { countryNameToSlug } from '@/lib/countryUtils'
+import { getValidImageUrl } from '@/lib/imageUtils'
 import RatingOverlay from '@/components/rating-overlay'
 
 export default function PostItem({ hideContinentTag = false, ...props }) {
   const countrySlug = countryNameToSlug(props.name)
   
-  // Debug: Log rating data for this country
-  if (props.name === 'France' || props.name === 'Thailand') {
-    console.log(`Rating data for ${props.name}:`, {
-      overallRating: props.overallRating,
-      costRating: props.costRating,
-      safetyRating: props.safetyRating,
-      funRating: props.funRating,
-      foodRating: props.foodRating
-    })
-  }
-  
+  const validImageUrl = getValidImageUrl(props.thumbnail, props.image, 'country')
+
   return (
-    <Link href={`/${countrySlug}/best-places-to-visit`} className="group block">
+    <Link href={`/${countrySlug}/best-places-to-visit`} className="group block" prefetch={props.featured}>
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
-        {/* Background image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${props.thumbnail})`,
-          }}
+        {/* Optimized background image */}
+        <Image
+          src={validImageUrl}
+          alt={`${props.name} - Travel destination`}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={props.featured}
         />
         
         {/* Semi-transparent overlay */}

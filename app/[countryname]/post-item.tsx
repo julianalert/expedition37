@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { countryNameToSlug } from '@/lib/countryUtils'
+import { getValidImageUrl } from '@/lib/imageUtils'
 
 interface PostItemProps {
   countryName: string
@@ -10,15 +12,19 @@ export default function PostItem({ countryName, ...props }: PostItemProps) {
   const citySlug = countryNameToSlug(props.name)
   const countrySlug = countryNameToSlug(countryName)
   
+  const validImageUrl = getValidImageUrl(props.thumbnail, props.image, 'city')
+  
   return (
-    <Link href={`/${countrySlug}/${citySlug}/best-time-to-visit`} className="group block">
+    <Link href={`/${countrySlug}/${citySlug}/best-time-to-visit`} className="group block" prefetch={props.featured}>
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
-        {/* Background image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${props.thumbnail})`,
-          }}
+        {/* Optimized background image */}
+        <Image
+          src={validImageUrl}
+          alt={`${props.name} - ${countryName} city`}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={props.featured}
         />
         
         {/* Semi-transparent overlay */}

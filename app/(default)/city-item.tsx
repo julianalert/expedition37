@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { cityNameToSlug } from '@/lib/cityUtils'
 import { countryNameToSlug, slugToCountryName } from '@/lib/countryUtils'
-import getAllCountries from '@/lib/getAllCountries'
-import { useEffect, useState } from 'react'
+import { getValidImageUrl } from '@/lib/imageUtils'
 import RatingOverlay from '@/components/rating-overlay'
 
 interface CityItemProps extends City {
@@ -13,42 +13,27 @@ interface CityItemProps extends City {
 }
 
 export default function CityItem(props: CityItemProps) {
-  const [countryName, setCountryName] = useState<string>(props.countryNameProp || '')
-  const [isLoading, setIsLoading] = useState(!props.countryNameProp)
   const citySlug = cityNameToSlug(props.name)
   
-  useEffect(() => {
-    // If country name is already provided, skip the API call
-    if (props.countryNameProp) {
-      setCountryName(props.countryNameProp)
-      setIsLoading(false)
-      return
-    }
-    
-    // Get country name from country ID only if not provided
-    getAllCountries().then(countries => {
-      const country = countries.find(c => c.id === props.country)
-      if (country) {
-        setCountryName(country.name)
-      }
-      setIsLoading(false)
-    })
-  }, [props.country, props.countryNameProp])
-
+  // Use provided country name or fallback to a default
+  const countryName = props.countryNameProp || 'Unknown'
   const countrySlug = countryNameToSlug(countryName)
   const displayCountryName = props.countryNameProp ? slugToCountryName(props.countryNameProp) : countryName
   
-  // Don't render the link until we have the country information
-  if (isLoading || !countryName) {
+  const validImageUrl = getValidImageUrl(props.thumbnail, props.image, 'city')
+  
+  // Don't render if no country name provided
+  if (!props.countryNameProp) {
     return (
       <div className="group block cursor-not-allowed opacity-75">
         <div className="relative h-80 rounded-xl overflow-hidden shadow-sm">
-          {/* Background image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${props.thumbnail})`,
-            }}
+          {/* Optimized background image */}
+          <Image
+            src={validImageUrl}
+            alt={`${props.name} - City loading`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           
           {/* Semi-transparent overlay with loading indicator */}
@@ -113,14 +98,16 @@ export default function CityItem(props: CityItemProps) {
   }
   
   return (
-    <Link href={`/${countrySlug}/${citySlug}`} className="group block">
+    <Link href={`/${countrySlug}/${citySlug}`} className="group block" prefetch={props.featured}>
       <div className="relative h-80 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out">
-        {/* Background image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${props.thumbnail})`,
-          }}
+        {/* Optimized background image */}
+        <Image
+          src={validImageUrl}
+          alt={`${props.name} - ${displayCountryName} city`}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={props.featured}
         />
         
         {/* Semi-transparent overlay */}

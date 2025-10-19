@@ -101,7 +101,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
       {/* Server-side structured data for SEO */}
       {country && <CountryStructuredData country={country} />}
       
-      <Overview countryName={countrySlug} initialCountry={country} />
+      <Overview country={country} />
     </>
   )
 }

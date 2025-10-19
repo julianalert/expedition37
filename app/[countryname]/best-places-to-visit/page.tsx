@@ -1,7 +1,7 @@
 import BestPlacesToVisit from '../best-places-to-visit'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
-import getCountryByName from '@/lib/getCountryByName'
+import getCountryWithCities from '@/lib/getCountryWithCities'
 import { TravelGuideStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: BestPlacesToVisitPageProps): 
   const countrySlug = resolvedParams.countryname
   const countryName = slugToCountryName(countrySlug)
   
-  const country = await getCountryByName(countrySlug)
+  const { country } = await getCountryWithCities(countrySlug)
   const displayName = country?.name || countryName
 
   const metadataConfig: MetadataConfig = {
@@ -78,8 +78,8 @@ export default async function BestPlacesToVisitPage({ params }: BestPlacesToVisi
   const resolvedParams = await params
   const countrySlug = resolvedParams.countryname
   
-  // Fetch country data server-side for SEO
-  const country = await getCountryByName(countrySlug)
+  // Fetch country and cities data in parallel for optimal performance
+  const { country, cities } = await getCountryWithCities(countrySlug)
   
   return (
     <>
@@ -96,7 +96,7 @@ export default async function BestPlacesToVisitPage({ params }: BestPlacesToVisi
         />
       )}
       
-      <BestPlacesToVisit countryName={countrySlug} initialCountry={country} />
+      <BestPlacesToVisit country={country} cities={cities} />
     </>
   )
 }

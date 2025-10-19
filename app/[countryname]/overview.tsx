@@ -1,26 +1,8 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import getCountryByName from '@/lib/getCountryByName'
-
 interface OverviewProps {
-  countryName: string
-  initialCountry?: Country | null
+  country: Country | null
 }
 
-export default function Overview({ countryName, initialCountry }: OverviewProps) {
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCountry)
-
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCountry) {
-      getCountryByName(countryName).then((data) => {
-        setCountry(data)
-        setLoading(false)
-      })
-    }
-  }, [countryName, initialCountry])
+export default function Overview({ country }: OverviewProps) {
 
   // Helper function to parse overview data
   const parseOverviewData = (overview: OverviewData | string | null | undefined): OverviewData | null => {
@@ -30,7 +12,6 @@ export default function Overview({ countryName, initialCountry }: OverviewProps)
       try {
         return JSON.parse(overview)
       } catch (error) {
-        console.error('Error parsing overview data:', error)
         return null
       }
     }
@@ -44,20 +25,6 @@ export default function Overview({ countryName, initialCountry }: OverviewProps)
     if (score >= 50) return 'bg-yellow-500'   // Middle: yellow (50-74)
     if (score >= 30) return 'bg-orange-500'   // Low: orange (30-49)
     return 'bg-red-500'                       // Very low: red (below 30)
-  }
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading overview...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
   }
 
   if (!country) {

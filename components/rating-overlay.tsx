@@ -56,14 +56,6 @@ const RatingOverlay: React.FC<RatingOverlayProps> = ({
   funRating,
   foodRating
 }) => {
-  // Debug: Log received rating values
-  console.log('RatingOverlay received:', {
-    overallRating,
-    costRating,
-    safetyRating,
-    funRating,
-    foodRating
-  })
   
   // Use default values if ratings are undefined
   const finalOverallRating = overallRating ?? 75
