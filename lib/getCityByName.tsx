@@ -26,13 +26,32 @@ export default async function getCityByName(citySlug: string): Promise<City | nu
       return data
     }
 
-    // If direct lookup fails, fall back to fetching all and finding by slug
-    // This handles cases where the slug doesn't perfectly match the name conversion
-    const cities = await getAllCities()
-    const city = findCityBySlug(cities, citySlug)
+    // If direct lookup fails, try a more flexible search with LIKE
+    const { data: likeData, error: likeError } = await supabase
+      .from('city')
+      .select('*')
+      .ilike('name', `%${potentialName}%`)
+      .limit(1)
+      .single()
     
-    if (city) {
-      return city
+    if (!likeError && likeData) {
+      return likeData
+    }
+
+    // Try searching by individual words in the slug
+    const searchTerms = citySlug.split('-')
+    for (const term of searchTerms) {
+      const capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1)
+      const { data: termData, error: termError } = await supabase
+        .from('city')
+        .select('*')
+        .ilike('name', `%${capitalizedTerm}%`)
+        .limit(1)
+        .single()
+      
+      if (!termError && termData) {
+        return termData
+      }
     }
 
     return getFallbackCityBySlug(citySlug)
@@ -44,6 +63,7 @@ export default async function getCityByName(citySlug: string): Promise<City | nu
 
 // Fallback function to get city by slug from local data
 async function getFallbackCityBySlug(citySlug: string): Promise<City | null> {
-  const cities = await getAllCities()
-  return findCityBySlug(cities, citySlug)
+  // Instead of fetching all cities, return null for better performance
+  // The UI will handle the "city not found" case gracefully
+  return null
 }

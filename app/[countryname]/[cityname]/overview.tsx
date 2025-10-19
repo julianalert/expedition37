@@ -1,34 +1,9 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
-
 interface OverviewProps {
-  placeName: string
-  countryName: string
-  initialCity?: City | null
-  initialCountry?: Country | null
+  city: City | null
+  country: Country | null
 }
 
-export default function Overview({ placeName, countryName, initialCity, initialCountry }: OverviewProps) {
-  const [city, setCity] = useState<City | null>(initialCity || null)
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCity || !initialCountry)
-
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCity || !initialCountry) {
-      Promise.all([
-        getCityByName(placeName),
-        getCountryByName(countryName)
-      ]).then(([cityData, countryData]) => {
-        setCity(cityData)
-        setCountry(countryData)
-        setLoading(false)
-      })
-    }
-  }, [placeName, countryName, initialCity, initialCountry])
+export default function Overview({ city, country }: OverviewProps) {
 
   // Helper function to parse overview data
   const parseOverviewData = (overview: OverviewData | string | null | undefined): OverviewData | null => {
@@ -38,7 +13,6 @@ export default function Overview({ placeName, countryName, initialCity, initialC
       try {
         return JSON.parse(overview)
       } catch (error) {
-        console.error('Error parsing overview data:', error)
         return null
       }
     }
@@ -52,20 +26,6 @@ export default function Overview({ placeName, countryName, initialCity, initialC
     if (score >= 50) return 'bg-yellow-500'   // Middle: yellow (50-74)
     if (score >= 30) return 'bg-orange-500'   // Low: orange (30-49)
     return 'bg-red-500'                       // Very low: red (below 30)
-  }
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading overview...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
   }
 
   if (!city) {
@@ -97,7 +57,7 @@ export default function Overview({ placeName, countryName, initialCity, initialC
                 {city.name} Overview
               </h1>
               <p className="text-gray-600">
-                Your complete guide to visiting {city.name}, {countryName}
+                Your complete guide to visiting {city.name}, {country?.name || 'Unknown'}
               </p>
             </div>
 
@@ -109,13 +69,13 @@ export default function Overview({ placeName, countryName, initialCity, initialC
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">About {city.name}</h2>
                 <div className="space-y-4">
                   <p className="text-gray-600">
-                    {overviewData?.short_desc || `${city.name} is one of the most captivating destinations in ${countryName}. This vibrant city offers visitors an incredible mix of attractions, culture, and experiences that make it a must-visit destination for travelers.`}
+                    {overviewData?.short_desc || `${city.name} is one of the most captivating destinations in ${country?.name || 'this region'}. This vibrant city offers visitors an incredible mix of attractions, culture, and experiences that make it a must-visit destination for travelers.`}
                   </p>
                   <div className="grid grid-cols-2 gap-4 mt-6">
                     <div className="text-center p-4 bg-blue-50 rounded-lg">
                       <div className="text-2xl font-bold text-blue-600">🏳️</div>
                       <div className="text-sm text-gray-600 mt-1">Country</div>
-                      <div className="text-lg font-semibold text-gray-900 mt-1">{countryName}</div>
+                      <div className="text-lg font-semibold text-gray-900 mt-1">{country?.name || 'Unknown'}</div>
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-lg">
                       <div className="text-2xl font-bold text-green-600">⭐</div>

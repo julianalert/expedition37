@@ -10,6 +10,26 @@ import type { Metadata } from 'next'
 // Revalidate this page every 24 hours (86400 seconds)
 export const revalidate = 86400
 
+// Pre-render popular city pages at build time
+export async function generateStaticParams() {
+  // Only pre-render a few popular cities to avoid long build times
+  // Others will be generated on-demand and cached
+  const popularCities = [
+    { countryname: 'thailand', cityname: 'bangkok' },
+    { countryname: 'thailand', cityname: 'chiang-mai' },
+    { countryname: 'indonesia', cityname: 'canggu' },
+    { countryname: 'malaysia', cityname: 'kuala-lumpur' },
+    { countryname: 'dominican-republic', cityname: 'saman-peninsula' },
+    { countryname: 'france', cityname: 'paris' },
+    { countryname: 'japan', cityname: 'tokyo' },
+    { countryname: 'spain', cityname: 'barcelona' },
+    { countryname: 'italy', cityname: 'rome' },
+    { countryname: 'portugal', cityname: 'lisbon' },
+  ]
+  
+  return popularCities
+}
+
 interface PlacePageProps {
   params: Promise<{
     countryname: string
@@ -102,10 +122,8 @@ export default async function PlacePage({ params }: PlacePageProps) {
       {city && country && <CityStructuredData city={city} country={country} />}
       
       <Overview 
-        placeName={citySlug} 
-        countryName={countrySlug} 
-        initialCity={city}
-        initialCountry={country}
+        city={city}
+        country={country}
       />
     </>
   )
