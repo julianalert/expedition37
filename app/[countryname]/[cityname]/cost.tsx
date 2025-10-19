@@ -1,23 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
 import { slugToCityName } from '@/lib/cityUtils'
 import { slugToCountryName } from '@/lib/countryUtils'
 
 interface CostProps {
-  placeName: string
-  countryName: string
-  initialCity?: City | null
-  initialCountry?: Country | null
+  city: City | null
+  country: Country | null
 }
 
-export default function Cost({ placeName, countryName, initialCity, initialCountry }: CostProps) {
-  const [city, setCity] = useState<City | null>(initialCity || null)
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCity || !initialCountry)
+export default function Cost({ city, country }: CostProps) {
   const [days, setDays] = useState('7')
   const [people, setPeople] = useState('2')
   const [adults, setAdults] = useState('2')
@@ -27,19 +20,6 @@ export default function Cost({ placeName, countryName, initialCity, initialCount
   const [costBreakdown, setCostBreakdown] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCity || !initialCountry) {
-      Promise.all([
-        getCityByName(placeName),
-        getCountryByName(countryName)
-      ]).then(([cityData, countryData]) => {
-        setCity(cityData)
-        setCountry(countryData)
-        setLoading(false)
-      })
-    }
-  }, [placeName, countryName, initialCity, initialCountry])
 
   const handleGenerateCost = async () => {
     setGeneratingCost(true)
@@ -53,7 +33,7 @@ export default function Cost({ placeName, countryName, initialCity, initialCount
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          destination: `${city?.name || slugToCityName(placeName)}, ${country?.name || slugToCountryName(countryName)}`,
+          destination: `${city?.name || 'Unknown City'}, ${country?.name || 'Unknown Country'}`,
           days: days,
           people: people,
           adults: adults,
@@ -70,28 +50,13 @@ export default function Cost({ placeName, countryName, initialCity, initialCount
       setCostBreakdown(data.costBreakdown)
     } catch (err) {
       setError('Failed to generate travel cost breakdown. Please try again.')
-      console.error('Error generating cost breakdown:', err)
     } finally {
       setGeneratingCost(false)
     }
   }
 
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  const displayCityName = city?.name || slugToCityName(placeName)
-  const displayCountryName = country?.name || slugToCountryName(countryName)
+  const displayCityName = city?.name || 'Unknown City'
+  const displayCountryName = country?.name || 'Unknown Country'
 
   return (
     <section>

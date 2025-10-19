@@ -2,8 +2,7 @@ import ThingsToDo from '../things-to-do'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
+import getCityWithCountry from '@/lib/getCityWithCountry'
 import type { Metadata } from 'next'
 
 interface ThingsToDoPageProps {
@@ -20,11 +19,8 @@ export async function generateMetadata({ params }: ThingsToDoPageProps): Promise
   const countryName = slugToCountryName(countrySlug)
   const cityName = slugToCityName(citySlug)
   
-  // Try to get city and country data for more detailed metadata
-  const [city, country] = await Promise.all([
-    getCityByName(citySlug),
-    getCountryByName(countrySlug)
-  ])
+  // Get city and country data for metadata
+  const { city, country } = await getCityWithCountry(citySlug, countrySlug)
   
   const displayCityName = city?.name || cityName
   const displayCountryName = country?.name || countryName
@@ -83,6 +79,11 @@ export async function generateMetadata({ params }: ThingsToDoPageProps): Promise
 
 export default async function ThingsToDoPage({ params }: ThingsToDoPageProps) {
   const resolvedParams = await params
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
   
-  return <ThingsToDo placeName={resolvedParams.cityname} countryName={resolvedParams.countryname} />
+  // Fetch data server-side for optimal performance
+  const { city, country } = await getCityWithCountry(citySlug, countrySlug)
+  
+  return <ThingsToDo city={city} />
 }

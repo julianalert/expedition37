@@ -1,48 +1,14 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
 import MonthlyRating from '@/components/monthly-rating'
 import TemperatureChart from '@/components/temperature-chart'
 import { TravelGuideStructuredData } from '@/components/structured-data'
 import { SITE_CONFIG } from '@/lib/metadata'
 
 interface BestTimeToVisitProps {
-  placeName: string
-  countryName: string
+  city: City | null
+  country: Country | null
 }
 
-export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVisitProps) {
-  const [city, setCity] = useState<City | null>(null)
-  const [country, setCountry] = useState<Country | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    Promise.all([
-      getCityByName(placeName),
-      getCountryByName(countryName)
-    ]).then(([cityData, countryData]) => {
-      setCity(cityData)
-      setCountry(countryData)
-      setLoading(false)
-    })
-  }, [placeName, countryName])
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading travel information...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
+export default function BestTimeToVisit({ city, country }: BestTimeToVisitProps) {
   if (!city) {
     return (
       <section>
@@ -58,8 +24,8 @@ export default function BestTimeToVisit({ placeName, countryName }: BestTimeToVi
     )
   }
 
-  const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
-  const citySlug = placeName.toLowerCase().replace(/\s+/g, '-')
+  const countrySlug = country?.name?.toLowerCase().replace(/\s+/g, '-') || 'unknown'
+  const citySlug = city?.name?.toLowerCase().replace(/\s+/g, '-') || 'unknown'
   
   return (
     <>

@@ -1,24 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import getCityByName from '@/lib/getCityByName'
-
 interface ThingsToDoProps {
-  placeName: string
-  countryName: string
+  city: City | null
 }
 
-export default function ThingsToDo({ placeName, countryName }: ThingsToDoProps) {
-  const [city, setCity] = useState<City | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    getCityByName(placeName).then((cityData) => {
-      setCity(cityData)
-      setLoading(false)
-    })
-  }, [placeName])
-
+export default function ThingsToDo({ city }: ThingsToDoProps) {
   // Helper function to parse things to do data
   const parseThingsToDoData = (thingsToDo: ThingsToDoData | string | null | undefined): ThingsToDoData | null => {
     if (!thingsToDo) return null
@@ -27,26 +13,11 @@ export default function ThingsToDo({ placeName, countryName }: ThingsToDoProps) 
       try {
         return JSON.parse(thingsToDo)
       } catch (error) {
-        console.error('Error parsing things to do data:', error)
         return null
       }
     }
     
     return thingsToDo
-  }
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading things to do...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
   }
 
   if (!city) {

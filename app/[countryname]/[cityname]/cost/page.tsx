@@ -2,8 +2,7 @@ import Cost from '../cost'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
+import getCityWithCountry from '@/lib/getCityWithCountry'
 import type { Metadata } from 'next'
 
 interface CostPageProps {
@@ -20,10 +19,7 @@ export async function generateMetadata({ params }: CostPageProps): Promise<Metad
   const countryName = slugToCountryName(countrySlug)
   const cityName = slugToCityName(citySlug)
   
-  const [city, country] = await Promise.all([
-    getCityByName(citySlug),
-    getCountryByName(countrySlug)
-  ])
+  const { city, country } = await getCityWithCountry(citySlug, countrySlug)
   
   const displayCityName = city?.name || cityName
   const displayCountryName = country?.name || countryName
@@ -82,19 +78,11 @@ export async function generateMetadata({ params }: CostPageProps): Promise<Metad
 
 export default async function CostPage({ params }: CostPageProps) {
   const resolvedParams = await params
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
   
-  // Fetch city and country data server-side for SEO
-  const [city, country] = await Promise.all([
-    getCityByName(resolvedParams.cityname),
-    getCountryByName(resolvedParams.countryname)
-  ])
+  // Fetch data server-side for optimal performance
+  const { city, country } = await getCityWithCountry(citySlug, countrySlug)
   
-  return (
-    <Cost 
-      placeName={resolvedParams.cityname}
-      countryName={resolvedParams.countryname}
-      initialCity={city}
-      initialCountry={country}
-    />
-  )
+  return <Cost city={city} country={country} />
 }

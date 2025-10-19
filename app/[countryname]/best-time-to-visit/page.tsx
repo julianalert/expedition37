@@ -95,7 +95,7 @@ export default async function BestTimePage({ params }: BestTimePageProps) {
         />
       )}
       
-      <BestTimeToVisit countryName={countrySlug} initialCountry={country} />
+      <BestTimeToVisit country={country} />
     </>
   )
 }

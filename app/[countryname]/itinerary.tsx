@@ -1,33 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import getCountryByName from '@/lib/getCountryByName'
 import { slugToCountryName } from '@/lib/countryUtils'
 
 interface ItineraryProps {
-  countryName: string
-  initialCountry?: Country | null
+  country: Country | null
 }
 
-export default function Itinerary({ countryName, initialCountry }: ItineraryProps) {
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCountry)
+export default function Itinerary({ country }: ItineraryProps) {
   const [interests, setInterests] = useState('')
   const [duration, setDuration] = useState('1 week')
   const [generatingItinerary, setGeneratingItinerary] = useState(false)
   const [itinerary, setItinerary] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCountry) {
-      getCountryByName(countryName).then((countryData) => {
-        setCountry(countryData)
-        setLoading(false)
-      })
-    }
-  }, [countryName, initialCountry])
 
   const handleGenerateItinerary = async () => {
     if (!interests.trim()) {
@@ -46,7 +33,7 @@ export default function Itinerary({ countryName, initialCountry }: ItineraryProp
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          destination: country?.name || slugToCountryName(countryName),
+          destination: country?.name || 'Unknown Country',
           interests: interests,
           duration: duration,
         }),
@@ -60,27 +47,12 @@ export default function Itinerary({ countryName, initialCountry }: ItineraryProp
       setItinerary(data.itinerary)
     } catch (err) {
       setError('Failed to generate itinerary. Please try again.')
-      console.error('Error generating itinerary:', err)
     } finally {
       setGeneratingItinerary(false)
     }
   }
 
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  const displayCountryName = country?.name || slugToCountryName(countryName)
+  const displayCountryName = country?.name || 'Unknown Country'
 
   return (
     <section>

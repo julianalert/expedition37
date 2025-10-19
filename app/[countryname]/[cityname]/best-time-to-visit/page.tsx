@@ -81,5 +81,14 @@ export async function generateMetadata({ params }: BestTimePageProps): Promise<M
 
 export default async function BestTimePage({ params }: BestTimePageProps) {
   const resolvedParams = await params
-  return <BestTimeToVisit placeName={resolvedParams.cityname} countryName={resolvedParams.countryname} />
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
+  
+  // Fetch data server-side for optimal performance
+  const [city, country] = await Promise.all([
+    getCityByName(citySlug),
+    getCountryByName(countrySlug)
+  ])
+  
+  return <BestTimeToVisit city={city} country={country} />
 }

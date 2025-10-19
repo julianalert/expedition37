@@ -1,74 +1,46 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import getCountryByName from '@/lib/getCountryByName'
-import getCityByName from '@/lib/getCityByName'
 import getAllCities from '@/lib/getAllCities'
 import getAllCountries from '@/lib/getAllCountries'
 import { getSimilarCities } from '@/lib/similarityUtils'
 import CityItem from '@/app/(default)/city-item'
 
 interface SimilarPlacesProps {
-  placeName: string
-  countryName: string
-  initialCity?: City | null
-  initialCountry?: Country | null
+  city: City | null
+  country: Country | null
 }
 
-export default function SimilarPlaces({ placeName, countryName, initialCity, initialCountry }: SimilarPlacesProps) {
-  const [city, setCity] = useState<City | null>(initialCity || null)
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(true) // Always start with loading state
+export default function SimilarPlaces({ city, country }: SimilarPlacesProps) {
+  const [loading, setLoading] = useState(true)
   const [similarCities, setSimilarCities] = useState<Array<{city: City, country: Country, similarity: number}>>([])
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true) // Ensure loading is true when fetching starts
+      if (!city || !country) {
+        setLoading(false)
+        return
+      }
+      
+      setLoading(true)
       try {
-        // Fetch city and country data if not provided
-        let currentCity = initialCity
-        let currentCountry = initialCountry
-
-        if (!currentCity || !currentCountry) {
-          const [fetchedCity, fetchedCountry] = await Promise.all([
-            currentCity ? Promise.resolve(currentCity) : getCityByName(placeName),
-            currentCountry ? Promise.resolve(currentCountry) : getCountryByName(countryName)
-          ])
-          
-          if (fetchedCity) setCity(fetchedCity)
-          if (fetchedCountry) setCountry(fetchedCountry)
-          
-          currentCity = fetchedCity
-          currentCountry = fetchedCountry
-        }
-
-        if (currentCity && currentCountry) {
-          // Get all cities and countries for similarity calculation
-          try {
-            const [allCities, allCountries] = await Promise.all([
-              getAllCities(),
-              getAllCountries()
-            ])
-            
-            console.log(`Loaded ${allCities.length} cities and ${allCountries.length} countries for similarity calculation`)
-            
-            const similar = getSimilarCities(currentCity, currentCountry, allCities, allCountries, 12)
-            setSimilarCities(similar)
-          } catch (dataError) {
-            console.error('Error loading cities/countries data:', dataError)
-            // Set empty array so component doesn't break
-            setSimilarCities([])
-          }
-        }
+        // Get all cities and countries for similarity calculation
+        const [allCities, allCountries] = await Promise.all([
+          getAllCities(),
+          getAllCountries()
+        ])
+        
+        const similar = getSimilarCities(city, country, allCities, allCountries, 12)
+        setSimilarCities(similar)
       } catch (error) {
-        console.error('Error fetching similar places:', error)
+        setSimilarCities([])
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [placeName, countryName, initialCity, initialCountry])
+  }, [city, country])
 
   if (loading) {
     return (

@@ -76,14 +76,9 @@ export default async function ItineraryPage({ params }: ItineraryPageProps) {
   const resolvedParams = await params
   const countrySlug = resolvedParams.countryname
   
-  // Fetch country data server-side for SEO
+  // Fetch data server-side for optimal performance
   const country = await getCountryByName(countrySlug)
   
-  return (
-    <Itinerary 
-      countryName={countrySlug}
-      initialCountry={country}
-    />
-  )
+  return <Itinerary country={country} />
 }
 

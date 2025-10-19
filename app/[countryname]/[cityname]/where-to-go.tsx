@@ -1,40 +1,12 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import getCityByName from '@/lib/getCityByName'
 import PostsList from './posts-list'
 import Sidebar from '@/components/sidebar'
 
 interface WhereToGoProps {
-  placeName: string
+  city: City | null
   countryName: string
 }
 
-export default function WhereToGo({ placeName, countryName }: WhereToGoProps) {
-  const [city, setCity] = useState<City | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    getCityByName(placeName).then((data) => {
-      setCity(data)
-      setLoading(false)
-    })
-  }, [placeName])
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading destinations...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
+export default function WhereToGo({ city, countryName }: WhereToGoProps) {
   if (!city) {
     return (
       <section>
@@ -71,7 +43,7 @@ export default function WhereToGo({ placeName, countryName }: WhereToGoProps) {
               </div>
 
               {/* Areas/attractions list */}
-              <PostsList placeName={placeName} countryName={countryName} />
+              <PostsList placeName={city?.name || 'Unknown City'} countryName={countryName} />
             </div>
 
           </div>

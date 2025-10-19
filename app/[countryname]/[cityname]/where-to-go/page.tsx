@@ -2,8 +2,7 @@ import WhereToGo from '../where-to-go'
 import { generateMetadata as generateMetadataUtil, SITE_CONFIG, MetadataConfig } from '@/lib/metadata'
 import { slugToCountryName } from '@/lib/countryUtils'
 import { slugToCityName } from '@/lib/cityUtils'
-import getCityByName from '@/lib/getCityByName'
-import getCountryByName from '@/lib/getCountryByName'
+import getCityWithCountry from '@/lib/getCityWithCountry'
 import type { Metadata } from 'next'
 
 interface WhereToGoPageProps {
@@ -20,10 +19,7 @@ export async function generateMetadata({ params }: WhereToGoPageProps): Promise<
   const countryName = slugToCountryName(countrySlug)
   const cityName = slugToCityName(citySlug)
   
-  const [city, country] = await Promise.all([
-    getCityByName(citySlug),
-    getCountryByName(countrySlug)
-  ])
+  const { city, country } = await getCityWithCountry(citySlug, countrySlug)
   
   const displayCityName = city?.name || cityName
   const displayCountryName = country?.name || countryName
@@ -82,5 +78,11 @@ export async function generateMetadata({ params }: WhereToGoPageProps): Promise<
 
 export default async function WhereToGoPage({ params }: WhereToGoPageProps) {
   const resolvedParams = await params
-  return <WhereToGo placeName={resolvedParams.cityname} countryName={resolvedParams.countryname} />
+  const countrySlug = resolvedParams.countryname
+  const citySlug = resolvedParams.cityname
+  
+  // Fetch data server-side for optimal performance
+  const { city } = await getCityWithCountry(citySlug, countrySlug)
+  
+  return <WhereToGo city={city} countryName={countrySlug} />
 }

@@ -1,42 +1,11 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import getCountryByName from '@/lib/getCountryByName'
 import MonthlyRating from '@/components/monthly-rating'
 import TemperatureChart from '@/components/temperature-chart'
 
 interface BestTimeToVisitProps {
-  countryName: string
-  initialCountry?: Country | null
+  country: Country | null
 }
 
-export default function BestTimeToVisit({ countryName, initialCountry }: BestTimeToVisitProps) {
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCountry)
-
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCountry) {
-      getCountryByName(countryName).then((data) => {
-        setCountry(data)
-        setLoading(false)
-      })
-    }
-  }, [countryName, initialCountry])
-
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading travel information...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
+export default function BestTimeToVisit({ country }: BestTimeToVisitProps) {
 
   if (!country) {
     return (
@@ -53,7 +22,7 @@ export default function BestTimeToVisit({ countryName, initialCountry }: BestTim
     )
   }
 
-  const countrySlug = countryName.toLowerCase().replace(/\s+/g, '-')
+  const countrySlug = country?.name?.toLowerCase().replace(/\s+/g, '-') || 'unknown-country'
   
   return (
     <>      

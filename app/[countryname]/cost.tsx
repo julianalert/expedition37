@@ -1,18 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import getCountryByName from '@/lib/getCountryByName'
 import { slugToCountryName } from '@/lib/countryUtils'
 
 interface CostProps {
-  countryName: string
-  initialCountry?: Country | null
+  country: Country | null
 }
 
-export default function Cost({ countryName, initialCountry }: CostProps) {
-  const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCountry)
+export default function Cost({ country }: CostProps) {
   const [days, setDays] = useState('7')
   const [people, setPeople] = useState('2')
   const [adults, setAdults] = useState('2')
@@ -22,15 +18,6 @@ export default function Cost({ countryName, initialCountry }: CostProps) {
   const [costBreakdown, setCostBreakdown] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    // Only fetch if we don't have initial data
-    if (!initialCountry) {
-      getCountryByName(countryName).then((countryData) => {
-        setCountry(countryData)
-        setLoading(false)
-      })
-    }
-  }, [countryName, initialCountry])
 
   const handleGenerateCost = async () => {
     setGeneratingCost(true)
@@ -44,7 +31,7 @@ export default function Cost({ countryName, initialCountry }: CostProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          destination: country?.name || slugToCountryName(countryName),
+          destination: country?.name || 'Unknown Country',
           days: days,
           people: people,
           adults: adults,
@@ -61,27 +48,12 @@ export default function Cost({ countryName, initialCountry }: CostProps) {
       setCostBreakdown(data.costBreakdown)
     } catch (err) {
       setError('Failed to generate travel cost breakdown. Please try again.')
-      console.error('Error generating cost breakdown:', err)
     } finally {
       setGeneratingCost(false)
     }
   }
 
-  if (loading) {
-    return (
-      <section>
-        <div className="max-w-8xl mx-auto px-4 sm:px-6">
-          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading...</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  const displayCountryName = country?.name || slugToCountryName(countryName)
+  const displayCountryName = country?.name || 'Unknown Country'
 
   return (
     <section>

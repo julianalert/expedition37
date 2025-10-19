@@ -76,13 +76,8 @@ export default async function CostPage({ params }: CostPageProps) {
   const resolvedParams = await params
   const countrySlug = resolvedParams.countryname
   
-  // Fetch country data server-side for SEO
+  // Fetch data server-side for optimal performance
   const country = await getCountryByName(countrySlug)
   
-  return (
-    <Cost 
-      countryName={countrySlug}
-      initialCountry={country}
-    />
-  )
+  return <Cost country={country} />
 }
