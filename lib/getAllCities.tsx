@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { logSupabaseStatus } from './supabase-health'
 
 export default async function getAllCities(): Promise<City[]> {
   // Check if Supabase environment variables are configured
@@ -9,15 +10,27 @@ export default async function getAllCities(): Promise<City[]> {
 
   try {
     // First try a simple query to test connection and table existence
+    console.log('Testing Supabase connection...')
     const testQuery = await supabase
       .from('city')
       .select('id, name')
       .limit(1)
     
     if (testQuery.error) {
-      console.error('Supabase connection test failed:', testQuery.error)
+      console.error('Supabase connection test failed:', {
+        message: testQuery.error.message,
+        details: testQuery.error.details,
+        hint: testQuery.error.hint,
+        code: testQuery.error.code,
+        fullError: testQuery.error
+      })
+      
+      // Run detailed health check for debugging
+      await logSupabaseStatus()
       return getFallbackCities()
     }
+
+    console.log('Connection test passed, fetching all cities...')
 
     // If test passes, try the full query with ordering
     let data, error
@@ -30,7 +43,13 @@ export default async function getAllCities(): Promise<City[]> {
       .order('name', { ascending: true })
 
     if (fullQuery.error) {
-      console.warn('Query with overallRating failed, trying simpler query:', fullQuery.error)
+      console.warn('Query with overallRating failed, trying simpler query:', {
+        message: fullQuery.error.message,
+        details: fullQuery.error.details,
+        hint: fullQuery.error.hint,
+        code: fullQuery.error.code,
+        fullError: fullQuery.error
+      })
       
       // Fallback to simpler query without overallRating ordering
       const simpleQuery = await supabase
@@ -46,18 +65,33 @@ export default async function getAllCities(): Promise<City[]> {
     }
 
     if (error) {
-      console.error('All Supabase queries failed in getAllCities:', error)
+      console.error('All Supabase queries failed in getAllCities:', {
+        message: error.message || 'Unknown error',
+        details: error.details || 'No details available',
+        hint: error.hint || 'No hint available',
+        code: error.code || 'No code available',
+        fullError: error,
+        errorType: typeof error,
+        errorKeys: Object.keys(error || {}),
+        stringifiedError: JSON.stringify(error)
+      })
       return getFallbackCities()
     }
 
     if (data && data.length > 0) {
+      console.log(`Successfully fetched ${data.length} cities from Supabase`)
       return data
     } else {
       console.log('No cities found in database, using fallback')
       return getFallbackCities()
     }
   } catch (error) {
-    console.error('Network error in getAllCities:', error)
+    console.error('Network error in getAllCities:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      fullError: error,
+      errorType: typeof error
+    })
     return getFallbackCities()
   }
 }
