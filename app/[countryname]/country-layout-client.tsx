@@ -23,7 +23,7 @@ export default function CountryLayoutClient({ children, countryName }: CountryLa
   const pathSegments = pathname.split('/').filter(Boolean)
   // City pages have either 2 segments (/country/city) or 3+ segments (/country/city/tab)
   // But we need to exclude country-level tabs like /country/best-places-to-visit
-  const countryTabs = ['best-places-to-visit', 'best-time-to-visit', 'good-deals', 'alternatives', 'itinerary']
+  const countryTabs = ['best-places-to-visit', 'best-time-to-visit', 'cost', 'itinerary', 'good-deals', 'alternatives']
   const isCityPage = pathSegments.length >= 2 && !countryTabs.includes(pathSegments[1])
   
   // Initialize sticky functionality
