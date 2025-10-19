@@ -13,10 +13,15 @@ interface PostsListProps {
 
 export default function PostsList({ countryName }: PostsListProps) {
   const [cities, setCities] = useState<City[]>([])
+  const [loading, setLoading] = useState(true)
   const { filters } = useFilters()
 
   useEffect(() => {
-    getCitiesByCountryName(countryName).then(setCities)
+    setLoading(true)
+    getCitiesByCountryName(countryName).then((data) => {
+      setCities(data)
+      setLoading(false)
+    })
   }, [countryName])
 
   // Filter cities based on selected filters - using same logic as homepage
@@ -103,6 +108,25 @@ export default function PostsList({ countryName }: PostsListProps) {
 
     return true
   })
+
+  if (loading) {
+    return (
+      <div className="pb-8 md:pb-16" id="cities">
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          {/* Spinner Icon */}
+          <div className="relative w-16 h-16">
+            <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+          </div>
+          {/* Loading Message */}
+          <div className="text-center">
+            <div className="text-lg font-semibold text-gray-900 mb-1">Loading destinations...</div>
+            <div className="text-sm text-gray-600">Discovering the best places to visit</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (cities.length === 0) {
     return (

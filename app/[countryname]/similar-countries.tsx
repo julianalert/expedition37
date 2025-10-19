@@ -13,11 +13,12 @@ interface SimilarCountriesProps {
 
 export default function SimilarCountries({ countryName, initialCountry }: SimilarCountriesProps) {
   const [country, setCountry] = useState<Country | null>(initialCountry || null)
-  const [loading, setLoading] = useState(!initialCountry)
+  const [loading, setLoading] = useState(true) // Always start with loading state
   const [similarCountries, setSimilarCountries] = useState<Array<{country: Country, similarity: number}>>([])
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true) // Ensure loading is true when fetching starts
       try {
         // Fetch country data if not provided
         let currentCountry = initialCountry
@@ -55,8 +56,17 @@ export default function SimilarCountries({ countryName, initialCountry }: Simila
       <section>
         <div className="max-w-8xl mx-auto px-4 sm:px-6">
           <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-lg text-gray-600">Loading similar countries...</div>
+            <div className="flex flex-col items-center justify-center h-64 gap-4">
+              {/* Spinner Icon */}
+              <div className="relative w-16 h-16">
+                <div className="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+              </div>
+              {/* Loading Message */}
+              <div className="text-center">
+                <div className="text-lg font-semibold text-gray-900 mb-1">Finding similar destinations...</div>
+                <div className="text-sm text-gray-600">Analyzing matching places based on vibe, budget, and experiences</div>
+              </div>
             </div>
           </div>
         </div>
