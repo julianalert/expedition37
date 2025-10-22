@@ -6,8 +6,8 @@ import { getAllBlogPosts } from '@/lib/blog-discovery'
 
 const metadataConfig: MetadataConfig = {
   seo: {
-    title: `Travel Blog - ${SITE_CONFIG.name}`,
-    description: 'Discover travel insights, destination guides, and expert tips from our travel blog. Get inspired for your next adventure with stories from around the world.',
+    title: 'Travel Blog - Best Places to visit, Things to Do & Travel Tips',
+    description: 'Discover our travel blog with lists of top activities, attractions, and places to visit worldwide. Get inspiration and plan smarter trips.',
     keywords: [
       'travel blog',
       'travel stories',
@@ -24,8 +24,8 @@ const metadataConfig: MetadataConfig = {
     author: SITE_CONFIG.author,
   },
   openGraph: {
-    title: `Travel Blog - ${SITE_CONFIG.name}`,
-    description: 'Discover travel insights, destination guides, and expert tips from our travel blog.',
+    title: 'Travel Blog - Best Places to visit, Things to Do & Travel Tips',
+    description: 'Discover our travel blog with lists of top activities, attractions, and places to visit worldwide. Get inspiration and plan smarter trips.',
     url: `${SITE_CONFIG.url}/blog`,
     siteName: SITE_CONFIG.name,
     images: [
@@ -44,8 +44,8 @@ const metadataConfig: MetadataConfig = {
     card: 'summary_large_image',
     site: SITE_CONFIG.twitter,
     creator: SITE_CONFIG.twitter,
-    title: `Travel Blog - ${SITE_CONFIG.name}`,
-    description: 'Discover travel insights, destination guides, and expert tips from our travel blog.',
+    title: 'Travel Blog - Best Places to visit, Things to Do & Travel Tips',
+    description: 'Discover our travel blog with lists of top activities, attractions, and places to visit worldwide. Get inspiration and plan smarter trips.',
     images: [`${SITE_CONFIG.url}/images/detour-og-image.png`],
   },
 }

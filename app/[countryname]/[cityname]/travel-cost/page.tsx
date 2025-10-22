@@ -42,14 +42,14 @@ export async function generateMetadata({ params }: CostPageProps): Promise<Metad
         'travel budget planner',
         'trip cost estimator'
       ],
-      canonical: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/cost`,
+      canonical: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/travel-cost`,
       robots: 'index, follow',
       author: SITE_CONFIG.author,
     },
     openGraph: {
       title: `${displayCityName} Travel Cost Guide - How Expensive is ${displayCityName}? | ${SITE_CONFIG.name}`,
       description: `Get a personalized travel cost breakdown for ${displayCityName}, ${displayCountryName}. Calculate your budget for accommodation, food, transportation, and activities.`,
-      url: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/cost`,
+      url: `${SITE_CONFIG.url}/${countrySlug}/${citySlug}/travel-cost`,
       siteName: SITE_CONFIG.name,
       images: [
         {
