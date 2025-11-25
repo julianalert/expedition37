@@ -12,7 +12,7 @@ export async function GET() {
     const currentDate = new Date().toISOString()
     const urls: SitemapUrl[] = []
 
-    // Get all posts
+    // Get all posts with better error handling
     try {
       const posts: Post[] = await getAllPosts()
       posts.forEach((post: Post) => {
@@ -25,6 +25,7 @@ export async function GET() {
       })
     } catch (error) {
       console.error('Error fetching posts for sitemap:', error)
+      // Continue with empty posts array - this is not critical
     }
 
     const sitemap = generateSitemapXml(urls)
@@ -37,6 +38,22 @@ export async function GET() {
     })
   } catch (error) {
     console.error('Error generating posts sitemap:', error)
-    return new NextResponse('Error generating posts sitemap', { status: 500 })
+    
+    // Return minimal fallback sitemap
+    const fallbackSitemap = generateSitemapXml([
+      {
+        url: `${SITE_URL}/posts`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily' as const,
+        priority: 0.8
+      }
+    ])
+    
+    return new NextResponse(fallbackSitemap, {
+      headers: {
+        'Content-Type': 'application/xml',
+        'Cache-Control': 'public, max-age=300, s-maxage=300',
+      },
+    })
   }
 }

@@ -17,16 +17,41 @@ export async function GET() {
     const urls: SitemapUrl[] = []
 
     // Get all countries to find their cities
-    const countries: Country[] = await getAllCountries()
+    let countries: Country[] = []
     
-    for (const country of countries) {
-      const countrySlug = countryNameToSlug(country.name)
-      
-      // Get cities for this country
+    try {
+      countries = await getAllCountries()
+    } catch (error) {
+      console.error('Error fetching countries for cities sitemap:', error)
+      // Return empty sitemap if we can't get countries
+      const emptySitemap = generateSitemapXml([])
+      return new NextResponse(emptySitemap, {
+        headers: {
+          'Content-Type': 'application/xml',
+          'Cache-Control': 'public, max-age=300, s-maxage=300', // Shorter cache for errors
+        },
+      })
+    }
+
+    // Limit the number of countries processed to avoid timeout
+    const limitedCountries = countries.slice(0, 10) // Process only first 10 countries during build
+    
+    for (const country of limitedCountries) {
       try {
-        const cities: City[] = await getCitiesByCountryId(country.id.toString())
+        const countrySlug = countryNameToSlug(country.name)
         
-        for (const city of cities) {
+        // Get cities for this country with timeout protection
+        const cities: City[] = await Promise.race([
+          getCitiesByCountryId(country.id.toString()),
+          new Promise<City[]>((_, reject) => 
+            setTimeout(() => reject(new Error('Timeout')), 5000)
+          )
+        ])
+        
+        // Limit cities per country to avoid build timeout
+        const limitedCities = cities.slice(0, 5)
+        
+        for (const city of limitedCities) {
           const citySlug = cityNameToSlug(city.name)
           
           // City main page
@@ -57,6 +82,8 @@ export async function GET() {
         }
       } catch (error) {
         console.error(`Error fetching cities for country ${country.name}:`, error)
+        // Continue with next country instead of failing
+        continue
       }
     }
 
@@ -70,6 +97,22 @@ export async function GET() {
     })
   } catch (error) {
     console.error('Error generating cities sitemap:', error)
-    return new NextResponse('Error generating cities sitemap', { status: 500 })
+    
+    // Return a minimal sitemap instead of failing
+    const fallbackSitemap = generateSitemapXml([
+      {
+        url: `${SITE_URL}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily' as const,
+        priority: 1.0
+      }
+    ])
+    
+    return new NextResponse(fallbackSitemap, {
+      headers: {
+        'Content-Type': 'application/xml',
+        'Cache-Control': 'public, max-age=300, s-maxage=300',
+      },
+    })
   }
 }

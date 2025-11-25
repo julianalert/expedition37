@@ -2,13 +2,25 @@
 
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { slugToCountryName } from '@/lib/countryUtils'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { slugToCountryName, countryNameToSlug } from '@/lib/countryUtils'
 
 interface CostProps {
   country: Country | null
 }
 
+const tabs = [
+  { id: 'overview', name: 'Overview', href: '' },
+  { id: 'best-places', name: 'Best places to visit', href: '/best-places-to-visit' },
+  { id: 'best-time', name: 'Best time to visit', href: '/best-time-to-visit' },
+  { id: 'cost', name: 'Cost', href: '/travel-cost' },
+  { id: 'itinerary', name: 'Itinerary', href: '/itinerary' },
+  { id: 'alternatives', name: 'Alternatives', href: '/alternatives' },
+]
+
 export default function Cost({ country }: CostProps) {
+  const pathname = usePathname()
   const [days, setDays] = useState('7')
   const [people, setPeople] = useState('2')
   const [adults, setAdults] = useState('2')
@@ -56,19 +68,128 @@ export default function Cost({ country }: CostProps) {
   const displayCountryName = country?.name || 'Unknown Country'
 
   return (
-    <section>
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="pt-4 pb-8 md:pt-4 md:pb-16">
-          <div className="max-w-6xl">
-            {/* Header */}
+    <>
+      {/* Country Hero Section */}
+      <section className="w-full">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
+          <div className="py-8 md:py-12 pb-2 md:pb-4">
+            {/* Back navigation */}
             <div className="mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                {displayCountryName} Travel Cost Guide - How expensive is {displayCountryName}?
-              </h1>
-              <p className="text-gray-600">
-                Get a personalized travel cost breakdown for your trip to {displayCountryName}
-              </p>
+              <a 
+                href="/" 
+                className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to all countries
+              </a>
             </div>
+
+            {/* Country hero section */}
+            {country && (
+              <div className="mb-0">
+                <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg">
+                  {/* Background image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(${country.image})`,
+                    }}
+                  />
+                  
+                  {/* Semi-transparent overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/70" />
+                  
+                  {/* Featured indicator */}
+                  {country.featured && (
+                    <div className="absolute top-6 right-6 z-10">
+                      <div className="flex items-center bg-amber-400 text-amber-900 px-3 py-1 rounded-full text-sm font-medium">
+                        <svg className="w-4 h-4 mr-1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M11.143 5.143A4.29 4.29 0 0 1 6.857.857a.857.857 0 0 0-1.714 0A4.29 4.29 0 0 1 .857 5.143a.857.857 0 0 0 0 1.714 4.29 4.29 0 0 1 4.286 4.286.857.857 0 0 0 1.714 0 4.29 4.29 0 0 1 4.286-4.286.857.857 0 0 0 0-1.714Z" />
+                        </svg>
+                        Featured
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Content */}
+                  <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
+                    {/* Continent */}
+                    <div className="flex justify-start">
+                      <div className="text-sm md:text-base font-medium text-white/80 bg-white/15 backdrop-blur-sm px-3 md:px-4 py-1 md:py-2 rounded-full">
+                        {country.continent || 'Travel Cost'}
+                      </div>
+                    </div>
+                    
+                    {/* Country name and cost indicator */}
+                    <div className="text-left">
+                      <div className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
+                        {displayCountryName}
+                      </div>
+                      <div className="flex flex-wrap gap-2 md:gap-3">
+                        <span className="text-xs md:text-sm text-white/80 bg-white/15 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
+                          Travel Cost Calculator
+                        </span>
+                        {country.mood && country.mood.slice(0, 3).map((mood: string, index: number) => (
+                          <span key={index} className="text-xs md:text-sm text-white/80 bg-white/15 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
+                            {mood}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Country Tabs Navigation */}
+      <section className="border-b border-gray-200 bg-white sticky top-0 z-40 mt-4 mb-4">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
+          <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide" aria-label="Tabs">
+            {tabs.map((tab) => {
+              const isActive = tab.id === 'cost'
+              const countrySlug = country ? countryNameToSlug(country.name) : ''
+              const href = tab.id === 'overview' ? `/${countrySlug}` : `/${countrySlug}${tab.href}`
+              
+              return (
+                <Link
+                  key={tab.id}
+                  href={href}
+                  className={`
+                    whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200
+                    ${isActive
+                      ? 'border-indigo-500 text-indigo-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }
+                  `}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {tab.name}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+      </section>
+
+      {/* Cost Calculator Section */}
+      <section>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6">
+          <div className="pt-4 pb-8 md:pt-4 md:pb-16">
+            <div className="max-w-6xl">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  {displayCountryName} Travel Cost Guide - How expensive is {displayCountryName}?
+                </h1>
+                <p className="text-gray-600">
+                  Get a personalized travel cost breakdown for your trip to {displayCountryName}
+                </p>
+              </div>
 
             {/* Form */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
@@ -242,9 +363,10 @@ export default function Cost({ country }: CostProps) {
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

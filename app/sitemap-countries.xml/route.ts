@@ -13,37 +13,65 @@ export async function GET() {
     const currentDate = new Date().toISOString()
     const urls: SitemapUrl[] = []
 
-    // Get all countries
-    const countries: Country[] = await getAllCountries()
+    // Get all countries with error handling
+    let countries: Country[] = []
+    
+    try {
+      countries = await getAllCountries()
+    } catch (error) {
+      console.error('Error fetching countries for sitemap:', error)
+      // Return minimal sitemap if we can't get countries
+      const fallbackSitemap = generateSitemapXml([
+        {
+          url: `${SITE_URL}`,
+          lastModified: currentDate,
+          changeFrequency: 'daily' as const,
+          priority: 1.0
+        }
+      ])
+      
+      return new NextResponse(fallbackSitemap, {
+        headers: {
+          'Content-Type': 'application/xml',
+          'Cache-Control': 'public, max-age=300, s-maxage=300',
+        },
+      })
+    }
     
     for (const country of countries) {
-      const countrySlug = countryNameToSlug(country.name)
-      
-      // Country main page
-      urls.push({
-        url: `${SITE_URL}/${countrySlug}`,
-        lastModified: country.updated_at || currentDate,
-        changeFrequency: 'weekly' as const,
-        priority: 0.8
-      })
-
-      // Country sub-pages
-      const countrySubPages = [
-        'best-places-to-visit',
-        'best-time-to-visit',
-        'cost',
-        'itinerary',
-        'alternatives'
-      ]
-
-      countrySubPages.forEach(subPage => {
+      try {
+        const countrySlug = countryNameToSlug(country.name)
+        
+        // Country main page
         urls.push({
-          url: `${SITE_URL}/${countrySlug}/${subPage}`,
+          url: `${SITE_URL}/${countrySlug}`,
           lastModified: country.updated_at || currentDate,
           changeFrequency: 'weekly' as const,
-          priority: 0.7
+          priority: 0.8
         })
-      })
+
+        // Country sub-pages
+        const countrySubPages = [
+          'best-places-to-visit',
+          'best-time-to-visit',
+          'cost',
+          'itinerary',
+          'alternatives'
+        ]
+
+        countrySubPages.forEach(subPage => {
+          urls.push({
+            url: `${SITE_URL}/${countrySlug}/${subPage}`,
+            lastModified: country.updated_at || currentDate,
+            changeFrequency: 'weekly' as const,
+            priority: 0.7
+          })
+        })
+      } catch (error) {
+        console.error(`Error processing country ${country.name}:`, error)
+        // Continue with next country
+        continue
+      }
     }
 
     const sitemap = generateSitemapXml(urls)
@@ -56,6 +84,22 @@ export async function GET() {
     })
   } catch (error) {
     console.error('Error generating countries sitemap:', error)
-    return new NextResponse('Error generating countries sitemap', { status: 500 })
+    
+    // Return minimal fallback sitemap
+    const fallbackSitemap = generateSitemapXml([
+      {
+        url: `${SITE_URL}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily' as const,
+        priority: 1.0
+      }
+    ])
+    
+    return new NextResponse(fallbackSitemap, {
+      headers: {
+        'Content-Type': 'application/xml',
+        'Cache-Control': 'public, max-age=300, s-maxage=300',
+      },
+    })
   }
 }
