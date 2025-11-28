@@ -53,6 +53,11 @@ export default function CountryLayoutClient({ children, countryName }: CountryLa
             <nav className="flex grow">
               <ul className="flex grow justify-end flex-wrap items-center">
                 <li>
+                  <Link className="text-sm font-medium text-gray-600 hover:text-indigo-600 px-3 lg:px-5 py-2 flex items-center transition-colors duration-200" href="/travel-planner">
+                    Travel Planner
+                  </Link>
+                </li>
+                <li>
                   <Link className="text-sm font-medium text-gray-600 hover:text-indigo-600 px-3 lg:px-5 py-2 flex items-center transition-colors duration-200" href="/blog">
                     Blog
                   </Link>
