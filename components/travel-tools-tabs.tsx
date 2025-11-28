@@ -5,11 +5,11 @@ import { useState } from 'react'
 const tabs = [
   { id: 'itinerary', name: 'Itinerary Generator', enabled: true },
   { id: 'budget', name: 'Budget Calculator', enabled: true },
+  { id: 'nearme', name: 'Near Me', enabled: true },
   { id: 'roadtrip', name: 'Road Trip Calculator', enabled: false },
   { id: 'flight', name: 'Flight Time Calculator', enabled: false },
   { id: 'packing', name: 'Packing List', enabled: false },
   { id: 'currency', name: 'Currency Converter', enabled: false },
-  { id: 'nearme', name: 'Near Me', enabled: false },
   { id: 'timezone', name: 'Time Difference', enabled: false },
 ]
 

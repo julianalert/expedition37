@@ -87,6 +87,19 @@ export default function CountryLayoutClient({ children, countryName }: CountryLa
                         </div>
                       </Link>
                       
+                      <Link href="/travel-planner/near-me" className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-150">
+                        <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
+                          <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="font-medium">Near Me</div>
+                          <div className="text-xs text-gray-500">Discover places around you</div>
+                        </div>
+                      </Link>
+                      
                       <div className="border-t border-gray-100 mt-2 pt-2">
                         <Link href="/travel-planner" className="flex items-center px-4 py-2 text-sm text-gray-500 hover:text-indigo-600 transition-colors duration-150">
                           <span className="text-xs">View All Tools</span>

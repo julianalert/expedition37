@@ -10,6 +10,7 @@ import TestimonialsImage04 from '@/public/images/david.png'
 import TravelToolsTabs from '@/components/travel-tools-tabs'
 import ItineraryGenerator from '@/components/itinerary-generator'
 import BudgetCalculator from '@/components/budget-calculator'
+import NearMe from '@/components/near-me'
 import TravelPlannerHero from '@/components/travel-planner-hero'
 
 export default function TravelPlannerClient() {
@@ -25,6 +26,8 @@ export default function TravelPlannerClient() {
         return <ItineraryGenerator />
       case 'budget':
         return <BudgetCalculator />
+      case 'nearme':
+        return <NearMe />
       default:
         return <ItineraryGenerator />
     }
@@ -219,12 +222,12 @@ export default function TravelPlannerClient() {
               </div>
 
               {/* Near Me */}
-              <div className="group block">
+              <a href="/travel-planner/near-me" className="group block">
                 <div className="relative h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out bg-gradient-to-br from-emerald-500 to-green-600">
-                  {/* Coming Soon Badge */}
+                  {/* Available Badge */}
                   <div className="absolute top-4 right-4 z-10">
-                    <div className="bg-purple-50 text-purple-600 text-xs px-2 py-1 rounded-md border border-purple-200">
-                      Coming Soon
+                    <div className="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-md border border-green-200">
+                      Available
                     </div>
                   </div>
 
@@ -244,7 +247,7 @@ export default function TravelPlannerClient() {
                     <p className="text-white/80 text-sm">Discover attractions and services nearby</p>
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Time Difference */}
               <div className="group block">
