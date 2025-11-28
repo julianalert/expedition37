@@ -11,6 +11,7 @@ import TravelToolsTabs from '@/components/travel-tools-tabs'
 import ItineraryGenerator from '@/components/itinerary-generator'
 import BudgetCalculator from '@/components/budget-calculator'
 import NearMe from '@/components/near-me'
+import TravelQuiz from '@/components/travel-quiz'
 import TravelPlannerHero from '@/components/travel-planner-hero'
 
 export default function TravelPlannerClient() {
@@ -28,6 +29,8 @@ export default function TravelPlannerClient() {
         return <BudgetCalculator />
       case 'nearme':
         return <NearMe />
+      case 'quiz':
+        return <TravelQuiz />
       default:
         return <ItineraryGenerator />
     }
@@ -168,12 +171,12 @@ export default function TravelPlannerClient() {
               </div>
 
               {/* Packing List */}
-              <div className="group block">
+              <a href="/travel-planner/travel-checklist" className="group block">
                 <div className="relative h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out bg-gradient-to-br from-pink-500 to-rose-600">
-                  {/* Coming Soon Badge */}
+                  {/* Available Badge */}
                   <div className="absolute top-4 right-4 z-10">
-                    <div className="bg-purple-50 text-purple-600 text-xs px-2 py-1 rounded-md border border-purple-200">
-                      Coming Soon
+                    <div className="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-md border border-green-200">
+                      Available
                     </div>
                   </div>
 
@@ -192,7 +195,7 @@ export default function TravelPlannerClient() {
                     <p className="text-white/80 text-sm">Smart packing suggestions for any trip</p>
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Currency Converter */}
               <div className="group block">
@@ -245,6 +248,33 @@ export default function TravelPlannerClient() {
                   <div className="absolute inset-0 p-6 flex flex-col justify-end">
                     <h3 className="text-xl font-bold text-white mb-2">Near Me</h3>
                     <p className="text-white/80 text-sm">Discover attractions and services nearby</p>
+                  </div>
+                </div>
+              </a>
+
+              {/* Where Should I Go Quiz */}
+              <a href="/travel-planner/quiz-where-should-i-travel" className="group block">
+                <div className="relative h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out bg-gradient-to-br from-purple-500 to-pink-600">
+                  {/* Available Badge */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-md border border-green-200">
+                      Available
+                    </div>
+                  </div>
+
+                  {/* Icon */}
+                  <div className="absolute top-6 left-6 z-10">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                    <h3 className="text-xl font-bold text-white mb-2">Where Should I Go?</h3>
+                    <p className="text-white/80 text-sm">Take our quiz to find your perfect destination</p>
                   </div>
                 </div>
               </a>

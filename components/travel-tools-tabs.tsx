@@ -6,6 +6,7 @@ const tabs = [
   { id: 'itinerary', name: 'Itinerary Generator', enabled: true },
   { id: 'budget', name: 'Budget Calculator', enabled: true },
   { id: 'nearme', name: 'Near Me', enabled: true },
+  { id: 'quiz', name: 'Where Should I Go?', enabled: true },
   { id: 'roadtrip', name: 'Road Trip Calculator', enabled: false },
   { id: 'flight', name: 'Flight Time Calculator', enabled: false },
   { id: 'packing', name: 'Packing List', enabled: false },
@@ -21,7 +22,7 @@ interface TravelToolsTabsProps {
 export default function TravelToolsTabs({ activeTab, onTabChange }: TravelToolsTabsProps) {
 
   return (
-    <section className="border-b border-gray-200 bg-white sticky top-0 z-40">
+    <section className="border-b border-gray-200 bg-white sticky top-0 z-30">
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide" aria-label="Tabs">
           {tabs.map((tab) => {
