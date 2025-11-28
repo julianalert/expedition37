@@ -7,9 +7,9 @@ const tabs = [
   { id: 'budget', name: 'Budget Calculator', enabled: true },
   { id: 'nearme', name: 'Near Me', enabled: true },
   { id: 'quiz', name: 'Where Should I Go?', enabled: true },
+  { id: 'packing', name: 'Packing List', enabled: true },
   { id: 'roadtrip', name: 'Road Trip Calculator', enabled: false },
   { id: 'flight', name: 'Flight Time Calculator', enabled: false },
-  { id: 'packing', name: 'Packing List', enabled: false },
   { id: 'currency', name: 'Currency Converter', enabled: false },
   { id: 'timezone', name: 'Time Difference', enabled: false },
 ]

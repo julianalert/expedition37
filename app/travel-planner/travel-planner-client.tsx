@@ -12,6 +12,7 @@ import ItineraryGenerator from '@/components/itinerary-generator'
 import BudgetCalculator from '@/components/budget-calculator'
 import NearMe from '@/components/near-me'
 import TravelQuiz from '@/components/travel-quiz'
+import PackingChecklist from '@/components/packing-checklist'
 import TravelPlannerHero from '@/components/travel-planner-hero'
 
 export default function TravelPlannerClient() {
@@ -31,6 +32,8 @@ export default function TravelPlannerClient() {
         return <NearMe />
       case 'quiz':
         return <TravelQuiz />
+      case 'packing':
+        return <PackingChecklist />
       default:
         return <ItineraryGenerator />
     }
