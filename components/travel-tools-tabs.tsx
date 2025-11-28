@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const tabs = [
   { id: 'itinerary', name: 'Itinerary Generator', enabled: true },
-  { id: 'budget', name: 'Budget Calculator', enabled: false },
+  { id: 'budget', name: 'Budget Calculator', enabled: true },
   { id: 'roadtrip', name: 'Road Trip Calculator', enabled: false },
   { id: 'flight', name: 'Flight Time Calculator', enabled: false },
   { id: 'packing', name: 'Packing List', enabled: false },
@@ -13,8 +13,12 @@ const tabs = [
   { id: 'timezone', name: 'Time Difference', enabled: false },
 ]
 
-export default function TravelToolsTabs() {
-  const [activeTab, setActiveTab] = useState('itinerary')
+interface TravelToolsTabsProps {
+  activeTab: string
+  onTabChange: (tabId: string) => void
+}
+
+export default function TravelToolsTabs({ activeTab, onTabChange }: TravelToolsTabsProps) {
 
   return (
     <section className="border-b border-gray-200 bg-white sticky top-0 z-40">
@@ -26,12 +30,12 @@ export default function TravelToolsTabs() {
             return (
               <button
                 key={tab.id}
-                onClick={() => tab.enabled && setActiveTab(tab.id)}
+                onClick={() => tab.enabled && onTabChange(tab.id)}
                 disabled={!tab.enabled}
                 className={`
                   whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 flex-shrink-0 flex items-center gap-2
                   ${isActive && tab.enabled
-                    ? 'border-indigo-500 text-indigo-600'
+                    ? 'border-indigo-500 text-indigo-600 cursor-pointer'
                     : tab.enabled
                     ? 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer'
                     : 'border-transparent text-gray-400 cursor-not-allowed'

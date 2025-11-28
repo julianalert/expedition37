@@ -63,16 +63,9 @@ export default function ItineraryGenerator() {
     <section>
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="py-8 md:py-12">
-          {/* Header */}
-          <div className="text-left mb-8">
-            <h2 className="text-3xl font-bold font-inter mb-4">Itinerary Generator</h2>
-            <p className="text-lg text-gray-600">
-              Tell us where you want to go and what you want to do, and our AI will create a personalized day-by-day itinerary for you.
-            </p>
-          </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+          <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm text-left">
             <div className="space-y-6">
               
               {/* Destination input */}
@@ -145,7 +138,7 @@ export default function ItineraryGenerator() {
                 <button 
                   type="submit"
                   disabled={generatingItinerary}
-                  className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {generatingItinerary ? 'Creating your itinerary...' : 'Create My Personalized Itinerary'}
                 </button>
