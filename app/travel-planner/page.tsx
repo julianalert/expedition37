@@ -7,6 +7,7 @@ import TestimonialsImage03 from '@/public/images/elena.jpg'
 import TestimonialsImage04 from '@/public/images/david.png'
 import TravelToolsTabs from '@/components/travel-tools-tabs'
 import ItineraryGenerator from '@/components/itinerary-generator'
+import TravelPlannerHero from '@/components/travel-planner-hero'
 import Hero from '@/components/hero'
 
 // Revalidate travel planner page every 6 hours (21600 seconds)
@@ -67,31 +68,6 @@ const metadataConfig: MetadataConfig = {
 export const metadata = generateMetadata(metadataConfig)
 export const viewport = generateViewport()
 
-// Travel Planner Hero Component
-function TravelPlannerHero() {
-  return (
-    <section className="relative overflow-hidden">
-      {/* Bg */}
-      <div className="absolute inset-0 bg-linear-to-b from-indigo-100 to-white pointer-events-none -z-10" aria-hidden="true" />
-
-      <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="pt-28 pb-8 md:pt-36 md:pb-16">
-          {/* Hero content */}
-          <div className="max-w-6xl text-center md:text-left">
-            {/* Copy */}
-            <h1 className="h1 font-inter mb-6">
-              Travel Planner <span className="font-nycd text-indigo-500 font-normal">Tools</span>
-            </h1>
-            <p className="text-lg text-gray-500 mb-8">
-              All your travel tools in one place, from itinerary generators to budget calculators.
-              <br className="hidden md:block" /> TryDetour helps you explore, plan, and prepare effortlessly.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 export default function TravelPlannerPage() {
   return (
@@ -99,7 +75,9 @@ export default function TravelPlannerPage() {
       <TravelPlannerHero />
       
       {/* Travel Tools Tabs */}
-      <TravelToolsTabs />
+      <div data-tabs-section>
+        <TravelToolsTabs />
+      </div>
       
       {/* Itinerary Generator Form */}
       <ItineraryGenerator />
@@ -681,7 +659,7 @@ export default function TravelPlannerPage() {
               <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
                 <h3 className="text-lg font-bold text-gray-800 mb-3">What kind of trips can I plan with TryDetour?</h3>
                 <p className="text-gray-600">
-                  Our tools adapt to any trip length, destination type, and travel style — solo, couple, family, or digital nomad.
+                  Our tools adapt to any trip length, destination type, and travel style: solo, couple, family, or digital nomad.
                 </p>
               </div>
 
