@@ -555,7 +555,7 @@ const articleData: BlogArticleData = {
       content: 'Comparison Table: Best Halal Honeymoon Destinations'
     },
     {
-      type: 'paragraph',
+      type: 'html',
       content: `<div class="destinations-table-wrapper">
   <table class="destinations-comparison">
     <thead>

@@ -75,6 +75,11 @@ function renderSection(section: BlogSection, index: number) {
       return (
         <p key={index} className="text-gray-700 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: section.content as string }} />
       );
+
+    case 'html':
+      return (
+        <div key={index} className="text-gray-700 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: section.content as string }} />
+      );
     
     case 'heading':
       return (
